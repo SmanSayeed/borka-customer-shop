@@ -2,15 +2,15 @@
 
 import { categoryLinks } from '@/constants/category';
 import { Search, ShoppingBag, User } from 'lucide-react'
-import Image from 'next/image';
 import Link from 'next/link';
+import { Logo } from './assets';
 
 const Navbar = () => {
   return (
     <div className='bg-secondary'>
-      <nav className='max-w-[1480px] mx-auto flex items-center justify-between py-4 text-white'>
+      <nav className='container mx-auto flex items-center justify-between py-4 text-white'>
         <Link href='/'>
-          <Image src='/logo.png' alt='logo' height={100} width={100} />
+          <Logo />
         </Link>
         <div>
           <ul className='flex items-center justify-around gap-6'>
