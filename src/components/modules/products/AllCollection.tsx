@@ -5,19 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ShoppingBag, Heart, Eye } from 'lucide-react';
-
-interface Product {
-  name: string;
-  price: number;
-  discount: number;
-  status: string;
-  color: string[];
-  size: string[];
-  quantity: number;
-  description: string;
-  image: string[];
-  category: string;
-}
+import { IProduct } from '@/types';
 
 const categories = [
   'All', // Added "All" tab
@@ -31,7 +19,7 @@ const categories = [
 ];
 
 const AllCollection = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
