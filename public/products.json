@@ -1,0 +1,200 @@
+{
+  "products": [
+    {
+      "name": "Elegant Black Abaya",
+      "price": 3500,
+      "discount": 10,
+      "status": "trending",
+      "color": ["Black"],
+      "size": ["S", "M", "L", "XL"],
+      "quantity": 25,
+      "description": "A beautifully designed black abaya crafted with lightweight premium fabric, perfect for both casual and special occasions.",
+      "specification": [
+        "Material: Premium Nida Fabric",
+        "Neck Style: Round",
+        "Sleeve Type: Full Sleeve",
+        "Care Instructions: Machine Wash Cold",
+        "Occasion: Daily Wear, Party Wear"
+      ],
+      "review": "Absolutely stunning abaya! The fabric is soft, elegant, and comfortable to wear.",
+      "image": [
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
+      ],
+      "category": "Abaya"
+    },
+    {
+      "name": "Floral Kimono Style Abaya",
+      "price": 4200,
+      "discount": 15,
+      "status": "new",
+      "color": ["Navy Blue", "White"],
+      "size": ["M", "L", "XL"],
+      "quantity": 18,
+      "description": "A lightweight kimono-style abaya featuring delicate floral prints and adjustable belt for a modest, chic look.",
+      "specification": [
+        "Material: Chiffon Blend",
+        "Pattern: Floral Printed",
+        "Fit Type: Relaxed Fit",
+        "Belt Included: Yes",
+        "Care Instructions: Hand Wash Only"
+      ],
+      "review": "Loved the floral design and quality. Very comfortable for everyday wear!",
+      "image": [
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205483/1731841131149803_lty48w.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205483/1730003500827820_r6sveh.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
+      ],
+      "category": "Kimono"
+    },
+    {
+      "name": "Salah Khimar Set",
+      "price": 2800,
+      "discount": 5,
+      "status": "trending",
+      "color": ["Olive Green", "Maroon"],
+      "size": ["Free Size"],
+      "quantity": 30,
+      "description": "Full-coverage salah khimar made from soft, breathable fabric ensuring comfort during prayers.",
+      "specification": [
+        "Material: Jersey Fabric",
+        "Coverage: Full-Length",
+        "Care Instructions: Hand Wash Recommended",
+        "Two-Piece Set: Yes"
+      ],
+      "review": "Perfect for daily prayers, very modest and comfortable fit.",
+      "image": [
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205483/1730003500827820_r6sveh.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205483/1731841131149803_lty48w.jpg"
+      ],
+      "category": "Salah Khimar"
+    },
+    {
+      "name": "Classic Hijab Collection",
+      "price": 950,
+      "discount": 0,
+      "status": "new",
+      "color": ["Beige", "Dusty Pink", "Charcoal"],
+      "size": ["Standard"],
+      "quantity": 100,
+      "description": "Soft and breathable hijabs designed for everyday comfort and elegance.",
+      "specification": [
+        "Material: Cotton Viscose",
+        "Shape: Rectangle",
+        "Length: 180cm",
+        "Width: 70cm",
+        "Care Instructions: Gentle Wash"
+      ],
+      "review": "Super comfortable and easy to style — perfect for everyday use!",
+      "image": [
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
+      ],
+      "category": "Hijab"
+    },
+    {
+      "name": "Luxury Kaftan Gown",
+      "price": 5200,
+      "discount": 20,
+      "status": "new",
+      "color": ["Emerald Green", "Gold"],
+      "size": ["M", "L", "XL"],
+      "quantity": 12,
+      "description": "An elegant kaftan gown featuring delicate embroidery and flowing design — ideal for festive occasions.",
+      "specification": [
+        "Material: Silk Blend",
+        "Embroidery: Handcrafted",
+        "Neckline: V-Neck",
+        "Sleeves: Batwing Style",
+        "Care Instructions: Dry Clean Only"
+      ],
+      "review": "Absolutely gorgeous gown! Got so many compliments wearing it.",
+      "image": [
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg"
+      ],
+      "category": "Gown"
+    },
+    {
+      "name": "Embroidered Skirt Set",
+      "price": 3100,
+      "discount": 12,
+      "status": "new",
+      "color": ["Black", "Ivory"],
+      "size": ["S", "M", "L"],
+      "quantity": 20,
+      "description": "Stylish two-piece embroidered skirt set that blends elegance with modesty. Perfect for festive gatherings.",
+      "specification": [
+        "Material: Cotton Silk",
+        "Set Includes: Top & Skirt",
+        "Care Instructions: Hand Wash Recommended",
+        "Fit Type: Regular Fit"
+      ],
+      "review": "Beautiful embroidery and premium quality. The fit is perfect!",
+      "image": [
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
+      ],
+      "category": "Skirt Set"
+    },
+    {
+      "name": "Minimalist Linen Kurti",
+      "price": 1900,
+      "discount": 0,
+      "status": "trending",
+      "color": ["White", "Light Blue"],
+      "size": ["S", "M", "L", "XL"],
+      "quantity": 0,
+      "description": "Breathable linen kurti featuring minimal design and elegant neckline. Great for everyday wear.",
+      "specification": [
+        "Material: Pure Linen",
+        "Neck Type: Round",
+        "Sleeve Type: 3/4 Sleeve",
+        "Care Instructions: Machine Wash Cold"
+      ],
+      "review": "Simple yet classy! Very comfortable for summer.",
+      "image": [
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg"
+      ],
+      "category": "Kurti"
+    },
+    {
+      "name": "Velvet Party Gown",
+      "price": 5600,
+      "discount": 10,
+      "status": "trending",
+      "color": ["Wine Red", "Navy Blue"],
+      "size": ["M", "L", "XL"],
+      "quantity": 10,
+      "description": "Luxurious velvet gown designed with a flattering silhouette, ideal for parties and weddings.",
+      "specification": [
+        "Material: Velvet Blend",
+        "Lining: Satin",
+        "Care Instructions: Dry Clean Only",
+        "Occasion: Evening Wear"
+      ],
+      "review": "Elegant and high-quality gown. The velvet fabric feels premium.",
+      "image": [
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
+      ],
+      "category": "Gown"
+    }
+  ]
+}
