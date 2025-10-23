@@ -1,3 +1,4 @@
+import Reviews from '@/components/modules/Home/Reviews'
 import AllCollection from '@/components/modules/products/AllCollection'
 import NewArrivals from '@/components/modules/products/NewArrivals'
 
@@ -9,7 +10,7 @@ const RootLayout = () => {
       Festive Special
       <AllCollection />
       Watch and Shop
-      Customer Review
+      <Reviews />
       Services
       Gallery
     </div>
