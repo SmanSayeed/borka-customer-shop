@@ -1,4 +1,5 @@
 import Features from '@/components/modules/Home/Features'
+import Gallery from '@/components/modules/Home/Gallery'
 import Reviews from '@/components/modules/Home/Reviews'
 import AllCollection from '@/components/modules/products/AllCollection'
 import NewArrivals from '@/components/modules/products/NewArrivals'
@@ -13,7 +14,7 @@ const RootLayout = () => {
       Watch and Shop
       <Reviews />
       Services
-      Gallery
+      <Gallery />
       <Features />
     </div>
   )

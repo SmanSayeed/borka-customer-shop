@@ -44,7 +44,7 @@ const testimonials: Testimonial[] = [
     title: 'Outstanding service and quality!',
     rating: 5,
     content:
-      'Working with this team has been an absolute pleasure. Their attention to detail and commitment to excellence is unmatched...',
+      'আগেও শপিং করেছি এবার আবার দুইটা বোকরা নিয়েছি মাশাআল্লাহ অনেক সুন্দর।আবার নতুন করে anzaar এর প্রেমে পড়ে গেলাম।সামনে আরও কিনবো ইনশাআল্লাহ। ❤️❤️',
     images: [
       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop',
       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop',
@@ -61,7 +61,7 @@ const testimonials: Testimonial[] = [
     title: 'Outstanding service and quality!',
     rating: 5,
     content:
-      'Working with this team has been an absolute pleasure. Their attention to detail and commitment to excellence is unmatched...',
+      'Ami khub voye voye silam! online theke shob product mutamuti niye thaki but borka ai prothom nilam .best quality manei Anzaar .khub e Valo r mot moto hoise Amer .next time Ami Anzaar theke nibo inshallah 💖',
     images: [
       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop',
       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop',

@@ -27,15 +27,15 @@ const Features = () => {
   return (
         <section className='mt-20 bg-secondary'>
           <div className='container mx-auto pt-10'>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 bg-[hsl(200,50%,15%)] rounded-2xl p-8 lg:divide-x divide-white/10'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 bg-white/2 rounded-2xl p-8 lg:divide-x divide-white/10'>
               {features.map((feature, index) => (
                 <div
                   key={index}
                   className='flex items-center gap-4 lg:px-8 first:lg:pl-0 last:lg:pr-0'
                 >
-                  <div className='shrink-0 w-16 h-16 rounded-2xl bg-teal-500/20 flex items-center justify-center'>
+                  <div className='shrink-0 w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center'>
                     <feature.icon
-                      className='w-8 h-8 text-teal-400'
+                      className='w-8 h-8 text-primary'
                       strokeWidth={1.5}
                     />
                   </div>
