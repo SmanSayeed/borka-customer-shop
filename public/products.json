@@ -22,7 +22,8 @@
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
-      ]
+      ],
+      "category": "Abaya"
     },
     {
       "name": "Floral Kimono Style Abaya",
@@ -46,7 +47,8 @@
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205483/1730003500827820_r6sveh.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
-      ]
+      ],
+      "category": "Kimono"
     },
     {
       "name": "Salah Khimar Set",
@@ -65,11 +67,12 @@
       ],
       "review": "Perfect for daily prayers, very modest and comfortable fit.",
       "image": [
-          "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
-          "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205483/1730003500827820_r6sveh.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205483/1731841131149803_lty48w.jpg"
-      ]
+      ],
+      "category": "Salah Khimar"
     },
     {
       "name": "Classic Hijab Collection",
@@ -91,9 +94,10 @@
       "image": [
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
-          "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
-      ]
+      ],
+      "category": "Hijab"
     },
     {
       "name": "Luxury Kaftan Gown",
@@ -113,11 +117,12 @@
       ],
       "review": "Absolutely gorgeous gown! Got so many compliments wearing it.",
       "image": [
-          "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg"
-      ]
+      ],
+      "category": "Gown"
     },
     {
       "name": "Embroidered Skirt Set",
@@ -136,11 +141,12 @@
       ],
       "review": "Beautiful embroidery and premium quality. The fit is perfect!",
       "image": [
-          "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
-      ]
+      ],
+      "category": "Skirt Set"
     },
     {
       "name": "Minimalist Linen Kurti",
@@ -159,11 +165,12 @@
       ],
       "review": "Simple yet classy! Very comfortable for summer.",
       "image": [
-          "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
-          "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg"
-      ]
+      ],
+      "category": "Kurti"
     },
     {
       "name": "Velvet Party Gown",
@@ -186,99 +193,8 @@
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
-      ]
-    },
-    {
-      "name": "Classic Open Abaya",
-      "price": 3300,
-      "discount": 5,
-      "status": "new",
-      "color": ["Gray", "Sand Beige"],
-      "size": ["S", "M", "L", "XL"],
-      "quantity": 22,
-      "description": "Open front abaya with modern styling and soft flowy fabric, suitable for any outing.",
-      "specification": [
-        "Material: Crepe",
-        "Closure: Open Front with Belt",
-        "Sleeve Type: Flared",
-        "Care Instructions: Hand Wash"
       ],
-      "review": "Perfect balance of style and comfort. Loved the color combination!",
-      "image": [
-          "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
-          "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
-          "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
-        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
-      ]
-    },
-    {
-      "name": "Printed Kaftan Dress",
-      "price": 2700,
-      "discount": 8,
-      "status": "trending",
-      "color": ["Dusty Pink", "Teal"],
-      "size": ["Free Size"],
-      "quantity": 28,
-      "description": "Lightweight printed kaftan dress offering a relaxed fit and beautiful ethnic motifs.",
-      "specification": [
-        "Material: Rayon Blend",
-        "Pattern: Printed",
-        "Fit: Loose",
-        "Care Instructions: Gentle Wash"
-      ],
-      "review": "Very comfortable and stylish. Ideal for summer days!",
-     "image": [
-         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
-        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
-        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
-        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
-      ]
-    },
-    {
-      "name": "Elegant Cotton Kurti",
-      "price": 2200,
-      "discount": 10,
-      "status": "new",
-      "color": ["Peach", "Lavender"],
-      "size": ["S", "M", "L"],
-      "quantity": 40,
-      "description": "Soft cotton kurti with delicate embroidery for a graceful everyday look.",
-      "specification": [
-        "Material: Pure Cotton",
-        "Pattern: Embroidered",
-        "Neck: Round Neck",
-        "Care Instructions: Machine Wash Cold"
-      ],
-      "review": "So comfortable and feminine — perfect for daily use.",
-      "image": [
-          "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg",
-        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
-        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
-        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg"
-      ]
-    },
-    {
-      "name": "Luxury Embellished Gown",
-      "price": 6400,
-      "discount": 25,
-      "status": "trending",
-      "color": ["Champagne", "Silver"],
-      "size": ["M", "L"],
-      "quantity": 8,
-      "description": "Premium embellished gown designed for weddings and formal occasions. Exquisite craftsmanship and detailing.",
-      "specification": [
-        "Material: Georgette with Embellishments",
-        "Lining: Soft Satin",
-        "Occasion: Bridal & Party Wear",
-        "Care Instructions: Dry Clean Only"
-      ],
-      "review": "Incredible gown! The details are just breathtaking — feels luxurious.",
-      "image": [
-          "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
-        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
-        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
-        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
-      ]
+      "category": "Gown"
     }
   ]
 }

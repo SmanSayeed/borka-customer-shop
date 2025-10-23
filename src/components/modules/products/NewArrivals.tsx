@@ -67,7 +67,7 @@ const NewArrivals = () => {
                       src={product.image[0]}
                       alt={product.name}
                       fill
-                      className='object-cover transition-transform duration-500 ease-in-out group-hover:scale-105'
+                      className='object-cover transition-transform duration-500 ease-in-out group-hover:scale-110'
                     />
 
                     {/* Hover Icons */}

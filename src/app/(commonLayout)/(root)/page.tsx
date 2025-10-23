@@ -1,3 +1,4 @@
+import AllCollection from '@/components/modules/products/AllCollection'
 import NewArrivals from '@/components/modules/products/NewArrivals'
 
 const RootLayout = () => {
@@ -6,7 +7,7 @@ const RootLayout = () => {
       <NewArrivals />
       Trending Now
       Festive Special
-      Filter all products
+      <AllCollection />
       Watch and Shop
       Customer Review
       Services
