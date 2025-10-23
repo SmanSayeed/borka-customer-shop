@@ -27,7 +27,7 @@ const testimonials: Testimonial[] = [
     title: 'It was a great experience!',
     rating: 5,
     content:
-      'This can be done in a multitude of ways for example if you are producing a brochure selling wellington boots...',
+      'আলহামদুলিল্লাহ আমি আমার পার্সেল আজই হাতে পেলাম। এক কথায় অসম্ভব সুন্দর 😍 ছবিতে যেমন ছিল তার থেকেও হাজার গুন সামনাসামনি সুন্দর। আলহামদুলিল্লাহ আমি খুবই খুবই খুশি। আমি আমার মনের মত বোরকা পেয়েছি। আপনাদের জন্য রইল অনেক অনেক শুভকামনা। জাযাকাল্লাহ খাইরান 🤲',
     images: [
       'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop',
       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop',
@@ -116,7 +116,7 @@ const Reviews = () => {
                 key={testimonial.id}
                 className={`cursor-pointer transition-all hover:shadow-md rounded-md ${
                   selectedTestimonial.id === testimonial.id
-                    ? 'border-primary bg-gray-100'
+                    ? 'border-primary bg-gray-100 shadow-md'
                     : ''
                 }`}
                 onClick={() => setSelectedTestimonial(testimonial)}
