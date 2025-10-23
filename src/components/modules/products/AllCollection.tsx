@@ -56,9 +56,9 @@ const AllCollection = () => {
       <h3 className='text-3xl font-bold mb-8 text-center'>All Collections</h3>
 
       <Tabs defaultValue='All' className='space-y-6'>
-        <TabsList className='grid w-full grid-cols-4 md:grid-cols-8 gap-2'>
+        <TabsList className='grid w-4xl mx-auto grid-cols-4 md:grid-cols-8 gap-2 bg-transparent'>
           {categories.map((category) => (
-            <TabsTrigger key={category} value={category}>
+            <TabsTrigger key={category} value={category} className='rounded-full py-2'>
               {category}
             </TabsTrigger>
           ))}

@@ -13,7 +13,7 @@ const Gallery = () => {
   ];
 
   return (
-    <div className='container mx-auto'>
+    <div className='container mx-auto mt-20'>
       <h2 className='text-3xl font-bold mb-6 text-center'>Gallery</h2>
       <div className='grid grid-cols-12'>
         {images.map((img, idx) => (
