@@ -10,7 +10,14 @@ export const Logo = ({
 }) => {
   return (
     <Link href='/'>
-      <Image src='/logo.png' alt='logo' height={height} width={width} />
+      <Image
+        src='/logo.png'
+        alt='logo'
+        height={height}
+        width={width}
+        className='object-contain'
+        priority
+      />
     </Link>
   );
 };

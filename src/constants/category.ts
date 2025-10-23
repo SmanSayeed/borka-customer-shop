@@ -8,3 +8,14 @@ export const categoryLinks = [
   { name: 'Kurti', path: '/category/kurti' },
   { name: 'Kaftan', path: '/category/kaftan' },
 ];
+
+export type IProduct = {
+  name: string;
+  price: number ;
+  color: string[];
+  size: string[];
+  quantity: number;
+  description: string;
+  specification: string[];
+  review: string;
+}
