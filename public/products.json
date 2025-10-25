@@ -1,6 +1,7 @@
 {
   "products": [
     {
+      "id": 1,
       "name": "Elegant Black Abaya",
       "price": 3500,
       "discount": 10,
@@ -26,6 +27,7 @@
       "category": "Abaya"
     },
     {
+      "id": 2,
       "name": "Floral Kimono Style Abaya",
       "price": 4200,
       "discount": 15,
@@ -51,6 +53,7 @@
       "category": "Kimono"
     },
     {
+      "id": 3,
       "name": "Salah Khimar Set",
       "price": 2800,
       "discount": 5,
@@ -75,6 +78,7 @@
       "category": "Salah Khimar"
     },
     {
+      "id": 4,
       "name": "Classic Hijab Collection",
       "price": 950,
       "discount": 0,
@@ -100,6 +104,7 @@
       "category": "Hijab"
     },
     {
+      "id": 5,
       "name": "Luxury Kaftan Gown",
       "price": 5200,
       "discount": 20,
@@ -125,6 +130,7 @@
       "category": "Gown"
     },
     {
+      "id": 6,
       "name": "Embroidered Skirt Set",
       "price": 3100,
       "discount": 12,
@@ -149,6 +155,7 @@
       "category": "Skirt Set"
     },
     {
+      "id": 7,
       "name": "Minimalist Linen Kurti",
       "price": 1900,
       "discount": 0,
@@ -173,6 +180,7 @@
       "category": "Kurti"
     },
     {
+      "id": 8,
       "name": "Velvet Party Gown",
       "price": 5600,
       "discount": 10,

@@ -1,3 +1,4 @@
+import HomeBanner from '@/components/modules/Home/Banner'
 import Features from '@/components/modules/Home/Features'
 import Gallery from '@/components/modules/Home/Gallery'
 import Reviews from '@/components/modules/Home/Reviews'
@@ -8,6 +9,7 @@ import NewArrivals from '@/components/modules/products/NewArrivals'
 const RootLayout = () => {
   return (
     <div>
+      <HomeBanner />
       <NewArrivals />
       <FestiveSpecial />
       <AllCollection />

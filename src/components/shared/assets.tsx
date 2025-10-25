@@ -9,15 +9,16 @@ export const Logo = ({
   width?: number;
 }) => {
   return (
-    <Link href='/'>
-      <Image
-        src='/logo.png'
-        alt='logo'
-        height={height}
-        width={width}
-        className='object-contain'
-        priority
-      />
-    </Link>
+    <div>
+        <Image
+          src='/logo.png'
+          alt='logo'
+          height={height}
+          width={width}
+          style={{ height: 'auto', width: 'auto' }}
+          className='object-contain'
+          priority
+        />
+    </div>
   );
 };

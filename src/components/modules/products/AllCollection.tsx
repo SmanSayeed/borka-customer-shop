@@ -82,7 +82,7 @@ const AllCollection = () => {
                         <button className='bg-white p-2 rounded-full hover:bg-gray-200 transform hover:scale-110 transition-transform duration-300'>
                           <Heart className='text-red-500' />
                         </button>
-                        <Link href={`/product-details/${index}`}>
+                        <Link href={`/category/${index}`}>
                           <button className='bg-white p-2 rounded-full hover:bg-gray-200 transform hover:scale-110 transition-transform duration-300'>
                             <Eye className='text-gray-800' />
                           </button>
