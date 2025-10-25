@@ -19,14 +19,17 @@ const Gallery = () => {
         {images.map((img, idx) => (
           <div
             key={idx}
-            className='col-span-4 row-span-1 h-100 relative overflow-hidden'
+            className='col-span-4 row-span-1 h-120 relative overflow-hidden group'
           >
             <Image
               src={img}
               alt={`Gallery-${idx}`}
               fill
-              className='object-cover transition-transform duration-700 hover:scale-115'
+              className='object-cover transition-transform duration-700 ease-in-out group-hover:scale-115'
             />
+            <div className='absolute inset-0 flex items-center justify-center'>
+              <div className='w-120 h-112 border-4 border-white/24 hover:border-none'></div>
+            </div>
           </div>
         ))}
       </div>
@@ -35,3 +38,4 @@ const Gallery = () => {
 };
 
 export default Gallery;
+
