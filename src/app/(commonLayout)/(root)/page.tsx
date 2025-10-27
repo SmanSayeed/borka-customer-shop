@@ -15,7 +15,6 @@ const RootLayout = () => {
       <AllCollection />
       <Reviews />
       <Gallery />
-      <Features />
     </div>
   )
 }
