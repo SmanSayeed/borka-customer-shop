@@ -19,7 +19,7 @@ const Footer = () => {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           {/* Logo & About section*/}
           <div className='space-y-6 '>
-            <Logo height={150} width={150} />
+            <Logo height={120} width={120} />
             <p className='text-sm text-gray-300 leading-relaxed'>
               Faith Journey is your go-to online destination for elegant and
               modest women's wear. We specialize in premium-quality borqas and
@@ -30,9 +30,9 @@ const Footer = () => {
 
           {/* Categories */}
           <div className='space-y-4 lg:ml-20'>
-            <h3 className='font-bold text-sm uppercase tracking-wide'>
+            <h4 className='font-bold text-sm uppercase tracking-wide'>
               Categories
-            </h3>
+            </h4>
             <ul className='space-y-2'>
               {categoryLinks.slice(0, 6).map(({ name, path }) => (
                 <li key={path}>
@@ -49,9 +49,9 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className='space-y-4'>
-            <h3 className='font-bold text-sm uppercase tracking-wide'>
+            <h4 className='font-bold text-sm uppercase tracking-wide'>
               Quick Links
-            </h3>
+            </h4>
             <ul className='space-y-2'>
               {quickLinks.map(({ name, path }) => (
                 <li key={path}>
@@ -68,9 +68,9 @@ const Footer = () => {
 
           {/* Contact */}
           <div className='space-y-4'>
-            <h3 className='font-bold text-sm uppercase tracking-wide'>
+            <h4 className='font-bold text-sm uppercase tracking-wide'>
               Contact
-            </h3>
+            </h4>
             <div className='space-y-3'>
               <div className='flex items-start gap-2'>
                 <Mail className='w-4 h-4 mt-0.5 shrink-0' />

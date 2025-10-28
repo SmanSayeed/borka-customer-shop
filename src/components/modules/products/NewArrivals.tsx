@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { Eye, Heart, ShoppingBag } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
 const NewArrivals = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -29,9 +29,24 @@ const NewArrivals = () => {
   const newProducts = products.filter((p) => p.status === 'new');
   const firstThree = newProducts.slice(0, 4);
 
+  // Framer Motion variants for cards
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.15,
+        duration: 0.6,
+        ease: 'easeOut',
+      },
+    }),
+  };
+
   return (
     <div className='container mx-auto mt-24'>
       <div className='grid grid-cols-1 lg:grid-cols-12 items-start gap-5'>
+        {/* Left section */}
         <div className='col-span-9 space-y-6'>
           <h2 className='text-4xl font-semibold mb-4'>New Arrivals</h2>
           <p className='text-foreground/80'>
@@ -55,7 +70,15 @@ const NewArrivals = () => {
             >
               {firstThree.map((product, index) => (
                 <SwiperSlide key={index}>
-                  <div className='relative border border-primary/20 overflow-hidden hover:bg-gray-50 hover:rounded-2xl group transition-all duration-700'>
+                  <motion.div
+                    className='relative border border-primary/20 overflow-hidden hover:bg-gray-50 hover:rounded-2xl group transition-all duration-700'
+                    initial='hidden'
+                    whileInView='visible'
+                    viewport={{ once: true, amount: 0.2 }}
+                    custom={index}
+                    variants={cardVariants}
+                    whileHover={{ scale: 1. }}
+                  >
                     <div className='relative w-full h-80 overflow-hidden'>
                       {/* Badges */}
                       {product.status && (
@@ -104,7 +127,7 @@ const NewArrivals = () => {
                         ৳{Number(product.price ?? 0).toLocaleString()}
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -114,23 +137,27 @@ const NewArrivals = () => {
           </button>
         </div>
 
+        {/* Right image */}
         <div className='col-span-3 hidden lg:block'>
-          <div className='relative w-full h-full min-h-[850px] overflow-hidden group'>
-            {/* Main Image with hover scale */}
+          <motion.div
+            className='relative w-full h-full min-h-[850px] overflow-hidden group'
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+          >
             <Image
               src='/images/arrival.png'
               alt='new arrival'
               width={500}
               height={900}
-              className='object-cover transition-transform duration-800 ease-in-out group-hover:scale-115'
+              className='object-cover transition-transform duration-800 ease-in-out group-hover:scale-110'
               priority
             />
 
-            {/* Border overlay perfectly centered with hover effect */}
             <div className='absolute inset-0 flex items-center justify-center pointer-events-none'>
               <div className='w-84 h-146 -mt-56 border-6 border-primary/20 transition-all duration-500 group-hover:scale-110 group-hover:opacity-0'></div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
