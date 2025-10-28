@@ -15,7 +15,7 @@ const HomeBanner = () => {
       {/* Image area: use object-contain so the actual image is fully visible (no cropping) */}
       <div className='w-full'>
         <Image
-          src='/images/banner.png'
+          src='/banner.png'
           alt='home banner'
           width={1906}
           height={675}
