@@ -1,6 +1,7 @@
-import Features from '@/components/modules/Home/Features'
+import HomeBanner from '@/components/modules/Home/Banner'
 import Gallery from '@/components/modules/Home/Gallery'
 import Reviews from '@/components/modules/Home/Reviews'
+import Services from '@/components/modules/Home/Services'
 import AllCollection from '@/components/modules/products/AllCollection'
 import FestiveSpecial from '@/components/modules/products/FestiveSpecial'
 import NewArrivals from '@/components/modules/products/NewArrivals'
@@ -8,12 +9,13 @@ import NewArrivals from '@/components/modules/products/NewArrivals'
 const RootLayout = () => {
   return (
     <div>
+      <HomeBanner />
+      <Services />
       <NewArrivals />
       <FestiveSpecial />
       <AllCollection />
       <Reviews />
       <Gallery />
-      <Features />
     </div>
   )
 }

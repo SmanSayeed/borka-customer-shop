@@ -1,21 +1,10 @@
 export const categoryLinks = [
-  { name: 'Abaya', path: '/category/abaya' },
-  { name: 'Kimono', path: '/category/kimono' },
-  { name: 'Salah Khimar', path: '/category/salah-khimar' },
-  { name: 'Hijab', path: '/category/hijab' },
-  { name: 'Skirt Set', path: '/category/skirt-set' },
-  { name: 'Gown', path: '/category/gown' },
-  { name: 'Kurti', path: '/category/kurti' },
-  { name: 'Kaftan', path: '/category/kaftan' },
+  { name: 'Abaya', path: '/category/abaya', count: 12 },
+  { name: 'Kimono', path: '/category/kimono', count: 9 },
+  { name: 'Salah Khimar', path: '/category/salah-khimar', count: 6 },
+  { name: 'Hijab', path: '/category/hijab', count: 15 },
+  { name: 'Skirt Set', path: '/category/skirt-set', count: 7 },
+  { name: 'Gown', path: '/category/gown', count: 10 },
+  { name: 'Kurti', path: '/category/kurti', count: 8 },
+  { name: 'Kaftan', path: '/category/kaftan', count: 11 },
 ];
-
-export type IProduct = {
-  name: string;
-  price: number ;
-  color: string[];
-  size: string[];
-  quantity: number;
-  description: string;
-  specification: string[];
-  review: string;
-}

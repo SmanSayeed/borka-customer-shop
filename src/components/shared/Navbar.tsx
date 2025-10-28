@@ -8,9 +8,9 @@ import { Logo } from './assets';
 const Navbar = () => {
   return (
     <div className='bg-secondary'>
-      <nav className='container mx-auto flex items-center justify-between py-4 text-white'>
+      <nav className='container mx-auto flex items-center justify-between py-2 text-white'>
         <Link href='/'>
-          <Logo />
+          <Logo height={80} width={80}/>
         </Link>
         <div>
           <ul className='flex items-center justify-around gap-6'>

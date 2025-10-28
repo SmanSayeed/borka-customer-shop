@@ -5,19 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ShoppingBag, Heart, Eye } from 'lucide-react';
-
-interface Product {
-  name: string;
-  price: number;
-  discount: number;
-  status: string;
-  color: string[];
-  size: string[];
-  quantity: number;
-  description: string;
-  image: string[];
-  category: string;
-}
+import { IProduct } from '@/types';
 
 const categories = [
   'All', // Added "All" tab
@@ -31,7 +19,7 @@ const categories = [
 ];
 
 const AllCollection = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -52,13 +40,19 @@ const AllCollection = () => {
   };
 
   return (
-    <div className='container mx-auto mt-20'>
-      <h3 className='text-3xl font-bold mb-8 text-center'>All Collections</h3>
+    <div className='container mx-auto mt-24'>
+      <h2 className='text-4xl font-semibold mb-10 text-center'>
+        All Collections
+      </h2>
 
       <Tabs defaultValue='All' className='space-y-6'>
         <TabsList className='grid w-4xl mx-auto grid-cols-4 md:grid-cols-8 gap-2 bg-transparent'>
           {categories.map((category) => (
-            <TabsTrigger key={category} value={category} className='rounded-full py-2'>
+            <TabsTrigger
+              key={category}
+              value={category}
+              className='rounded-full py-2'
+            >
               {category}
             </TabsTrigger>
           ))}
@@ -94,7 +88,7 @@ const AllCollection = () => {
                         <button className='bg-white p-2 rounded-full hover:bg-gray-200 transform hover:scale-110 transition-transform duration-300'>
                           <Heart className='text-red-500' />
                         </button>
-                        <Link href={`/product-details/${index}`}>
+                        <Link href={`/category/${index}`}>
                           <button className='bg-white p-2 rounded-full hover:bg-gray-200 transform hover:scale-110 transition-transform duration-300'>
                             <Eye className='text-gray-800' />
                           </button>
@@ -109,7 +103,7 @@ const AllCollection = () => {
                         {product.color.join(', ')}
                       </p>
                       <p className='font-medium text-primary mt-2'>
-                         ৳{product.price.toLocaleString()}
+                        ৳{product.price.toLocaleString()}
                       </p>
                     </div>
                   </div>

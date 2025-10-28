@@ -40,9 +40,9 @@ const Features = () => {
                     />
                   </div>
                   <div>
-                    <h3 className='text-lg font-semibold text-white mb-1'>
+                    <h4 className='text-lg font-semibold text-white mb-1'>
                       {feature.title}
-                    </h3>
+                    </h4>
                     <p className='text-sm text-white/70'>
                       {feature.description}
                     </p>

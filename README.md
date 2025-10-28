@@ -34,3 +34,33 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+
+
+
+Home Page
+    - Navbar
+    - Banner
+    - New Arrivals
+    - Festival Special / Trending
+    - All Collection (Tab Filtering for home page)
+    - Customer Review
+    - Gallery
+    - Service Feature
+    - Footer
+
+Category Page
+    - Filter category page with all products
+
+Product Details page
+
+Add To cart Page
+
+Checkout page
+
+Success Page (Order summary)
+
+Not found page
+
+Store Location page (Address)
