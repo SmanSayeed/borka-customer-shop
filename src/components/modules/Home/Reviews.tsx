@@ -105,7 +105,7 @@ const Reviews = () => {
   };
 
   return (
-    <div className='container mx-auto p-12 bg-gray-50 rounded-2xl mt-20'>
+    <div className='container mx-auto bg-gray-50 rounded-2xl mt-24'>
       <h2 className='text-4xl font-semibold mb-10 text-center'>
         Top Customer Reviews
       </h2>

@@ -13,7 +13,7 @@ const Gallery = () => {
   ];
 
   return (
-    <div className='container mx-auto mt-20'>
+    <div className='container mx-auto mt-24'>
       <h2 className='text-4xl font-semibold mb-10 text-center'>
         Top Customer Reviews
       </h2>
