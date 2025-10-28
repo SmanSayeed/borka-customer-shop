@@ -29,9 +29,9 @@ const HomeBanner = () => {
         {/* Left-aligned content — pointer-events-auto so buttons are clickable */}
         <div className='relative max-w-4xl z-10 px-6 md:py-22 pointer-events-auto'>
           <div className='md:ml-40 my-auto flex flex-col items-start text-foreground space-y-4'>
-            <h4 className='md:mb-6 bg-white/10 backdrop-blur-sm md:text-3xl text-lg font-medium py-1'>
+            <h3 className='md:mb-6 bg-white/10 backdrop-blur-sm md:text-3xl text-lg font-medium py-1'>
               Faith in Every Fold
-            </h4>
+            </h3>
 
             <motion.h1
               initial={{ opacity: 0, y: 18 }}

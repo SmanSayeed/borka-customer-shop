@@ -64,9 +64,9 @@ const Services = () => {
                 />
               </div>
               <div className='flex flex-col'>
-                <h3 className='font-semibold text-foreground mb-1 transition-colors duration-300 group-hover:text-primary'>
+                <h4 className='font-semibold text-foreground mb-1 transition-colors duration-300 group-hover:text-primary'>
                   {service.title}
-                </h3>
+                </h4>
                 <p className='text-sm text-muted-foreground'>
                   {service.description}
                 </p>

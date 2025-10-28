@@ -97,10 +97,10 @@ button {
 }
 
 
-h1, h2, h3{
+h1, h2, h4, h5, h6{
   font-family: var(--font-marcellus);
 }
 
-h4 {
+h3 {
   font-family: var(--font-marck-script), sans-serif;
 }
