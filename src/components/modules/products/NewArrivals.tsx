@@ -132,7 +132,7 @@ const NewArrivals = () => {
               ))}
             </Swiper>
           )}
-          <button className='underline font-semibold text-foreground hover:underline-offset-3 hover:text-primary transition-colors mt-8'>
+          <button className='underline font-semibold text-foreground hover:underline-offset-3 hover:text-primary transition-colors'>
             Discover New Arrival
           </button>
         </div>
@@ -140,7 +140,7 @@ const NewArrivals = () => {
         {/* Right image */}
         <div className='col-span-3 hidden lg:block'>
           <motion.div
-            className='relative w-full h-full min-h-[850px] overflow-hidden group'
+            className='relative w-full h-full overflow-hidden group'
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -155,7 +155,7 @@ const NewArrivals = () => {
             />
 
             <div className='absolute inset-0 flex items-center justify-center pointer-events-none'>
-              <div className='w-84 h-146 -mt-56 border-6 border-primary/20 transition-all duration-500 group-hover:scale-110 group-hover:opacity-0'></div>
+              <div className='w-84 h-146 border-6 border-primary/20 transition-all duration-500 group-hover:scale-110 group-hover:opacity-0'></div>
             </div>
           </motion.div>
         </div>

@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
 import { categoryLinks } from '@/constants/category';
-import { Search, ShoppingBag, User } from 'lucide-react'
+import { Search, ShoppingBag, User } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from './assets';
 
@@ -10,7 +10,7 @@ const Navbar = () => {
     <div className='bg-secondary'>
       <nav className='container mx-auto flex items-center justify-between py-2 text-white'>
         <Link href='/'>
-          <Logo height={80} width={80}/>
+          <Logo height={80} width={80} />
         </Link>
         <div>
           <ul className='flex items-center justify-around gap-6'>
@@ -53,6 +53,6 @@ const Navbar = () => {
       </nav>
     </div>
   );
-}
+};
 
-export default Navbar
+export default Navbar;

@@ -203,6 +203,31 @@
         "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
       ],
       "category": "Gown"
+    },
+    {
+      "id": 6,
+      "name": "Embroidered Skirt Set",
+      "price": 3100,
+      "discount": 12,
+      "status": "trending",
+      "color": ["Black", "Ivory"],
+      "size": ["S", "M", "L"],
+      "quantity": 20,
+      "description": "Stylish two-piece embroidered skirt set that blends elegance with modesty. Perfect for festive gatherings.",
+      "specification": [
+        "Material: Cotton Silk",
+        "Set Includes: Top & Skirt",
+        "Care Instructions: Hand Wash Recommended",
+        "Fit Type: Regular Fit"
+      ],
+      "review": "Beautiful embroidery and premium quality. The fit is perfect!",
+      "image": [
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171480007779230_c9ygw5.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg",
+        "https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/1730173954017210_lkkzx0.jpg"
+      ],
+      "category": "Skirt Set"
     }
   ]
 }
