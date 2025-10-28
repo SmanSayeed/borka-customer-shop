@@ -29,9 +29,9 @@ const FestiveSpecial = () => {
 
   return (
     <div className='container mx-auto mt-20'>
-      <h3 className='text-3xl font-bold mb-8 text-center text-primary'>
+      <h2 className='text-4xl font-semibold mb-10 text-center'>
         🎊 Festive Specials 🎊
-      </h3>
+      </h2>
 
       {festiveProducts.length === 0 ? (
         <p className='text-gray-500 text-center'>

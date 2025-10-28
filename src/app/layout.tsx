@@ -1,26 +1,30 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono, Playfair_Display } from 'next/font/google'; // Playfair Display import
+import { Marcellus, DM_Sans, Marck_Script } from 'next/font/google';
 import './globals.css';
 
-// const geistSans = Geist({
-//   variable: '--font-geist-sans',
-//   subsets: ['latin'],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: '--font-geist-mono',
-//   subsets: ['latin'],
-// });
-
-const playfair = Playfair_Display({
-  variable: '--font-playfair',
+const marcellus = Marcellus({
+  variable: '--font-marcellus',
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'], 
+  weight: '400',
+  display: 'swap',
+});
+
+const dmSans = DM_Sans({
+  variable: '--font-dm-sans',
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+});
+
+const marckScript = Marck_Script({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-marck-script',
 });
 
 export const metadata: Metadata = {
   title: 'Faith Journey',
-  description: 'A Abaya E-commerce Online Shop',
+  description: 'An Abaya E-commerce Online Shop',
 };
 
 export default function RootLayout({
@@ -31,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${playfair.variable} antialiased`}
+        className={` ${dmSans.variable} ${marcellus.variable} font-dmSans bg-background text-foreground antialiased`}
       >
         {children}
       </body>

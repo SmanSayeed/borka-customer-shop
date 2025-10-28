@@ -1,5 +1,4 @@
 import HomeBanner from '@/components/modules/Home/Banner'
-import Features from '@/components/modules/Home/Features'
 import Gallery from '@/components/modules/Home/Gallery'
 import Reviews from '@/components/modules/Home/Reviews'
 import AllCollection from '@/components/modules/products/AllCollection'

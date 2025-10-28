@@ -106,7 +106,9 @@ const Reviews = () => {
 
   return (
     <div className='container mx-auto p-12 bg-gray-50 rounded-2xl mt-20'>
-      <h1 className='mb-12 text-4xl font-bold text-center'>Testimonials</h1>
+      <h2 className='text-4xl font-semibold mb-10 text-center'>
+        Top Customer Reviews
+      </h2>
 
       <div className='max-w-5xl mx-auto'>
         <div className='grid gap-8 lg:grid-cols-[300px_1fr]'>

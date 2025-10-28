@@ -77,10 +77,9 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  /* dark mode colors ... একইভাবে থাকবে */
+  --font-marcellus: 'Marcellus', serif;
+  --font-dm-sans: 'DM Sans', sans-serif;
+  --font-marck-script: 'Marck Script', cursive;
 }
 
 @layer base {
@@ -89,10 +88,19 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-playfair), var(--font-sans), sans-serif;
+    font-family: var(--font-dm-sans);
   }
 }
 
 button {
   cursor: pointer;
+}
+
+
+h1, h2, h3{
+  font-family: var(--font-marcellus);
+}
+
+h4 {
+  font-family: var(--font-marck-script), sans-serif;
 }

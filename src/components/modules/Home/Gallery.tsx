@@ -14,7 +14,9 @@ const Gallery = () => {
 
   return (
     <div className='container mx-auto mt-20'>
-      <h2 className='text-3xl font-bold mb-6 text-center'>Gallery</h2>
+      <h2 className='text-4xl font-semibold mb-10 text-center'>
+        Top Customer Reviews
+      </h2>
       <div className='grid grid-cols-12'>
         {images.map((img, idx) => (
           <div
@@ -38,4 +40,3 @@ const Gallery = () => {
 };
 
 export default Gallery;
-

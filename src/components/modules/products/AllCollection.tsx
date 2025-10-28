@@ -41,12 +41,18 @@ const AllCollection = () => {
 
   return (
     <div className='container mx-auto mt-20'>
-      <h3 className='text-3xl font-bold mb-8 text-center'>All Collections</h3>
+      <h2 className='text-4xl font-semibold mb-10 text-center'>
+        All Collections
+      </h2>
 
       <Tabs defaultValue='All' className='space-y-6'>
         <TabsList className='grid w-4xl mx-auto grid-cols-4 md:grid-cols-8 gap-2 bg-transparent'>
           {categories.map((category) => (
-            <TabsTrigger key={category} value={category} className='rounded-full py-2'>
+            <TabsTrigger
+              key={category}
+              value={category}
+              className='rounded-full py-2'
+            >
               {category}
             </TabsTrigger>
           ))}
@@ -97,7 +103,7 @@ const AllCollection = () => {
                         {product.color.join(', ')}
                       </p>
                       <p className='font-medium text-primary mt-2'>
-                         ৳{product.price.toLocaleString()}
+                        ৳{product.price.toLocaleString()}
                       </p>
                     </div>
                   </div>
