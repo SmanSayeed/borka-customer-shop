@@ -35,7 +35,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
 const [zoomed, setZoomed] = useState(false);
 
   return (
-    <div className=''>
+    <div className='px-6 lg:px-0'>
       {/* Breadcrumb */}
       <BreadcrumbBanner />
       <div className='container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6'>

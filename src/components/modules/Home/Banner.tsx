@@ -24,12 +24,10 @@ const HomeBanner = () => {
         />
       </div>
 
-      {/* Overlay & content container positioned on top-left of the image */}
       <div className='absolute inset-0 pointer-events-none'>
-        {/* Left-aligned content — pointer-events-auto so buttons are clickable */}
-        <div className='relative max-w-4xl z-10 px-6 md:py-22 pointer-events-auto'>
+        <div className='relative md:max-w-4xl z-10 px-6 md:py-22 pointer-events-auto'>
           <div className='md:ml-40 my-auto flex flex-col items-start text-foreground space-y-4'>
-            <h3 className='md:mb-6 bg-white/10 backdrop-blur-sm md:text-3xl text-lg font-medium py-1'>
+            <h3 className='md:mb-6 bg-white/10 backdrop-blur-sm md:text-3xl text-lg font-medium md:py-1'>
               Faith in Every Fold
             </h3>
 
@@ -37,7 +35,7 @@ const HomeBanner = () => {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className='text-lg md:text-4xl lg:text-6xl font-bold leading-tight md:mb-6'
+              className='md:text-4xl lg:text-6xl font-bold leading-tight md:mb-6'
             >
               Embrace the Beauty of Modesty Begin Your Faith Journey in
               Elegance.

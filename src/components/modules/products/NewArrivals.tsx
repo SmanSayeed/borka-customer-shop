@@ -44,7 +44,7 @@ const NewArrivals = () => {
   };
 
   return (
-    <div className='container mx-auto mt-24'>
+    <div className='container mx-auto mt-24 px-6 lg:px-0'>
       <div className='grid grid-cols-1 lg:grid-cols-12 items-start gap-5'>
         {/* Left section */}
         <div className='col-span-9 space-y-6'>
@@ -77,7 +77,7 @@ const NewArrivals = () => {
                     viewport={{ once: true, amount: 0.2 }}
                     custom={index}
                     variants={cardVariants}
-                    whileHover={{ scale: 1. }}
+                    whileHover={{ scale: 1 }}
                   >
                     <div className='relative w-full h-80 overflow-hidden'>
                       {/* Badges */}

@@ -40,13 +40,13 @@ const AllCollection = () => {
   };
 
   return (
-    <div className='container mx-auto mt-24'>
+    <div className='container mx-auto mt-24 px-6 lg:px-0'>
       <h2 className='text-4xl font-semibold mb-10 text-center'>
         All Collections
       </h2>
 
       <Tabs defaultValue='All' className='space-y-6'>
-        <TabsList className='grid w-4xl mx-auto grid-cols-4 md:grid-cols-8 gap-2 bg-transparent'>
+        <TabsList className='grid md:w-4xl mx-auto grid-cols-4 md:grid-cols-8 gap-2 bg-transparent mb-10'>
           {categories.map((category) => (
             <TabsTrigger
               key={category}
@@ -65,7 +65,7 @@ const AllCollection = () => {
                 No products available in {category}.
               </p>
             ) : (
-              <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6'>
+              <div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
                 {getFilteredProducts(category).map((product, index) => (
                   <div
                     key={index}

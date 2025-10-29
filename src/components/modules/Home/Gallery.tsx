@@ -29,7 +29,7 @@ const images = [
 
 export default function ShopFacebook() {
   return (
-    <div className='max-w-7xl mx-auto mt-24 rounded-2xl'>
+    <div className='max-w-7xl mx-auto mt-24 rounded-2xl px-6 lg:px-0'>
       {/* Section Header */}
       <div className='text-center mb-12'>
         <h2 className='mt-4 text-3xl md:text-4xl font-bold text-heading'>

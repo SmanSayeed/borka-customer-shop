@@ -13,7 +13,7 @@ export function Testimonial() {
       <h2 className='text-4xl font-semibold mb-10 text-center'>
         Top Customer Reviews
       </h2>
-      <div className='relative overflow-hidden w-full h-full pb-20'>
+      <div className='relative overflow-hidden w-full h-full pb-20 px-6 lg:px-0'>
         <Carousel slides={slideData} />
       </div>
     </div>

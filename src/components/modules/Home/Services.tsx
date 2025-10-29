@@ -42,12 +42,12 @@ const Services = () => {
 
   return (
     <div className='container mx-auto mt-10'>
-      <div className='py-10 px-4 border-b border-gray-100'>
+      <div className='py-10 px-6 border-b border-gray-100'>
         <motion.div
           initial='hidden'
           whileInView='visible'
           viewport={{ once: true, amount: 0.2 }}
-          className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8'
+          className='grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-8'
         >
           {services.map((service, index) => (
             <motion.div

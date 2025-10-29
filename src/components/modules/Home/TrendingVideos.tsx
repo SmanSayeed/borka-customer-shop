@@ -44,7 +44,7 @@ const TrendingVideo = () => {
   ];
 
   return (
-    <section className='w-full mt-24'>
+    <section className='w-full mt-24 px-6 lg:px-0'>
       <div className='container mx-auto'>
         {/* Header */}
         <div className='text-center mb-12'>
@@ -61,7 +61,6 @@ const TrendingVideo = () => {
               key={video.id}
               className='relative overflow-hidden group border border-primary/20 hover:rounded-2xl duration-500'
             >
-
               {/* Video */}
               <div className='relative aspect-[9/16] overflow-hidden'>
                 <iframe
