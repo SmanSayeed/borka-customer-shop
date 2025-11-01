@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Marcellus, DM_Sans, Marck_Script } from 'next/font/google';
 import './globals.css';
+import QueryProvider from '@/providers/Providers';
 
 const marcellus = Marcellus({
   variable: '--font-marcellus',
@@ -37,7 +38,7 @@ export default function RootLayout({
       <body
         className={` ${dmSans.variable} ${marcellus.variable} ${marckScript.variable} font-dmSans bg-background text-foreground antialiased`}
       >
-        {children}
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );

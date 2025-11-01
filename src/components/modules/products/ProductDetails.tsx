@@ -17,7 +17,7 @@ import {
   ZoomIn,
 } from 'lucide-react';
 import Link from 'next/link';
-import { IProduct } from '@/types';
+import { IProduct } from '@/types/product';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import {
   Tooltip,
@@ -32,7 +32,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [mainImage, setMainImage] = useState(product.image[0]);
-const [zoomed, setZoomed] = useState(false);
+  const [zoomed, setZoomed] = useState(false);
 
   return (
     <div className='px-6 lg:px-0'>

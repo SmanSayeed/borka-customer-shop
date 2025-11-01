@@ -1,111 +1,70 @@
-import { ShoppingCart, Heart, Shuffle, Eye, Star } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { IProduct } from '@/types/product';
+import clsx from 'clsx';
+import { motion } from 'framer-motion';
+import { Eye, Heart, ShoppingBag } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
-interface Product {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  rating: number;
-  image: string;
-  outOfStock?: boolean;
-}
-
-interface ProductCardProps {
-  product: Product;
-  viewMode: 'grid' | 'list';
-}
-
-const ProductCard = ({ product, viewMode }: ProductCardProps) => {
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`h-3 w-3 ${
-          i < Math.floor(rating)
-            ? 'fill-primary text-primary'
-            : 'text-muted-foreground'
-        }`}
-      />
-    ));
-  };
-
+const ProductCard = ({product}: {product: IProduct}) => {  
   return (
-    <Card className='group relative overflow-hidden transition-shadow hover:shadow-lg'>
-      <CardContent className='p-0'>
-        <div className={viewMode === 'list' ? 'flex gap-4' : ''}>
-          {/* Image Container */}
-          <div
-            className={`relative overflow-hidden bg-muted ${
-              viewMode === 'list' ? 'w-48' : ''
-            }`}
-          >
-            <img
-              src={product.image}
-              alt={product.name}
-              className='h-64 w-full object-cover transition-transform group-hover:scale-105'
-            />
+    <motion.div
+      className='relative border border-primary/20 overflow-hidden hover:bg-gray-50 hover:rounded-2xl group transition-all duration-700'
+      initial='hidden'
+      whileInView='visible'
+      viewport={{ once: true, amount: 0.2 }}
+      whileHover={{ scale: 1 }}
+    >
+      <div
+        className={clsx(
+          'relative w-full overflow-hidden h-100'
+        )}
+      >
+        {/* Badges */}
+        {product.product_code && (
+          <span className='absolute top-3 left-3 z-10 bg-green-600 text-white text-[11px] px-2 py-1'>
+            {product.product_code.toUpperCase()}
+          </span>
+        )}
+        {product.discount_label && (
+          <span className='absolute top-3 right-3 z-10 bg-primary text-white text-xs font-semibold px-2 py-1'>
+            {product.discount_label}
+          </span>
+        )}
 
-            {product.outOfStock && (
-              <Badge className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-foreground text-background'>
-                OUT OF STOCK
-              </Badge>
-            )}
+        <Image
+          src={product.thumbnail_url || '/placeholder.png'}
+          alt={product.product_label || 'Product Image'}
+          fill
+          className='object-cover transition-transform duration-500 ease-in-out group-hover:scale-110'
+        />
 
-            {/* Action Buttons - Show on hover */}
-            <div className='absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 opacity-0 transition-opacity group-hover:opacity-100'>
-              <Button
-                size='icon'
-                variant='secondary'
-                className='h-9 w-9 rounded-full'
-              >
-                <ShoppingCart className='h-4 w-4' />
-              </Button>
-              <Button
-                size='icon'
-                variant='secondary'
-                className='h-9 w-9 rounded-full'
-              >
-                <Heart className='h-4 w-4' />
-              </Button>
-              <Button
-                size='icon'
-                variant='secondary'
-                className='h-9 w-9 rounded-full'
-              >
-                <Shuffle className='h-4 w-4' />
-              </Button>
-              <Button
-                size='icon'
-                variant='secondary'
-                className='h-9 w-9 rounded-full'
-              >
-                <Eye className='h-4 w-4' />
-              </Button>
-            </div>
-          </div>
-
-          {/* Product Info */}
-          <div className={`p-4 ${viewMode === 'list' ? 'flex-1' : ''}`}>
-            <div className='mb-2 flex items-center gap-1'>
-              {renderStars(product.rating)}
-            </div>
-
-            <p className='mb-1 text-xs text-muted-foreground'>
-              {product.category}
-            </p>
-            <h3 className='mb-2 font-semibold text-foreground'>
-              {product.name}
-            </h3>
-            <p className='text-lg font-bold text-primary'>
-              £{product.price.toFixed(2)}
-            </p>
-          </div>
+        <div className='absolute right-3 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10'>
+          <button className='bg-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-500'>
+            <ShoppingBag className='w-5 h-5' />
+          </button>
+          <button className='bg-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-500'>
+            <Heart className='w-5 h-5 ' />
+          </button>
+          <Link href={`/products/${product.product_label}`}>
+            <button className='bg-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-500'>
+              <Eye className='w-5 h-5' />
+            </button>
+          </Link>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      <div className='py-6 text-center flex flex-col items-center justify-center transition-all duration-300'>
+        <h4 className='font-semibold text-lg'>{product.product_label}</h4>
+        <p className='text-sm text-gray-500 mt-1'>
+          {Array.isArray(product.color_name)
+            ? product.color_name.join('-')
+            : product.product_category}
+        </p>
+        <p className='font-medium text-primary mt-2'>
+          ৳{Number(product.sale_price ?? 0).toLocaleString()}
+        </p>
+      </div>
+    </motion.div>
   );
 };
 

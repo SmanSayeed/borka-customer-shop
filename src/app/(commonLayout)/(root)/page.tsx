@@ -1,11 +1,11 @@
-import HomeBanner from '@/components/modules/Home/Banner'
-import Gallery from '@/components/modules/Home/Gallery'
-import Services from '@/components/modules/Home/Services'
-import { Testimonial } from '@/components/modules/Home/Testimonial'
-import TrendingVideo from '@/components/modules/Home/TrendingVideos'
-import AllCollection from '@/components/modules/products/AllCollection'
-import FestiveSpecial from '@/components/modules/products/FestiveSpecial'
-import NewArrivals from '@/components/modules/products/NewArrivals'
+import HomeBanner from '@/components/modules/Home/Banner';
+import Services from '@/components/modules/Home/Services';
+import ShopFacebook from '@/components/modules/Home/ShopFacebook';
+import { Testimonial } from '@/components/modules/Home/Testimonial';
+import TrendingVideo from '@/components/modules/Home/TrendingVideos';
+import AllCollection from '@/components/modules/products/AllCollection';
+import TrendingSpecial from '@/components/modules/products/TrendingSpecial';
+import NewArrivals from '@/components/modules/products/NewArrivals';
 
 const RootLayout = () => {
   return (
@@ -13,14 +13,13 @@ const RootLayout = () => {
       <HomeBanner />
       <Services />
       <NewArrivals />
-      <FestiveSpecial />
+      <TrendingSpecial />
       <TrendingVideo />
       <AllCollection />
-      {/* <Reviews /> */}
       <Testimonial />
-      <Gallery />
+      <ShopFacebook />
     </div>
-  )
-}
+  );
+};
 
-export default RootLayout
+export default RootLayout;

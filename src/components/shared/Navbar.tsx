@@ -1,31 +1,47 @@
 'use client';
 
-import { categoryLinks } from '@/constants/category';
-import { Search, ShoppingBag, User } from 'lucide-react';
+import { useState } from 'react';
+import { Search, ShoppingBag, User, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from './assets';
+import { ICategory } from '@/types/category';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Skeleton } from '../ui/skeleton';
+import useCategory from '@/hooks/useCategory';
 
 const Navbar = () => {
+const {categories, categoryFetchLoading} = useCategory();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <div className='bg-secondary'>
-      <nav className='container mx-auto flex items-center justify-between py-2 text-white'>
+    <header className='bg-secondary text-white relative'>
+      <nav className='container mx-auto flex items-center justify-between py-3 px-6 lg:px-0'>
         <Link href='/'>
           <Logo height={80} width={80} />
         </Link>
-        <div>
-          <ul className='flex items-center justify-around gap-6'>
-            {categoryLinks.map((link) => (
+
+        {categoryFetchLoading ? (
+          <>
+            {' '}
+            <Skeleton className='w-200 h-12 bg-white/10' />
+          </>
+        ) : (
+          <ul className='hidden lg:flex items-center gap-6'>
+            {categories.map(({ id, slug, name }: ICategory) => (
               <Link
-                key={link.path}
-                href={link.path}
+                key={id}
+                href={`/category/${slug}`}
                 className='hover:text-primary transition-colors'
               >
-                {link.name}
+                {name}
               </Link>
             ))}
           </ul>
-        </div>
-        <div className='flex items-center justify-around gap-6'>
+        )}
+
+        {/* Right Icons */}
+        <div className='flex items-center gap-4'>
           <button
             onClick={() => console.log('Search clicked')}
             className='p-2 rounded-full hover:bg-primary dark:hover:bg-gray-800 transition'
@@ -49,9 +65,42 @@ const Navbar = () => {
           >
             <User className='size-5' />
           </Link>
+
+          {/* Hamburger for Mobile */}
+          <button
+            className='lg:hidden p-2 rounded-full hover:bg-primary transition'
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label='Menu'
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </nav>
-    </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.ul
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className='lg:hidden bg-secondary overflow-hidden flex flex-col gap-2 px-6 py-8 text-sm'
+          >
+            {categories.map(({ id, slug, name }: ICategory) => (
+              <Link
+                key={id}
+                href={`/category/${slug}`}
+                className='py-2 hover:text-primary border-b border-white/10 transition-colors'
+                onClick={() => setMenuOpen(false)}
+              >
+                {name}
+              </Link>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </header>
   );
 };
 

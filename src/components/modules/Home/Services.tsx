@@ -41,7 +41,7 @@ const Services = () => {
   };
 
   return (
-    <div className='container mx-auto mt-10'>
+    <div className='container mx-auto mt-10 px-6 md:px-0 hidden lg:block'>
       <div className='py-10 px-6 border-b border-gray-100'>
         <motion.div
           initial='hidden'
