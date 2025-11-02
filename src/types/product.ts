@@ -1,5 +1,3 @@
-
-
 export interface IProduct {
   id: number;
   slug: string;

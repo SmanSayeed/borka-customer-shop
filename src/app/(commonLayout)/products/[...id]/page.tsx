@@ -32,9 +32,11 @@ const product = {
 const ProductDetailsPage = async ({
   params,
 }: {
-  params: Promise<{ productId: string }>;
+  params: Promise<{ id: string }>;
 }) => {
-  const { productId } = await params;
+
+  const { id } = await params;
+  console.log(id)
   return (
     <div>
       <ProductDetails product={product} />

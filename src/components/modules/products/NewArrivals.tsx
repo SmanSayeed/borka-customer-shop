@@ -9,12 +9,10 @@ import { motion } from 'framer-motion';
 import ProductCard from './ProductCard';
 import useProducts from '@/hooks/useProducts';
 import { IProduct } from '@/types/product';
+import Loader from '@/components/shared/loader';
 
 const NewArrivals = () => {
-
   const { products, productFetchLoading } = useProducts();
-
-  // console.log(products)
 
   return (
     <div className='container mx-auto mt-24 px-6 lg:px-0'>
@@ -28,7 +26,7 @@ const NewArrivals = () => {
           </p>
 
           {productFetchLoading ? (
-            <>Loading ...</>
+           <Loader />
           ) : products.length === 0 ? (
             <p className='text-gray-500'>No new arrivals available.</p>
           )

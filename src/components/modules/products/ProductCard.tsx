@@ -45,7 +45,7 @@ const ProductCard = ({product}: {product: IProduct}) => {
           <button className='bg-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-500'>
             <Heart className='w-5 h-5 ' />
           </button>
-          <Link href={`/products/${product.product_label}`}>
+          <Link href={`/products/${product.slug}`}>
             <button className='bg-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-500'>
               <Eye className='w-5 h-5' />
             </button>
