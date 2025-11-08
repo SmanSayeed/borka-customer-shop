@@ -64,7 +64,7 @@ const PageBanner = () => {
   );
 
   return (
-    <div className='relative h-[200px] sm:h-[300px] md:h-[200px] lg:h-[260px] overflow-hidden pt-22'>
+    <div className='relative h-[200px] sm:h-[300px] md:h-[200px] lg:h-[260px] overflow-hidden'>
       <div ref={sliderRef} className='keen-slider h-full'>
         {images.map((src, index) => (
           <div

@@ -55,9 +55,9 @@ const FAQ = () => {
   };
 
   return (
-    <div className='max-w-7xl mx-auto my-16 px-4'>
+    <div className='max-w-5xl mx-auto my-16 px-4'>
       {/* Header */}
-      <div className='mb-12 text-center'>
+      <div className='mb-12 text-center mx-auto flex-col items-center'>
         <CustomBadge text='Faith Journey FAQs' />
         <h2 className='text-3xl md:text-4xl font-bold mt-4 text-heading'>
           Frequently Asked Questions
