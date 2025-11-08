@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { FilterAllProducts } from '@/actions/product';
 import { useQuery } from '@tanstack/react-query';
-import { FilterAllProducts } from '@/services/product';
+import { useMemo, useState } from 'react';
 
 export interface FilterParams {
   category?: string[];

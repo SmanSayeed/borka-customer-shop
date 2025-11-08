@@ -15,12 +15,26 @@ import { FilterSidebarProps } from '@/types';
 
 const FilterSidebar = ({ filters, onFiltersChange }: FilterSidebarProps) => {
   const [openSections, setOpenSections] = useState({
-    availability: false,
+    availability: true,
     category: true,
     color: true,
     price: true,
   });
 
+  // ✅ Handle Availability change
+  const handleAvailabilityChange = (checked: boolean, status: string) => {
+    const updatedAvailability = checked
+      ? [...filters.availability, status]
+      : filters.availability.filter((a) => a !== status);
+
+    onFiltersChange({
+      ...filters,
+      availability: updatedAvailability,
+      page: 1,
+    });
+  };
+
+  // ✅ Handle Category change
   const handleCategoryChange = (checked: boolean, name: string) => {
     const updatedCategories = checked
       ? [...filters.category, name]
@@ -28,6 +42,7 @@ const FilterSidebar = ({ filters, onFiltersChange }: FilterSidebarProps) => {
     onFiltersChange({ ...filters, category: updatedCategories, page: 1 });
   };
 
+  // ✅ Handle Color change
   const handleColorChange = (checked: boolean, color: string) => {
     const updatedColors = checked
       ? [...filters.color, color]
@@ -35,6 +50,7 @@ const FilterSidebar = ({ filters, onFiltersChange }: FilterSidebarProps) => {
     onFiltersChange({ ...filters, color: updatedColors, page: 1 });
   };
 
+  // ✅ Handle Price change
   const handlePriceChange = (values: number[]) => {
     onFiltersChange({
       ...filters,
@@ -44,19 +60,81 @@ const FilterSidebar = ({ filters, onFiltersChange }: FilterSidebarProps) => {
     });
   };
 
+  // Example category/color/availability data
+  const categoryOptions = [
+    'imarah-kurti-set',
+    'cotton-top',
+    'abaya',
+    'tunic',
+    'modest-wear',
+  ];
+  const colorOptions = [
+    'Black',
+    'White',
+    'Blue',
+    'Red',
+    'Green',
+    'Beige',
+    'Grey',
+  ];
+  const availabilityOptions = ['In Stock', 'Out of Stock'];
+
   return (
-    <section className='h-fit sticky top-6 bg-white/40 border border-primary/10 p-6 rounded-lg'>
+    <section className='h-fit sticky top-6 bg-white/40 border border-primary/10 p-6 rounded-lg backdrop-blur-md shadow-sm'>
       <div className='pb-4'>
-        <h4 className='text-lg font-bold'>Filter Products</h4>
+        <h4 className='text-lg font-bold text-gray-800'>Filter Products</h4>
       </div>
 
       <div className='space-y-6'>
+        {/* ✅ Availability */}
+        <Collapsible open={openSections.availability}>
+          <CollapsibleTrigger
+            className='flex items-center justify-between w-full p-0 hover:no-underline'
+            onClick={() =>
+              setOpenSections((prev) => ({
+                ...prev,
+                availability: !prev.availability,
+              }))
+            }
+          >
+            <Label className='text-sm font-medium cursor-pointer'>
+              Availability
+            </Label>
+            <ChevronDown
+              className={`h-4 w-4 transition-transform ${
+                openSections.availability ? 'rotate-180' : ''
+              }`}
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className='mt-3 space-y-2'>
+            {availabilityOptions.map((status) => (
+              <div key={status} className='flex items-center space-x-2'>
+                <Checkbox
+                  id={status}
+                  checked={filters.availability.includes(status)}
+                  onCheckedChange={(checked) =>
+                    handleAvailabilityChange(!!checked, status)
+                  }
+                />
+                <Label htmlFor={status} className='text-sm cursor-pointer'>
+                  {status}
+                </Label>
+              </div>
+            ))}
+          </CollapsibleContent>
+        </Collapsible>
+
+        <Separator />
+
         {/* ✅ Category */}
         <Collapsible open={openSections.category}>
           <CollapsibleTrigger
             className='flex items-center justify-between w-full p-0 hover:no-underline'
             onClick={() =>
-              setOpenSections((prev) => ({ ...prev, category: !prev.category }))
+              setOpenSections((prev) => ({
+                ...prev,
+                category: !prev.category,
+              }))
             }
           >
             <Label className='text-sm font-medium cursor-pointer'>
@@ -69,7 +147,7 @@ const FilterSidebar = ({ filters, onFiltersChange }: FilterSidebarProps) => {
             />
           </CollapsibleTrigger>
           <CollapsibleContent className='mt-3 space-y-2'>
-            {['imarah-kurti-set', 'cotton-top', 'abaya', 'tunic'].map((cat) => (
+            {categoryOptions.map((cat) => (
               <div key={cat} className='flex items-center space-x-2'>
                 <Checkbox
                   id={cat}
@@ -104,7 +182,7 @@ const FilterSidebar = ({ filters, onFiltersChange }: FilterSidebarProps) => {
             />
           </CollapsibleTrigger>
           <CollapsibleContent className='mt-3 space-y-2'>
-            {['Black', 'White', 'Blue', 'Red', 'Green'].map((color) => (
+            {colorOptions.map((color) => (
               <div key={color} className='flex items-center space-x-2'>
                 <Checkbox
                   id={`color-${color}`}

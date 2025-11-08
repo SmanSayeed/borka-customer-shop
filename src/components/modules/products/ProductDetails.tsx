@@ -1,23 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import BreadcrumbBanner from '@/components/shared/Breadcrumb';
 import {
-  Minus,
-  Plus,
-  ShoppingCart,
-  Heart,
-  ShoppingBag,
-  Star,
-  ZoomIn,
-} from 'lucide-react';
-import Link from 'next/link';
-import { IProduct } from '@/types';
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import {
   Tooltip,
@@ -25,7 +16,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import BreadcrumbBanner from '@/components/shared/Breadcrumb';
+import { IProduct } from '@/types';
+import {
+  Heart,
+  Minus,
+  Plus,
+  ShoppingBag,
+  ShoppingCart,
+  ZoomIn,
+} from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
 
 const ProductDetails = ({ product }: { product: IProduct }) => {
   const [quantity, setQuantity] = useState(1);
@@ -38,8 +39,9 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
     <div className='px-6 lg:px-0'>
       {/* Breadcrumb */}
       <BreadcrumbBanner />
+
       <div className='container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6'>
-        {/* Left Section - Images */}
+        {/* ---------- Left Section - Images ---------- */}
         <div className='flex gap-8'>
           {/* Thumbnails */}
           <div className='flex flex-col gap-4'>
@@ -56,7 +58,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
             ))}
           </div>
 
-          {/* Main Image Section */}
+          {/* Main Image */}
           <div className='relative h-full flex items-center justify-center'>
             <div
               className='relative rounded-lg overflow-hidden'
@@ -108,37 +110,44 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
           </div>
         </div>
 
-        {/* Right Section - Details */}
+        {/* ---------- Right Section - Product Info ---------- */}
         <div>
           <Badge className='bg-green-500 my-3 rounded-none'>New Arrival</Badge>
           <h2 className='text-2xl font-semibold mb-2'>{product.name}</h2>
+
           <div className='flex items-center gap-2 mb-4'>
             <span className='text-yellow-500'>★★★★☆</span>
             <span className='text-sm text-gray-500'>
               {product.rating || 4.5} ({product.reviews || 55} Reviews)
             </span>
           </div>
+
           <div className='flex items-center gap-4 mb-4'>
             <p className='text-2xl font-bold text-gray-900'>
               ${product.price.toFixed(2)}
             </p>
-            {product.price && (
-              <p className='text-gray-400 line-through'>
-                ${product.price.toFixed(2)}
-              </p>
-            )}
             {product.discount && (
-              <p className='text-red-500 text-sm font-semibold'>
-                ({product.discount}% Off)
-              </p>
+              <>
+                <p className='text-gray-400 line-through'>
+                  $
+                  {(
+                    product.price +
+                    (product.price * product.discount) / 100
+                  ).toFixed(2)}
+                </p>
+                <p className='text-red-500 text-sm font-semibold'>
+                  ({product.discount}% Off)
+                </p>
+              </>
             )}
           </div>
-          {/* Colors & Sizes Side by Side */}
+
+          {/* Colors & Sizes */}
           <div className='flex gap-10 mb-4'>
             {/* Colors */}
             <div>
               <p className='font-medium mb-2'>
-                Colors:{' '}
+                Color:{' '}
                 <span className='text-gray-500'>
                   {selectedColor || 'Select'}
                 </span>
@@ -150,7 +159,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
                     onClick={() => setSelectedColor(color)}
                     className={`w-8 h-8 rounded-full border-2 ${
                       selectedColor === color
-                        ? 'border-primary'
+                        ? 'border-primary ring-2 ring-primary/30'
                         : 'border-gray-200'
                     }`}
                     style={{ backgroundColor: color }}
@@ -184,6 +193,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
               </div>
             </div>
           </div>
+
           {/* Quantity */}
           <div className='mb-4'>
             <p className='font-medium mb-2'>Quantity:</p>
@@ -205,12 +215,14 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
               </Button>
             </div>
           </div>
-          {/* Stock Info */}{' '}
+
+          {/* Extra Info */}
           <ul className='text-sm text-gray-600 mb-6 space-y-2'>
-            {' '}
-            <li>✅ In Stock</li> <li>✅ Free delivery available</li>{' '}
-            <li>✅ Sales 10% Off Use Code: CODE123</li>{' '}
+            <li>✅ In Stock</li>
+            <li>✅ Free delivery available</li>
+            <li>✅ Sales 10% Off Use Code: CODE123</li>
           </ul>
+
           {/* Action Buttons */}
           <div className='flex items-center justify-between gap-4 mt-6'>
             <Button className='flex-1 bg-orange-500 hover:bg-orange-600 text-white'>
@@ -223,59 +235,63 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
               <Heart className='text-gray-400' />
             </Button>
           </div>
-        </div>
-        {/* Tabs Section */}
-        <div className='mt-10 flex items-center justify-center mx-auto'>
-          <Tabs defaultValue='description' className='w-full'>
-            <TabsList className='flex gap-4 mb-4 border-b border-gray-200'>
-              <TabsTrigger value='description'>Description</TabsTrigger>
-              <TabsTrigger value='offers'>Available Offers</TabsTrigger>
-              <TabsTrigger value='reviews'>Reviews</TabsTrigger>
-            </TabsList>
 
-            {/* Description */}
-            <TabsContent value='description'>
-              <p className='text-gray-600 leading-relaxed'>
-                {product.description ||
-                  'This beautiful dress is crafted from high-quality materials ensuring comfort and style. Perfect for any occasion.'}
-              </p>
-            </TabsContent>
+          {/* Accordion Section */}
+          <div className='mt-8 border-t border-gray-200 dark:border-gray-800'>
+            <Accordion type='single' collapsible className='w-full'>
+              <AccordionItem
+                value='description'
+                className='border-b border-gray-200 dark:border-gray-800'
+              >
+                <AccordionTrigger className='text-base font-medium text-gray-900 dark:text-gray-100 py-4'>
+                  <h4>Description</h4>
+                </AccordionTrigger>
+                <AccordionContent className='text-sm text-gray-600 dark:text-gray-400 pb-4'>
+                  This product is made from high-quality materials ensuring
+                  comfort, durability, and a perfect fit for everyday use.
+                </AccordionContent>
+              </AccordionItem>
 
-            {/* Offers */}
-            <TabsContent value='offers'>
-              <ul className='text-sm text-gray-600 space-y-2'>
-                <li>
-                  💳 <strong>Bank Offer:</strong> 10% instant discount on Debit
-                  Cards.
-                </li>
-                <li>
-                  🎁 <strong>Special Offer:</strong> Buy 2 get 1 free on
-                  selected items.
-                </li>
-                <li>
-                  🚚 <strong>Free Delivery:</strong> On all orders above $50.
-                </li>
-              </ul>
-            </TabsContent>
+              <AccordionItem
+                value='additional-info'
+                className='border-b border-gray-200 dark:border-gray-800'
+              >
+                <AccordionTrigger className='text-base font-medium text-gray-900 dark:text-gray-100 py-4'>
+                  <h4>Additional Information</h4>
+                </AccordionTrigger>
+                <AccordionContent className='text-sm text-gray-600 dark:text-gray-400 pb-4'>
+                  Material: 100% cotton <br />
+                  Care: Machine wash cold, tumble dry low.
+                </AccordionContent>
+              </AccordionItem>
 
-            {/* Reviews */}
-            <TabsContent value='reviews'>
-              <h4 className='font-semibold mb-4'>Write a Review</h4>
-              <form className='space-y-4'>
-                <Input placeholder='Your Name' />
-                <Input placeholder='Your Email' type='email' />
-                <div className='flex items-center gap-1'>
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className='w-5 h-5 text-yellow-400' />
-                  ))}
-                </div>
-                <Textarea placeholder='Write your review...' />
-                <Button type='submit' className='bg-primary text-white'>
-                  Submit Review
-                </Button>
-              </form>
-            </TabsContent>
-          </Tabs>
+              <AccordionItem
+                value='shipping'
+                className='border-b border-gray-200 dark:border-gray-800'
+              >
+                <AccordionTrigger className='text-base font-medium text-gray-900 dark:text-gray-100 py-4'>
+                  <h4>Shipping and Returns</h4>
+                </AccordionTrigger>
+                <AccordionContent className='text-sm text-gray-600 dark:text-gray-400 pb-4'>
+                  We offer free shipping for all orders above $50. Items can be
+                  returned within 7 days of delivery.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem
+                value='return-policy'
+                className='border-b border-gray-200 dark:border-gray-800'
+              >
+                <AccordionTrigger className='text-base font-medium text-gray-900 dark:text-gray-100 py-4'>
+                  <h4>Return Policies</h4>
+                </AccordionTrigger>
+                <AccordionContent className='text-sm text-gray-600 dark:text-gray-400 pb-4'>
+                  Products must be unused and in their original packaging to
+                  qualify for returns.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
         </div>
       </div>
     </div>

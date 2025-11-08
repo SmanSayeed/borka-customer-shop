@@ -1,15 +1,29 @@
 'use server';
 
 import envConfig from '@/config/envConfig';
-
+import { revalidatePath } from 'next/cache';
 const { baseUrl } = envConfig();
 
-export interface ProductFilters {
-  category?: string[];
-  color?: string[];
-  min_price?: number;
-  max_price?: number;
-  search?: string;
+export async function fetchAllProducts(
+  filters?: Record<string, string | number>
+) {
+  try {
+    const params = new URLSearchParams(filters as any).toString();
+
+    const res = await fetch(`${baseUrl}/products?${params}`, {
+      cache: 'no-store', 
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch products');
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error('❌ Error fetching products:', error);
+    throw error;
+  }
 }
 
 // export const FetchAllProduct = async (
@@ -118,3 +132,17 @@ export const getAllProducts = async (
     );
   }
 };
+
+export async function getProductColors () {
+  try {
+    const res = await fetch(`${baseUrl}/product-colors`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    const result = res.json();
+    return result;
+  } catch (error) {
+    throw Error(error.message);
+  }
+}

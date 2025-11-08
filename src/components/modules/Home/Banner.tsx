@@ -63,8 +63,7 @@ const HomeBanner = () => {
             >
               Embrace the Beauty
               {/* br only for mobile */}
-              <br />
-              {' '}of Modesty{' '}
+              <br /> of Modesty{' '}
               <span className='text-primary'>
                 Begin Your <br className='block sm:hidden' />
                 Faith Journey
@@ -87,17 +86,30 @@ const HomeBanner = () => {
             </motion.p>
 
             {/* CTA Button */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.35, duration: 0.9 }}
-            >
-              <Link href='/products'>
-                <Button className='bg-primary rounded-full px-6 py-5 sm:px-8 text-white font-medium hover:bg-secondary hover:shadow-lg transition text-sm sm:text-base'>
-                  Discover All Collection
-                </Button>
-              </Link>
-            </motion.div>
+            <div className='flex items-center justify-between gap-6'>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.35, duration: 0.9 }}
+              >
+                <Link href='/products'>
+                  <Button className='bg-primary rounded-full px-6 py-5 sm:px-8 text-white font-medium hover:bg-secondary hover:shadow-lg transition text-sm sm:text-base'>
+                    Discover All Collection
+                  </Button>
+                </Link>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.35, duration: 0.9 }}
+              >
+                <Link href='/about'>
+                  <Button className='bg-white rounded-full px-6 py-5 sm:px-8 text-primary font-medium hover:bg-secondary hover:shadow-lg transition text-sm sm:text-base border border-gray-100'>
+                    About us
+                  </Button>
+                </Link>
+              </motion.div>
+            </div>
           </div>
 
           {/* ------- Right Side: Image ------- */}

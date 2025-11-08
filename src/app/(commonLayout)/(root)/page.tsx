@@ -12,10 +12,10 @@ const RootLayout = () => {
     <div>
       <HomeBanner />
       <Services />
-      <NewArrivals />
-      <TrendingSpecial />
+      {/* <NewArrivals /> */}
+      {/* <TrendingSpecial /> */}
       <TrendingVideo />
-      <AllCollection />
+      {/* <AllCollection /> */}
       <Testimonial />
       <ShopFacebook />
     </div>

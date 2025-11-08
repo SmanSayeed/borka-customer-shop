@@ -1,6 +1,6 @@
 'use client';
 
-import { getParentCategories } from '@/services/category';
+import { getParentCategories } from '@/actions/category';
 import { useQuery } from '@tanstack/react-query';
 
 const useCategory = () => {
