@@ -1,11 +1,11 @@
-import { IProduct } from '@/types/product';
+import { IProduct } from '@/types';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { Eye, Heart, ShoppingBag } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const ProductCard = ({product}: {product: IProduct}) => {  
+const ProductCard = ({ product }: { product: IProduct }) => {
   return (
     <motion.div
       className='relative border border-primary/20 overflow-hidden hover:bg-gray-50 hover:rounded-2xl group transition-all duration-700'
@@ -14,11 +14,7 @@ const ProductCard = ({product}: {product: IProduct}) => {
       viewport={{ once: true, amount: 0.2 }}
       whileHover={{ scale: 1 }}
     >
-      <div
-        className={clsx(
-          'relative w-full overflow-hidden h-100'
-        )}
-      >
+      <div className={clsx('relative w-full overflow-hidden h-100')}>
         {/* Badges */}
         {product.product_code && (
           <span className='absolute top-3 left-3 z-10 bg-green-600 text-white text-[11px] px-2 py-1'>

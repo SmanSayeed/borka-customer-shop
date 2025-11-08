@@ -1,3 +1,11 @@
+export interface ICategory {
+  id: number;
+  name: string;
+  slug: string;
+  business_category_id: number;
+  parent_id: number | null;
+}
+
 export interface IProduct {
   id: number;
   slug: string;
@@ -22,4 +30,21 @@ export interface ProductCardProps {
   product: IProduct;
   height?: string;
   viewMode?: string;
+}
+
+export interface FilterState {
+  availability: 'all' | 'inStock' | 'outOfStock';
+  priceRange: [number, number];
+  categories: string[];
+  colors: string[];
+  sortBy: 'best-selling' | 'price-low' | 'price-high' | 'rating';
+}
+
+export interface FilterSidebarProps {
+  filters: FilterState;
+  onFiltersChange?: (filters: FilterState) => void;
+  products?: IProduct[];
+  productLoading?: boolean;
+  categories?: ICategory[];
+  categoryLoading?: boolean;
 }

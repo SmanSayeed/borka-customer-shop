@@ -1,9 +1,8 @@
 import Image from 'next/image';
-import Link from 'next/link';
 
 export const Logo = ({
-  height,
-  width,
+  height = 80,
+  width = 80,
 }: {
   height?: number;
   width?: number;
@@ -15,8 +14,8 @@ export const Logo = ({
           alt='logo'
           height={height}
           width={width}
-          style={{ height: 'auto', width: 'auto' }}
           className='object-contain'
+          style={{height: 'auto', width: 'auto'}}
           priority
         />
     </div>

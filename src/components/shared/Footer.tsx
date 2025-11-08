@@ -1,16 +1,16 @@
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Facebook,
-  Youtube,
-  Instagram,
-  Music2,
-} from 'lucide-react';
-import { Logo } from './assets';
-import Link from 'next/link';
 import { categoryLinks } from '@/constants/category';
 import { quickLinks } from '@/constants/footer';
+import {
+  Facebook,
+  Instagram,
+  Mail,
+  MapPin,
+  Music2,
+  Phone,
+  Youtube,
+} from 'lucide-react';
+import Link from 'next/link';
+import { Logo } from './assets';
 
 const Footer = () => {
   return (
@@ -126,9 +126,10 @@ const Footer = () => {
       </div>
 
       {/* Copyright Section */}
-      <div className='py-10'>
-        <p className='text-sm text-center'>
-          Copyright @ 2025 Faith Journey. All Rights Reserved.
+      <div className='py-10 container mx-auto'>
+        <div className='border-b border-gray-50/5' />
+        <p className='text-[12px] text-center pt-6'>
+          Copyright © 2025 Faith Journey. All Rights Reserved.
         </p>
       </div>
     </footer>

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { categoryLinks } from '@/constants/category';
-import { IProduct } from '@/types/product';
+import { IProduct } from '@/types';
 import BreadcrumbBanner from '@/components/shared/Breadcrumb';
 import ProductCard from './ProductCard';
 import useProducts from '@/hooks/useProducts';
@@ -17,11 +17,10 @@ import {
   NavigationMenuLink,
 } from '@/components/ui/navigation-menu';
 
-
 const ProductSidebar = () => {
   const [priceRange, setPriceRange] = useState([0]);
-  const {products, productFetchLoading} = useProducts();
-  
+  const { products, productFetchLoading } = useProducts();
+
   return (
     <div className='container mx-auto'>
       <BreadcrumbBanner />

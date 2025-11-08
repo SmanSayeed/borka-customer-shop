@@ -17,7 +17,7 @@ import {
   ZoomIn,
 } from 'lucide-react';
 import Link from 'next/link';
-import { IProduct } from '@/types/product';
+import { IProduct } from '@/types';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import {
   Tooltip,

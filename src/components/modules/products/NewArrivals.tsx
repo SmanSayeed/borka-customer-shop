@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -7,9 +7,9 @@ import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { motion } from 'framer-motion';
 import ProductCard from './ProductCard';
-import useProducts from '@/hooks/useProducts';
-import { IProduct } from '@/types/product';
+import { IProduct } from '@/types';
 import Loader from '@/components/shared/loader';
+import useProducts from '@/hooks/useProducts';
 
 const NewArrivals = () => {
   const { products, productFetchLoading } = useProducts();
@@ -26,11 +26,10 @@ const NewArrivals = () => {
           </p>
 
           {productFetchLoading ? (
-           <Loader />
+            <Loader />
           ) : products.length === 0 ? (
             <p className='text-gray-500'>No new arrivals available.</p>
-          )
-          :  (
+          ) : (
             <Swiper
               modules={[Navigation]}
               spaceBetween={20}

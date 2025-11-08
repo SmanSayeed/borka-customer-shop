@@ -1,11 +1,28 @@
-import ProductSidebar from '@/components/modules/products/ProductSidebar';
+import ProductCatalog from '@/components/modules/products/ProductCatalog';
+import PageBanner from '@/components/shared/PageBanner';
+import { getAllProducts } from '@/services/product';
 
-const ProductPage = () => {
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+const ProductsPage = async ({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) => {
+  const query = await searchParams;
+  const {search} = query;
+  console.log(search, 'from product page')
+
+  const { data: products } = await getAllProducts(undefined, undefined, query);
+
   return (
     <div>
-      <ProductSidebar />
+      <PageBanner />
+      <div className='max-w-7xl my-10 mx-auto'>
+        <ProductCatalog products={products} />
+      </div>
     </div>
   );
 };
 
-export default ProductPage;
+export default ProductsPage;

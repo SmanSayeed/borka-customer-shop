@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { Search, ShoppingBag, User, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from './assets';
-import { ICategory } from '@/types/category';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Skeleton } from '../ui/skeleton';
 import useCategory from '@/hooks/useCategory';
+import { ICategory } from '@/types';
 
 const Navbar = () => {
 const {categories, categoryFetchLoading} = useCategory();
@@ -18,7 +18,7 @@ const {categories, categoryFetchLoading} = useCategory();
     <header className='bg-secondary text-white relative'>
       <nav className='container mx-auto flex items-center justify-between py-3 px-6 lg:px-0'>
         <Link href='/'>
-          <Logo height={80} width={80} />
+          <Logo />
         </Link>
 
         {categoryFetchLoading ? (

@@ -5,11 +5,12 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import ProductCard from './ProductCard';
+import { IProduct } from '@/types';
 import useProducts from '@/hooks/useProducts';
-import { IProduct } from '@/types/product';
 
 const TrendingSpecial = () => {
-  const { products, productFetchLoading } = useProducts();
+  const { products, isProductLoading } = useProducts();
+  console.log(products)
 
   return (
     <div className='container mx-auto mt-24 px-6 lg:px-0'>
@@ -17,7 +18,7 @@ const TrendingSpecial = () => {
         Trending Products
       </h2>
 
-      {productFetchLoading ? (
+      {isProductLoading ? (
         <>Loading</>
       ) : products.length === 0 ? (
         <p className='text-gray-500 text-center'>

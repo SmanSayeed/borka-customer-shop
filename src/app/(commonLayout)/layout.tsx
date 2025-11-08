@@ -3,6 +3,7 @@
 import Features from '@/components/modules/Home/Features';
 import Footer from '@/components/shared/Footer';
 import Navbar from '@/components/shared/Navbar';
+import ScrollReveal from '@/components/shared/ScrollReveal';
 import { useLenis } from '@/hooks/useLenis';
 
 const CommonLayout = ({ children }: { children: React.ReactNode }) => {
@@ -10,7 +11,9 @@ const CommonLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Navbar />
-      <main className='min-h-screen'>{children}</main>
+      <main className='min-h-screen'>
+        {children}
+        </main>
       <Features />
       <Footer />
     </>
