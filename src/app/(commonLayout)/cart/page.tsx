@@ -97,7 +97,28 @@ const CartPage = () => {
 
   return (
     <div>
-        <BreadcrumbBanner />
+      <div className='flex items-center justify-between mb-14 max-w-4xl mx-auto'>
+        <div className='flex-1 text-center'>
+          <div className='w-8 h-8 rounded-full bg-green-600 text-white mx-auto flex items-center justify-center'>
+            1
+          </div>
+          <p className='mt-2 text-sm font-medium'>Your Cart</p>
+        </div>
+        <div className='flex-1 text-center border-t-2 border-green-600 relative top-4'></div>
+        <div className='flex-1 text-center'>
+          <div className='w-8 h-8 rounded-full bg-gray-300 text-white mx-auto flex items-center justify-center'>
+            2
+          </div>
+          <p className='mt-2 text-sm font-medium'>Checkout Details</p>
+        </div>
+        <div className='flex-1 text-center border-t-2 border-gray-300 relative top-4'></div>
+        <div className='flex-1 text-center'>
+          <div className='w-8 h-8 rounded-full bg-gray-300 text-white mx-auto flex items-center justify-center'>
+            3
+          </div>
+          <p className='mt-2 text-sm font-medium'>Order Complete</p>
+        </div>
+      </div>
       <div className=''>
         <div className='container mx-auto'>
           <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
@@ -183,12 +204,12 @@ const CartPage = () => {
                           </span>
                           £{(item.price * item.quantity).toFixed(2)}
                         </div>
-                          <button
-                            onClick={() => removeItem(item.id)}
-                            className='text-destructive hover:text-destructive/80'
-                          >
-                            <X className='h-4 w-4' />
-                          </button>
+                        <button
+                          onClick={() => removeItem(item.id)}
+                          className='text-destructive hover:text-destructive/80'
+                        >
+                          <X className='h-4 w-4' />
+                        </button>
                       </div>
                     ))}
                   </div>
@@ -242,36 +263,9 @@ const CartPage = () => {
                   <Button
                     variant='secondary'
                     className='w-full'
-                    onClick={() => router.push('/success')}
+                    onClick={() => router.push('/checkout')}
                   >
                     Proceed To Checkout
-                  </Button>
-                </div>
-              </Card>
-
-              {/* Calculate Shipping */}
-              <Card className='p-6'>
-                <h2 className='text-xl font-semibold mb-6'>
-                  Calculate Shipping
-                </h2>
-                <div className='space-y-4'>
-                  <Input
-                    placeholder='Bangladesh'
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                  />
-                  <Input
-                    placeholder='Mirpur Dohs Dhaka-1200'
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                  />
-                  <Input
-                    placeholder='Postal Code'
-                    value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value)}
-                  />
-                  <Button variant='secondary' className='w-full'>
-                    Calculate Shipping
                   </Button>
                 </div>
               </Card>

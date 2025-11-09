@@ -44,6 +44,28 @@ const SuccessPage = () => {
 
   return (
     <div className='bg-background py-20 px-4 sm:px-6 lg:px-8'>
+      <div className='flex items-center justify-between mb-14 max-w-4xl mx-auto'>
+        <div className='flex-1 text-center'>
+          <div className='w-8 h-8 rounded-full bg-green-600 text-white mx-auto flex items-center justify-center'>
+            1
+          </div>
+          <p className='mt-2 text-sm font-medium'>Your Cart</p>
+        </div>
+        <div className='flex-1 text-center border-t-2 border-green-600 relative top-4'></div>
+        <div className='flex-1 text-center'>
+          <div className='w-8 h-8 rounded-full bg-green-600 text-white mx-auto flex items-center justify-center'>
+            2
+          </div>
+          <p className='mt-2 text-sm font-medium'>Checkout Details</p>
+        </div>
+        <div className='flex-1 text-center border-t-2 border-green-600 relative top-4'></div>
+        <div className='flex-1 text-center'>
+          <div className='w-8 h-8 rounded-full bg-green-600 text-white mx-auto flex items-center justify-center'>
+            3
+          </div>
+          <p className='mt-2 text-sm font-medium'>Order Complete</p>
+        </div>
+      </div>
       <div className='max-w-7xl mx-auto'>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12'>
           {/* Left Column - Thank You Message & Billing */}
@@ -101,8 +123,7 @@ const SuccessPage = () => {
           <div>
             <div
               className='relative p-6 lg:p-8 shadow-sm flex flex-col items-center bg-cover bg-center bg-no-repeat border-none'
-              style={{ backgroundImage: "url('/success.png')"
-              }}
+              style={{ backgroundImage: "url('/success.png')" }}
             >
               {/* Overlay for better readability */}
               <div className='absolute inset-0 bg-background/70 backdrop-blur-sm rounded-xl'></div>

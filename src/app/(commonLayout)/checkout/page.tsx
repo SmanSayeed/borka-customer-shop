@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -13,17 +14,19 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 
 const CheckoutPage = () => {
+  const router = useRouter();
   const [country, setCountry] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('credit');
 
   const handlePlaceOrder = () => {
-    alert('Order placed!');
+    // এখানে অর্ডার প্রসেসিং logic রাখতে পারো
+    router.push('/success'); // Redirect to success page
   };
 
   return (
     <div className='max-w-7xl mx-auto py-12 px-4'>
       {/* Step Progress */}
-      <div className='flex items-center justify-between mb-12'>
+      <div className='flex items-center justify-between mb-14 max-w-4xl mx-auto'>
         <div className='flex-1 text-center'>
           <div className='w-8 h-8 rounded-full bg-green-600 text-white mx-auto flex items-center justify-center'>
             1
@@ -147,7 +150,7 @@ const CheckoutPage = () => {
           </Checkbox>
 
           <Button
-            className='w-full mt-4 bg-brown-600 hover:bg-brown-700'
+            className='w-full mt-4 bg-primary hover:bg-teal-700'
             onClick={handlePlaceOrder}
           >
             Place order
