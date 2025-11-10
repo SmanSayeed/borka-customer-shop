@@ -9,4 +9,6 @@ export type IProduct = {
   description: string;
   image: string[];
   category: string;
+  rating?: number;
+  reviews?: number;
 }

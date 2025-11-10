@@ -20,7 +20,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
   const slideRef = useRef<HTMLLIElement>(null);
   const xRef = useRef(0);
   const yRef = useRef(0);
-  const frameRef = useRef<number>();
+  const frameRef = useRef<number | undefined>(undefined);
   const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
 
   const overlayVariants = {
     initial: { y: '100%' },
-    hover: { y: '0%', transition: { duration: 0.5, ease: 'easeOut' } },
+    hover: { y: '0%', transition: { duration: 0.5, ease: 'easeOut' as const } },
   };
 
   const contentVariants = {
@@ -62,7 +62,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
     hover: {
       opacity: 1,
       y: 0,
-      transition: { delay: 0.5, duration: 0.5, ease: 'easeOut' }, // overlay এর পরে
+      transition: { delay: 0.5, duration: 0.5, ease: 'easeOut' as const }, // overlay এর পরে
     },
   };
 
