@@ -24,12 +24,11 @@ const HomeBanner = () => {
           />
         </div>
       </div>
-      <div className='absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(14,116,144,0.15),transparent_60%)] pointer-events-none -z-10' />
 
       {/* === Main container === */}
       <div className='relative container mx-auto px-4 sm:px-6 md:px-0 z-10'>
-        <div className='grid grid-cols-1 lg:grid-cols-12 items-center gap-10 lg:gap-16'>
-          <div className='col-span-12 lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-16'>
+          <div className='flex flex-col items-center lg:items-start text-center lg:text-left space-y-4'>
             <h3 className='bg-white/10 backdrop-blur-sm text-primary text-lg sm:text-xl md:text-2xl font-medium py-1 px-3 border-2 border-white/30 rounded'>
               Faith in Every Fold
             </h3>
@@ -87,7 +86,7 @@ const HomeBanner = () => {
           </div>
 
           {/* ------- Right Side: Image ------- */}
-          <div className='col-span-12 lg:col-span-5 flex justify-center lg:justify-end mt-8 lg:mt-0'>
+          <div className='flex justify-center lg:justify-end mt-8 lg:mt-0'>
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}

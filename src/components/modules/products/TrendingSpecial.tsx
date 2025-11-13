@@ -13,7 +13,7 @@ const TrendingSpecial = () => {
 
   return (
     <div className='container mx-auto mt-24 px-6 lg:px-0'>
-      <h2 className='text-4xl font-semibold mb-10 text-center'>
+      <h2 className='text-5xl font-bold mb-10 text-center'>
         Trending Products
       </h2>
 

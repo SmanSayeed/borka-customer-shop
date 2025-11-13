@@ -17,7 +17,7 @@ const ShopFacebook = () => {
     <section className='max-w-7xl mx-auto mt-24 rounded-2xl px-6 md:px-0'>
       {/* Section Header */}
       <div className='text-center mb-12'>
-        <h2 className='text-3xl md:text-4xl font-bold text-heading'>
+        <h2 className='text-3xl md:text-5xl font-bold text-heading'>
           Explore Faith Journey on{' '}
           <span className='text-primary'>Facebook</span>
         </h2>
@@ -26,7 +26,6 @@ const ShopFacebook = () => {
         </p>
       </div>
 
-      {/* Image Grid */}
       <div className='grid grid-cols-12 gap-6'>
         {images.map((image, index) => {
           const colSpanClass =
@@ -60,7 +59,6 @@ const ShopFacebook = () => {
                     <div className='absolute inset-0 bg-gradient-to-t from-black/40 via-primary/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out' />
                   </div>
 
-                  {/* Hover Content */}
                   <div className='absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-all duration-500'>
                     <div className='flex items-center gap-2 bg-white/90 backdrop-blur-md text-foreground px-4 py-2 rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300'>
                       <ArrowUpRight

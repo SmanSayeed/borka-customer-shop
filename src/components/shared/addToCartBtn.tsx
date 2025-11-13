@@ -35,7 +35,7 @@ export default function AddToCartButton({ product, text = 'Add To Cart' }: Props
     <div>
       <button
         onClick={handleAddToCart}
-        className='px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition'
+        className='bg-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-500'
       >
         <ShoppingBag className='w-5 h-5' />
       </button>

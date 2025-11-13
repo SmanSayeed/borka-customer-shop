@@ -48,7 +48,7 @@ const TrendingVideo = () => {
       <div className='container mx-auto'>
         {/* Header */}
         <div className='text-center mb-12'>
-          <h2 className='text-4xl font-bold mb-3'>Trending on Facebook</h2>
+          <h2 className='text-5xl font-bold mb-3'>Trending on Facebook</h2>
           <p className='text-muted-foreground max-w-2xl mx-auto'>
             Watch our latest fashion reels — unboxings, try-ons & new arrivals.
           </p>
