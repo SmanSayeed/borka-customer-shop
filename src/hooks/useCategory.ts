@@ -4,20 +4,16 @@ import { getParentCategories } from '@/actions/category';
 import { useQuery } from '@tanstack/react-query';
 
 const useCategory = () => {
-  //* Fetch all parent categories
-  const { data: categoriesData, isLoading: categoryFetchLoading } = useQuery({
+  const { data: categoriesData, isLoading: isCategoryLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: getParentCategories,
   });
 
-  const categories = categoriesData?.data;
+  const categories = categoriesData?.data || [];
 
   return {
-    // Queries
     categories,
-    categoryFetchLoading,
-
-    // Mutations
+    isCategoryLoading,
   };
 };
 

@@ -6,16 +6,18 @@ import TrendingVideo from '@/components/modules/Home/TrendingVideos';
 import AllCollection from '@/components/modules/products/AllCollection';
 import TrendingSpecial from '@/components/modules/products/TrendingSpecial';
 import NewArrivals from '@/components/modules/products/NewArrivals';
+import PromoSection from '@/components/modules/products/PromoSection';
 
 const RootLayout = () => {
   return (
     <div>
       <HomeBanner />
       <Services />
-      {/* <NewArrivals /> */}
-      {/* <TrendingSpecial /> */}
+      <PromoSection />
+      <NewArrivals />
+      <TrendingSpecial />
       <TrendingVideo />
-      {/* <AllCollection /> */}
+      <AllCollection />
       <Testimonial />
       <ShopFacebook />
     </div>

@@ -1,18 +1,18 @@
 'use client';
 
+import Loader from '@/components/shared/Loader';
+import useProducts from '@/hooks/useProducts';
+import { IProduct } from '@/types';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
-import { motion } from 'framer-motion';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import ProductCard from './ProductCard';
-import { IProduct } from '@/types';
-import Loader from '@/components/shared/loader';
-import useProducts from '@/hooks/useProducts';
 
 const NewArrivals = () => {
-  const { products, productFetchLoading } = useProducts();
+  const { products, isProductLoading } = useProducts();
 
   return (
     <div className='container mx-auto mt-24 px-6 lg:px-0'>
@@ -25,8 +25,8 @@ const NewArrivals = () => {
             fashion.
           </p>
 
-          {productFetchLoading ? (
-            <Loader />
+          {isProductLoading ? (
+            <Loader skeleton skeletonCount={6} />
           ) : products.length === 0 ? (
             <p className='text-gray-500'>No new arrivals available.</p>
           ) : (

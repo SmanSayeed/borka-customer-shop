@@ -1,3 +1,4 @@
+import AddToCartButton from '@/components/shared/addToCartBtn';
 import { IProduct } from '@/types';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
@@ -36,7 +37,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
         <div className='absolute right-3 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10'>
           <button className='bg-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-500'>
-            <ShoppingBag className='w-5 h-5' />
+            <AddToCartButton product={product}/>
           </button>
           <button className='bg-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-500'>
             <Heart className='w-5 h-5 ' />

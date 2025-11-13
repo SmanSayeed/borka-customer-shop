@@ -2,9 +2,11 @@
 
 import {
   fetchAllProducts,
-  getProductColors,
   getProductCategories,
+  getProductColors,
 } from '@/actions/product';
+import Loader from '@/components/shared/Loader';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Collapsible,
   CollapsibleContent,
@@ -13,14 +15,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useQuery } from '@tanstack/react-query';
+import { ChevronDown } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
-import clsx from 'clsx';
-import { ChevronDown } from 'lucide-react';
-import Loader from '@/components/shared/loader';
 
 export default function ProductList() {
   const searchParams = useSearchParams();
@@ -105,10 +104,7 @@ export default function ProductList() {
   };
 
   // ✅ Fetch Data
-  const {
-    data: productsData,
-    isLoading: isProductLoading,
-  } = useQuery({
+  const { data: productsData, isLoading: isProductLoading } = useQuery({
     queryKey: ['products', filters],
     queryFn: async () => await fetchAllProducts(filters),
   });
@@ -192,29 +188,33 @@ export default function ProductList() {
             Category <ChevronDown className='w-4 h-4' />
           </CollapsibleTrigger>
           <CollapsibleContent className='mt-3 space-y-2'>
-            {isCategoryLoading? <Loader /> : categories.map((cat: any) => (
-              <div key={cat._id} className='flex items-center space-x-2'>
-                <Checkbox
-                  id={cat.name}
-                  checked={selectedCategories.includes(cat.name)}
-                  onCheckedChange={() =>
-                    toggleSelection(
-                      cat.name,
-                      selectedCategories,
-                      setSelectedCategories
-                    )
-                  }
-                />
-                <Label htmlFor={cat.name} className='cursor-pointer'>
-                  {cat.name}
-                </Label>
-              </div>
-            ))}
+            {isCategoryLoading ? (
+              <Loader />
+            ) : (
+              categories.map((cat: any) => (
+                <div key={cat._id} className='flex items-center space-x-2'>
+                  <Checkbox
+                    id={cat.name}
+                    checked={selectedCategories.includes(cat.name)}
+                    onCheckedChange={() =>
+                      toggleSelection(
+                        cat.name,
+                        selectedCategories,
+                        setSelectedCategories
+                      )
+                    }
+                  />
+                  <Label htmlFor={cat.name} className='cursor-pointer'>
+                    {cat.name}
+                  </Label>
+                </div>
+              ))
+            )}
           </CollapsibleContent>
         </Collapsible>
 
         {/* 🎨 Color */}
-        <Collapsible defaultOpen>
+        {/* <Collapsible defaultOpen>
           <CollapsibleTrigger className='flex justify-between items-center w-full py-2 font-medium'>
             Colors <ChevronDown className='w-4 h-4' />
           </CollapsibleTrigger>
@@ -240,13 +240,15 @@ export default function ProductList() {
               ></div>
             ))}
           </CollapsibleContent>
-        </Collapsible>
+        </Collapsible> */}
       </div>
 
       {/* 🛍️ Product Grid */}
       <div className='col-span-12 md:col-span-9'>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {isProductLoading ? <Loader /> : products?.length ? (
+          {isProductLoading ? (
+            <Loader />
+          ) : products?.length ? (
             products.map((item: any) => (
               <ProductCard key={item._id} product={item} />
             ))

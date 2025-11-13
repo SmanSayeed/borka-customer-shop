@@ -1,4 +1,4 @@
-import Loader from '@/components/shared/loader';
+import Loader from '@/components/shared/Loader';
 import ProductCard from './ProductCard';
 import type { Product } from './ProductCatalog';
 import ProductPagination from './ProductPagination';
@@ -20,7 +20,6 @@ const ProductGrid = ({
   setPage,
   gridCols,
 }: ProductGridProps) => {
-  
   const gridClass = {
     2: 'grid-cols-1',
     3: 'grid-cols-1 sm:grid-cols-2',
@@ -34,7 +33,9 @@ const ProductGrid = ({
       >
         {isLoading ? (
           <Loader />
-        ) : products?.length === 0? <>Products not found</> : (
+        ) : products?.length === 0 ? (
+          <>Products not found</>
+        ) : (
           products?.map((product) => (
             <div
               key={product.id}

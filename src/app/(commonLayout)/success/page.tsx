@@ -1,49 +1,46 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 const SuccessPage = () => {
-  const orderData = {
-    date: '02 May 2023',
-    orderNumber: '024-125478956',
-    paymentMethod: 'Mastercard',
-    items: [
-      {
-        id: 1,
-        name: 'All In One Chocolate Combo',
-        size: 'Pack: Medium',
-        quantity: 1,
-        price: 50.0,
-        image:
-          'https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg',
-      },
-      {
-        id: 2,
-        name: 'Desire Of Hearts',
-        size: 'Pack: Large',
-        quantity: 1,
-        price: 50.0,
-        image:
-          'https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg',
-      },
-    ],
-    subtotal: 100.0,
-    shipping: 2.0,
-    tax: 5.0,
-  };
+  const [orderData, setOrderData] = useState<any>(null);
 
-  const billingAddress = {
-    name: 'Jane Smith',
-    address: '456 Oak St #3b, San Francisco,',
-    addressLine2: 'CA 94102, United States',
-    phone: '+1 (415) 555-1234',
-    email: 'jane.smith@email.com',
-  };
+  useEffect(() => {
+    const data = localStorage.getItem('checkout-data');
+    if (data) {
+      setOrderData(JSON.parse(data));
+    }
+  }, []);
 
-  const orderTotal = orderData.subtotal + orderData.shipping + orderData.tax;
+  if (!orderData) {
+    return (
+      <div className='flex justify-center items-center min-h-screen'>
+        <p className='text-gray-500 text-lg'>Loading your order details...</p>
+      </div>
+    );
+  }
+
+  const {
+    billing_address,
+    shipping_address,
+    payment_method,
+    order_summary,
+    coupon,
+    tax,
+    total,
+  } = orderData;
+
+  const subtotal = order_summary.reduce(
+    (sum: number, item: any) => sum + item.subtotal,
+    0
+  );
+  const shipping = 2; 
 
   return (
     <div className='bg-background py-20 px-4 sm:px-6 lg:px-8'>
+      {/* Step Progress */}
       <div className='flex items-center justify-between mb-14 max-w-4xl mx-auto'>
         <div className='flex-1 text-center'>
           <div className='w-8 h-8 rounded-full bg-green-600 text-white mx-auto flex items-center justify-center'>
@@ -66,9 +63,10 @@ const SuccessPage = () => {
           <p className='mt-2 text-sm font-medium'>Order Complete</p>
         </div>
       </div>
+
       <div className='max-w-7xl mx-auto'>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12'>
-          {/* Left Column - Thank You Message & Billing */}
+          {/* Left Column - Billing Address */}
           <div className='space-y-8'>
             <div>
               <h1 className='text-4xl lg:text-5xl font-bold text-foreground mb-4'>
@@ -81,35 +79,56 @@ const SuccessPage = () => {
               </p>
             </div>
 
+            {/* Billing Address */}
             <div className='space-y-4'>
               <h2 className='text-xl font-semibold text-foreground'>
-                Billing address
+                Billing Address
               </h2>
               <div className='space-y-3'>
-                <div className='grid grid-cols-[100px_1fr] gap-2'>
-                  <span className='font-medium text-foreground'>Name</span>
-                  <span className='text-muted-foreground'>
-                    {billingAddress.name}
-                  </span>
+                <div className='grid grid-cols-[120px_1fr] gap-2'>
+                  <span className='font-medium'>Name</span>
+                  <span>{billing_address.name}</span>
                 </div>
-                <div className='grid grid-cols-[100px_1fr] gap-2'>
-                  <span className='font-medium text-foreground'>Address</span>
-                  <div className='text-muted-foreground'>
-                    <div>{billingAddress.address}</div>
-                    <div>{billingAddress.addressLine2}</div>
+                <div className='grid grid-cols-[120px_1fr] gap-2'>
+                  <span className='font-medium'>Address</span>
+                  <span>{billing_address.address}</span>
+                </div>
+                {billing_address.area && (
+                  <div className='grid grid-cols-[120px_1fr] gap-2'>
+                    <span className='font-medium'>Area</span>
+                    <span>{billing_address.area}</span>
                   </div>
+                )}
+                <div className='grid grid-cols-[120px_1fr] gap-2'>
+                  <span className='font-medium'>Zone ID</span>
+                  <span>{billing_address.zone_id}</span>
                 </div>
-                <div className='grid grid-cols-[100px_1fr] gap-2'>
-                  <span className='font-medium text-foreground'>Phone</span>
-                  <span className='text-muted-foreground'>
-                    {billingAddress.phone}
-                  </span>
+              </div>
+            </div>
+
+            {/* Shipping Address */}
+            <div className='space-y-4'>
+              <h2 className='text-xl font-semibold text-foreground'>
+                Shipping Address
+              </h2>
+              <div className='space-y-3'>
+                <div className='grid grid-cols-[120px_1fr] gap-2'>
+                  <span className='font-medium'>Name</span>
+                  <span>{shipping_address.name}</span>
                 </div>
-                <div className='grid grid-cols-[100px_1fr] gap-2'>
-                  <span className='font-medium text-foreground'>Email</span>
-                  <span className='text-muted-foreground'>
-                    {billingAddress.email}
-                  </span>
+                <div className='grid grid-cols-[120px_1fr] gap-2'>
+                  <span className='font-medium'>Address</span>
+                  <span>{shipping_address.address}</span>
+                </div>
+                {shipping_address.area && (
+                  <div className='grid grid-cols-[120px_1fr] gap-2'>
+                    <span className='font-medium'>Area</span>
+                    <span>{shipping_address.area}</span>
+                  </div>
+                )}
+                <div className='grid grid-cols-[120px_1fr] gap-2'>
+                  <span className='font-medium'>Zone ID</span>
+                  <span>{shipping_address.zone_id}</span>
                 </div>
               </div>
             </div>
@@ -122,92 +141,58 @@ const SuccessPage = () => {
           {/* Right Column - Order Summary */}
           <div>
             <div
-              className='relative p-6 lg:p-8 shadow-sm flex flex-col items-center bg-cover bg-center bg-no-repeat border-none'
+              className='relative p-6 lg:p-8 shadow-sm flex flex-col items-center bg-cover bg-center bg-no-repeat border-none rounded-xl'
               style={{ backgroundImage: "url('/success.png')" }}
             >
-              {/* Overlay for better readability */}
               <div className='absolute inset-0 bg-background/70 backdrop-blur-sm rounded-xl'></div>
-
-              {/* Content on top of the background */}
               <div className='relative z-10 w-full'>
-                <h2 className='text-2xl font-semibold text-foreground mb-6'>
-                  Order Summary
-                </h2>
+                <h2 className='text-2xl font-semibold mb-6'>Order Summary</h2>
 
-                {/* Order Details */}
-                <div className='grid grid-cols-3 gap-4 mb-6 pb-6 border-b'>
-                  <div>
-                    <div className='text-sm text-muted-foreground mb-1'>
-                      Date
-                    </div>
-                    <div className='font-medium text-foreground'>
-                      {orderData.date}
-                    </div>
-                  </div>
-                  <div>
-                    <div className='text-sm text-muted-foreground mb-1'>
-                      Order Number
-                    </div>
-                    <div className='font-medium text-foreground'>
-                      {orderData.orderNumber}
-                    </div>
-                  </div>
-                  <div>
-                    <div className='text-sm text-muted-foreground mb-1'>
-                      Payment Method
-                    </div>
-                    <div className='font-medium text-foreground'>
-                      {orderData.paymentMethod}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Product Items */}
+                {/* Order Items */}
                 <div className='space-y-4 mb-6'>
-                  {orderData.items.map((item) => (
-                    <div key={item.id} className='flex gap-4'>
-                      <div className='w-20 h-20 rounded-lg overflow-hidden bg-muted shrink-0'>
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className='w-full h-full object-cover'
-                        />
-                      </div>
-                      <div className='flex-1 min-w-0'>
-                        <h3 className='font-semibold text-foreground mb-1'>
-                          {item.name}
-                        </h3>
-                        <p className='text-sm text-muted-foreground mb-1'>
-                          {item.size}
-                        </p>
+                  {order_summary.map((item: any, idx: number) => (
+                    <div
+                      key={idx}
+                      className='flex justify-between items-center'
+                    >
+                      <div>
+                        <p className='font-semibold'>{item.name}</p>
                         <p className='text-sm text-muted-foreground'>
                           Qty: {item.quantity}
                         </p>
                       </div>
-                      <div className='font-semibold text-foreground shrink-0'>
-                        ${item.price.toFixed(2)}
-                      </div>
+                      <p className='font-semibold'>
+                        ${item.subtotal.toFixed(2)}
+                      </p>
                     </div>
                   ))}
                 </div>
 
-                {/* Price Breakdown */}
-                <div className='space-y-3 pt-4 border-t'>
-                  <div className='flex justify-between text-muted-foreground'>
-                    <span>Sub Total</span>
-                    <span>${orderData.subtotal.toFixed(2)}</span>
+                {/* Price Details */}
+                <div className='space-y-2 border-t pt-4 text-sm'>
+                  <div className='flex justify-between'>
+                    <span>Subtotal</span>
+                    <span>${subtotal.toFixed(2)}</span>
                   </div>
-                  <div className='flex justify-between text-muted-foreground'>
+                  <div className='flex justify-between'>
                     <span>Shipping</span>
-                    <span>${orderData.shipping.toFixed(2)}</span>
+                    <span>${shipping.toFixed(2)}</span>
                   </div>
-                  <div className='flex justify-between text-muted-foreground'>
+                  <div className='flex justify-between'>
+                    <span>Coupon ({coupon.code})</span>
+                    <span>- ${coupon.discount.toFixed(2)}</span>
+                  </div>
+                  <div className='flex justify-between'>
                     <span>Tax</span>
-                    <span>${orderData.tax.toFixed(2)}</span>
+                    <span>${tax.toFixed(2)}</span>
                   </div>
-                  <div className='flex justify-between text-xl font-bold text-foreground pt-3 border-t'>
-                    <span>Order Total</span>
-                    <span>${orderTotal.toFixed(2)}</span>
+                  <div className='flex justify-between text-xl font-bold border-t pt-3'>
+                    <span>Total</span>
+                    <span>${total.toFixed(2)}</span>
+                  </div>
+                  <div className='flex justify-between mt-2'>
+                    <span className='font-medium'>Payment Method:</span>
+                    <span className='capitalize'>{payment_method}</span>
                   </div>
                 </div>
               </div>

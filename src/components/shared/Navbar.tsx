@@ -1,31 +1,42 @@
 'use client';
 
-import { useState } from 'react';
-import { Search, ShoppingBag, User, Menu, X } from 'lucide-react';
-import Link from 'next/link';
-import { Logo } from './assets';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Skeleton } from '../ui/skeleton';
 import useCategory from '@/hooks/useCategory';
 import { ICategory } from '@/types';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Menu, Search, ShoppingBag, User, X } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { Logo } from './assets';
+import Loader from './Loader';
+import { CartItem } from '@/app/(commonLayout)/cart/page';
+import { getCartFromStorage } from '@/lib/cartStorage';
 
 const Navbar = () => {
-const {categories, categoryFetchLoading} = useCategory();
-
+  const { categories, isCategoryLoading } = useCategory();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setCartItems(getCartFromStorage());
+    // Listen for cart updates (optional enhancement)
+    const handleStorageChange = () => {
+      setCartItems(getCartFromStorage());
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   return (
     <header className='bg-secondary text-white relative'>
       <nav className='container mx-auto flex items-center justify-between py-3 px-6 lg:px-0'>
+        {/* Logo */}
         <Link href='/'>
           <Logo />
         </Link>
 
-        {categoryFetchLoading ? (
-          <>
-            {' '}
-            <Skeleton className='w-200 h-12 bg-white/10' />
-          </>
+        {/* Categories */}
+        {isCategoryLoading ? (
+          <Loader skeleton skeletonCount={8} />
         ) : (
           <ul className='hidden lg:flex items-center gap-6'>
             {categories.map(({ id, slug, name }: ICategory) => (
@@ -42,22 +53,35 @@ const {categories, categoryFetchLoading} = useCategory();
 
         {/* Right Icons */}
         <div className='flex items-center gap-4'>
+          {/* Search */}
           <button
             onClick={() => console.log('Search clicked')}
-            className='p-2 rounded-full hover:bg-primary dark:hover:bg-gray-800 transition'
+            className='p-2 rounded-full hover:bg-primary dark:hover:bg-gray-800 transition relative'
             aria-label='Search'
           >
             <Search className='size-5' />
           </button>
 
+          {/* Cart */}
           <Link
             href='/cart'
-            className='p-2 rounded-full hover:bg-primary dark:hover:bg-gray-800 transition'
+            className='relative p-2 rounded-full hover:bg-primary dark:hover:bg-gray-800 transition'
             aria-label='Shopping Cart'
           >
             <ShoppingBag className='size-5' />
+            {cartItems?.length > 0 && (
+              <span
+                className='absolute -top-1.5 -right-1.5 bg-primary text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center'
+                title={`${cartItems.length} item${
+                  cartItems.length > 1 ? 's' : ''
+                }`}
+              >
+                {cartItems.length}
+              </span>
+            )}
           </Link>
 
+          {/* User */}
           <Link
             href='/signin'
             className='p-2 rounded-full hover:bg-primary dark:hover:bg-gray-800 transition'
@@ -66,7 +90,7 @@ const {categories, categoryFetchLoading} = useCategory();
             <User className='size-5' />
           </Link>
 
-          {/* Hamburger for Mobile */}
+          {/* Menu Toggle */}
           <button
             className='lg:hidden p-2 rounded-full hover:bg-primary transition'
             onClick={() => setMenuOpen(!menuOpen)}

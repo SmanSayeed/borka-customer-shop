@@ -36,7 +36,6 @@ const ProductDetailsPage = async ({
 }) => {
 
   const { id } = await params;
-  console.log(id)
   return (
     <div>
       <ProductDetails product={product} />

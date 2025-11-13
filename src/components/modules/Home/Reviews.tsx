@@ -85,7 +85,6 @@ const testimonials: Testimonial[] = [
       'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop',
     ],
   },
-  // আরও testimonial objects একইভাবে
 ];
 
 const Reviews = () => {

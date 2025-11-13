@@ -4,7 +4,7 @@ import envConfig from '@/config/envConfig';
 import { revalidatePath } from 'next/cache';
 const { baseUrl } = envConfig();
 
-export async function fetchAllProducts(
+export async function getAllProducts(
   filters?: Record<string, string | number>
 ) {
   try {
@@ -76,62 +76,6 @@ export async function fetchAllProducts(
 //     throw new Error(error.message || 'Something went wrong');
 //   }
 // };
-
-export const getAllProducts = async (
-  page: number = 1,
-  perPage: number = 12,
-  query?: { [key: string]: string | string[] | undefined }
-) => {
-  try {
-    const params = new URLSearchParams();
-
-    // 🔹 Category
-    if (query.category?.length) {
-      query.category.forEach((cat) => params.append('category[]', cat));
-    }
-
-    // 🔹 Color
-    if (query.color?.length) {
-      query.color.forEach((clr) => params.append('color[]', clr));
-    }
-
-    // 🔹 Search
-    if (query.search) params.append('search', query.search);
-
-    // 🔹 Price range
-    if (query.min_price !== undefined)
-      params.append('min_price', query.min_price.toString());
-    if (query.max_price !== undefined)
-      params.append('max_price', query.max_price.toString());
-
-    // 🔹 Pagination
-    params.append('page', page.toString());
-    params.append('per_page', perPage.toString());
-
-    // ✅ Final API URL
-    const apiUrl = `${baseUrl}/products?${params.toString()}`;
-    console.log('🔗 Final Product API:', apiUrl);
-
-    const res = await fetch(apiUrl, {
-      method: 'GET',
-      cache: 'no-store', // important for fresh data
-      next: { tags: ['PRODUCT'] },
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    if (!res.ok) {
-      throw new Error(`Failed to fetch products: ${res.statusText}`);
-    }
-
-    const data = await res.json();
-    return data;
-  } catch (error: any) {
-    console.error('❌ Error fetching products:', error);
-    throw new Error(
-      error.message || 'Something went wrong while fetching products'
-    );
-  }
-};
 
 export async function getProductColors () {
   try {
