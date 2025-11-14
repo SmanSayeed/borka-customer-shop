@@ -75,7 +75,7 @@ const OrderSummary = ({
         </div>
       </div>
 
-      <Button className='w-full h-12 text-base mb-4'>Place Order</Button>
+      <Button className='w-full mb-4'>Place Order</Button>
 
       <div className='flex items-center justify-center gap-2 text-sm text-muted-foreground'>
         <Lock className='w-4 h-4' />

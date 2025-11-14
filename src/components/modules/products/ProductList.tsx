@@ -122,7 +122,7 @@ const {categories, isCategoryLoading} = useCategory();
   return (
     <div className='grid grid-cols-12 gap-6'>
       {/* 🧭 Filter Sidebar */}
-      <div className='col-span-12 md:col-span-3 space-y-6 border rounded-xl p-5 bg-white/40'>
+      <div className='col-span-12 md:col-span-3 space-y-6 rounded-xl p-5 bg-white'>
         {/* 🔍 Search */}
         <Collapsible defaultOpen>
           <CollapsibleTrigger className='flex justify-between items-center w-full py-2 font-medium'>

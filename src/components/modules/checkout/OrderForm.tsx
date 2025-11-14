@@ -199,7 +199,7 @@ const OrderForm = ({
                 >
                   <Package className='w-8 h-8 text-foreground' />
                   <span className='font-medium text-lg text-foreground'>
-                    Stripe Payment
+                    Advance Payment
                   </span>
                 </div>
               </div>

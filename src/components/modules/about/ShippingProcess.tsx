@@ -2,8 +2,13 @@
 
 import CustomBadge from '@/components/shared/CustomBadge';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
+import {
+  ArrowRight,
+  ShoppingCart,
+  Package,
+  Truck,
+  CheckCircle,
+} from 'lucide-react';
 
 const steps = [
   {
@@ -11,8 +16,7 @@ const steps = [
     title: 'Order Placed',
     description:
       'Customer places an order on our platform, and it is confirmed immediately.',
-    image:
-      'https://images.pexels.com/photos/3945665/pexels-photo-3945665.jpeg?auto=compress&cs=tinysrgb&w=2070',
+    icon: <ShoppingCart className='w-12 h-12 text-green-600' />,
     color: 'text-green-600 border-green-500',
   },
   {
@@ -20,8 +24,7 @@ const steps = [
     title: 'Order Processed',
     description:
       'Our team processes the order, prepares the items, and ensures quality checks are done.',
-    image:
-      'https://images.pexels.com/photos/3807756/pexels-photo-3807756.jpeg?auto=compress&cs=tinysrgb&w=2070',
+    icon: <Package className='w-12 h-12 text-blue-600' />,
     color: 'text-blue-600 border-blue-500',
   },
   {
@@ -29,18 +32,16 @@ const steps = [
     title: 'Shipped',
     description:
       'The order is handed over to our delivery partner for fast and secure shipping.',
-    image:
-      'https://images.pexels.com/photos/3662649/pexels-photo-3662649.jpeg?auto=compress&cs=tinysrgb&w=2070',
-    color: 'text-green-600 border-green-500',
+    icon: <Truck className='w-12 h-12 text-purple-600' />,
+    color: 'text-purple-600 border-purple-500',
   },
   {
     id: '04',
     title: 'Delivered',
     description:
       'The package reaches the customer safely, completing the delivery process.',
-    image:
-      'https://images.pexels.com/photos/4506262/pexels-photo-4506262.jpeg?auto=compress&cs=tinysrgb&w=2070',
-    color: 'text-blue-600 border-blue-500',
+    icon: <CheckCircle className='w-12 h-12 text-green-600' />,
+    color: 'text-green-600 border-green-500',
   },
 ];
 
@@ -55,6 +56,7 @@ const DeliveryShippingProcess = () => {
           How Your Order Reaches You
         </h2>
       </div>
+
       <div className='flex flex-col md:flex-row justify-center items-center gap-12 max-w-6xl mx-auto px-4 relative'>
         {steps.map((step, index) => (
           <motion.div
@@ -65,31 +67,23 @@ const DeliveryShippingProcess = () => {
             viewport={{ once: true }}
             className='relative text-center max-w-xs'
           >
-            {/* Image with circular border and number */}
             <div
-              className={`relative border-4 rounded-full overflow-hidden w-40 h-40 mx-auto ${step.color}`}
+              className={`relative border-4 rounded-full w-30 h-30 mx-auto flex items-center justify-center ${step.color}`}
             >
-              <Image
-                src={step.image}
-                alt={step.title}
-                height={500}
-                width={500}
-                className='object-cover'
-              />
+              {step.icon}
               <div
                 className={`absolute -top-3 -right-3 bg-white shadow-md rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold ${step.color}`}
               >
                 {step.id}
               </div>
             </div>
-            {/* Title and Description */}
-            <h3 className='text-lg font-bold mt-6'>{step.title}</h3>
+
+            <h4 className='text-lg font-bold mt-4'>{step.title}</h4>
             <p className='text-gray-500 text-sm mt-2'>{step.description}</p>
 
-            {/* Arrow */}
             {index < steps.length - 1 && (
-              <div className='hidden md:block absolute top-20 -right-10'>
-                <ArrowRight size={32} className='text-gray-300' />
+              <div className='hidden md:block absolute top-16 -right-10'>
+                <ArrowRight size={28} className='text-gray-300' />
               </div>
             )}
           </motion.div>

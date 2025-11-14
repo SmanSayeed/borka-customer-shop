@@ -57,7 +57,7 @@ const FAQ = () => {
   return (
     <div className='max-w-5xl mx-auto my-16 px-4'>
       {/* Header */}
-      <div className='mb-12 text-center mx-auto flex-col items-center'>
+      <div className='mb-12 flex text-center mx-auto flex-col items-center'>
         <CustomBadge text='Faith Journey FAQs' />
         <h2 className='text-3xl md:text-4xl font-bold mt-4 text-heading'>
           Frequently Asked Questions
@@ -69,7 +69,7 @@ const FAQ = () => {
         {faqData.map((item) => (
           <div
             key={item.id}
-            className='rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-200 text-color'
+            className='rounded-lg overflow-hidden bg-white hover:shadow-md transition-shadow duration-200 text-color'
           >
             {/* Question Button */}
             <button
@@ -81,7 +81,7 @@ const FAQ = () => {
               </span>
               <div className='flex-shrink-0'>
                 {expandedItems.includes(item.id) ? (
-                  <Minus className='w-6 h-6 bg-secondary p-1 rounded-full text-white' />
+                  <Minus className='w-6 h-6 bg-primary p-1 rounded-full text-white' />
                 ) : (
                   <Plus className='w-5 h-5 text-secondary' />
                 )}

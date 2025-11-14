@@ -5,7 +5,7 @@ import PageBanner from '@/components/shared/PageBanner';
 const ContactPage = () => {
   return (
     <div className='bg-background'>
-      <PageBanner />
+      <PageBanner text='Contact Us'/>
       <ContactUs />
       <BranchLocations />
     </div>

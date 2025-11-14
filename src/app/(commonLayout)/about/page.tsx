@@ -7,7 +7,7 @@ import ShopFacebook from '@/components/modules/Home/ShopFacebook';
 const AboutPage = () => {
   return (
     <div>
-      <PageBanner />
+      <PageBanner text='About Us'/>
       <AboutUs />
       <ShippingProcess />
       <FAQ />

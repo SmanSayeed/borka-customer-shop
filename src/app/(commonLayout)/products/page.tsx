@@ -14,7 +14,7 @@ const ProductsPage = async () => {
 
   return (
     <div>
-      <PageBanner />
+      <PageBanner text='Product List'/>
       <div className='max-w-7xl my-10 mx-auto'>
         {/* <ProductCatalog products={products} /> */}
         <ProductList />
