@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={` ${dmSans.variable} ${marcellus.variable} ${marckScript.variable} font-dmSans bg-background text-foreground antialiased`}
+        className={` ${dmSans.variable} ${marcellus.variable} ${marckScript.variable} font-dmSans text-foreground antialiased bg-[#f7fbfe]`}
       >
         <QueryProvider>{children}</QueryProvider>
       </body>

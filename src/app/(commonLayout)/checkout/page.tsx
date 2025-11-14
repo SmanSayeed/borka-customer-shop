@@ -1,5 +1,6 @@
 'use client';
 
+import OrderStepper from '@/components/shared/OrderStepper';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -80,29 +81,7 @@ const CheckoutPage = () => {
 
   return (
     <div className='max-w-7xl mx-auto py-12 px-4'>
-      {/* Step Progress */}
-      <div className='flex items-center justify-between mb-14 max-w-4xl mx-auto'>
-        <div className='flex-1 text-center'>
-          <div className='w-8 h-8 rounded-full bg-green-600 text-white mx-auto flex items-center justify-center'>
-            1
-          </div>
-          <p className='mt-2 text-sm font-medium'>Your Cart</p>
-        </div>
-        <div className='flex-1 text-center border-t-2 border-green-600 relative top-4'></div>
-        <div className='flex-1 text-center'>
-          <div className='w-8 h-8 rounded-full bg-green-600 text-white mx-auto flex items-center justify-center'>
-            2
-          </div>
-          <p className='mt-2 text-sm font-medium'>Checkout Details</p>
-        </div>
-        <div className='flex-1 text-center border-t-2 border-gray-300 relative top-4'></div>
-        <div className='flex-1 text-center'>
-          <div className='w-8 h-8 rounded-full bg-gray-300 text-white mx-auto flex items-center justify-center'>
-            3
-          </div>
-          <p className='mt-2 text-sm font-medium'>Order Complete</p>
-        </div>
-      </div>
+      <OrderStepper currentStep={2}/>
 
       <div className='grid md:grid-cols-2 gap-8'>
         {/* Left Section - Address Forms */}
