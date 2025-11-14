@@ -86,7 +86,7 @@ export async function getProductColors () {
 
     const result = res.json();
     return result;
-  } catch (error) {
-    throw Error(error.message);
+  } catch (error: any) {
+    throw Error(error);
   }
 }

@@ -401,7 +401,6 @@ const Cart = () => {
               >
                 <CartItem
                   {...item}
-                  isMobile
                   onQuantityChange={handleQuantityChange}
                   onRemove={handleRemove}
                 />

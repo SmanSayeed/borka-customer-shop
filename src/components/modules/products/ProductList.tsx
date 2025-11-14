@@ -1,8 +1,7 @@
 'use client';
 
 import {
-  fetchAllProducts,
-  getProductCategories,
+  getAllProducts,
   getProductColors,
 } from '@/actions/product';
 import Loader from '@/components/shared/Loader';
@@ -20,6 +19,7 @@ import { ChevronDown } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
+import useCategory from '@/hooks/useCategory';
 
 export default function ProductList() {
   const searchParams = useSearchParams();
@@ -106,7 +106,7 @@ export default function ProductList() {
   // ✅ Fetch Data
   const { data: productsData, isLoading: isProductLoading } = useQuery({
     queryKey: ['products', filters],
-    queryFn: async () => await fetchAllProducts(filters),
+    queryFn: async () => await getAllProducts(filters),
   });
 
   const { data: colorsData, isLoading: isColorLoading } = useQuery({
@@ -114,14 +114,10 @@ export default function ProductList() {
     queryFn: async () => await getProductColors(),
   });
 
-  const { data: categoriesData, isLoading: isCategoryLoading } = useQuery({
-    queryKey: ['categories'],
-    queryFn: async () => await getProductCategories(),
-  });
+const {categories, isCategoryLoading} = useCategory();
 
   const products = productsData?.data?.data || [];
   const colors = colorsData?.data || [];
-  const categories = categoriesData?.data || [];
 
   return (
     <div className='grid grid-cols-12 gap-6'>
