@@ -30,13 +30,13 @@ const CartItem = ({
 
   return (
     <tr className='border-b border-border'>
-      <td className='py-6'>
+      <td className='py-4 pl-4'>
         <div className='flex items-start gap-4'>
           <div className='relative'>
             <img
               src={image}
               alt={name}
-              className='w-24 h-24 object-cover rounded-lg bg-secondary'
+              className='w-20 h-20 object-cover rounded-lg bg-secondary'
             />
             <button
               onClick={() => onRemove(id)}
@@ -60,18 +60,15 @@ const CartItem = ({
         </div>
       </td>
 
-      <td className='py-6 px-4'>
-        <div className='flex items-center gap-2'>
-          <div className='w-2 h-2 bg-foreground rounded-full'></div>
+      <td className='py-4 px-4'>
           <span className='text-sm text-foreground'>{stock}</span>
-        </div>
       </td>
 
-      <td className='py-6 px-4'>
+      <td className='py-4 px-4'>
         <span className='font-medium text-foreground'>${price.toFixed(2)}</span>
       </td>
 
-      <td className='py-6 px-4'>
+      <td className='py-4 px-4'>
         <div className='flex items-center gap-2 bg-[#f7fbfe] rounded-md p-1 w-fit'>
           <Button
             variant='ghost'
@@ -95,7 +92,7 @@ const CartItem = ({
         </div>
       </td>
 
-      <td className='py-6 px-4 text-right'>
+      <td className='py-4 px-4 text-right'>
         <span className='font-semibold text-foreground'>
           ${total.toFixed(2)}
         </span>

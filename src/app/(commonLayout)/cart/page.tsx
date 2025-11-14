@@ -262,6 +262,7 @@ import CartItem from '@/components/modules/cart/CartItem';
 import { Button } from '@/components/ui/button';
 import { Flame, Phone } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CartProduct {
@@ -276,6 +277,7 @@ interface CartProduct {
 }
 
 const Cart = () => {
+  const router = useRouter();
   const [cartItems, setCartItems] = useState<CartProduct[]>([
     {
       id: '1',
@@ -329,58 +331,52 @@ const Cart = () => {
 
   return (
     <div className='min-h-screen'>
-      <div className='container mx-auto px-4 py-8 max-w-7xl'>
-        <div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8'>
-          <nav className='text-sm text-muted-foreground mb-6'>
-            Home /Products/ <span className='text-foreground'>Cart</span>
+      <div className='container mx-auto px-4 py-6 max-w-7xl'>
+        <div className='flex flex-col gap-3 md:flex-row md:justify-between md:items-center my-4'>
+          <nav className='text-xs sm:text-sm text-muted-foreground'>
+            Home / Products / <span className='text-foreground'>Cart</span>
           </nav>
-          <div className='flex items-center gap-2 bg-card rounded-lg px-4 py-2'>
-            <Flame className='w-5 h-5 text-primary' />
-            <span className='text-sm text-foreground'>
-              Hurry up! Your items are reserved for 24 hours
-            </span>
+
+          <div className='flex items-center gap-2 bg-card rounded-lg px-3 py-2 text-sm'>
+            <Flame className='w-4 h-4 text-primary' />
+            <span>Items reserved for 24 hours</span>
           </div>
-          <div className='flex items-center gap-2 text-sm text-foreground'>
+
+          <div className='flex items-center gap-2 text-sm'>
             <Phone className='w-4 h-4' />
             <span>Help line: 01819-491091</span>
           </div>
         </div>
 
-        <h1 className='text-3xl md:text-4xl font-bold text-foreground mb-10'>
+        {/* Title */}
+        <h1 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-6'>
           Shopping Cart
         </h1>
-        {/* Cart Info */}
-        <div className='bg-white p-6 md:p-8 rounded-2xl'>
-          <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-6'>
-            <p className='text-foreground'>
+
+        {/* Cart Main Box */}
+        <div className='bg-white p-4 sm:p-6 md:p-8 rounded-2xl'>
+          <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4'>
+            <p className='text-sm sm:text-base'>
               You have <span className='font-semibold'>{cartItems.length}</span>{' '}
               products in your cart
             </p>
-            <p className='text-sm text-muted-foreground'>
+
+            <p className='text-xs sm:text-sm text-muted-foreground'>
               Expected Delivery:{' '}
               <span className='font-semibold text-foreground'>Friday</span>
             </p>
           </div>
 
-          <div className='bg-card rounded-lg border border-border overflow-x-auto mb-8'>
+          {/* TABLE (desktop) */}
+          <div className='hidden md:block bg-card rounded-lg border border-border overflow-x-auto mb-8'>
             <table className='w-full'>
               <thead>
                 <tr className='border-b border-border'>
-                  <th className='text-left py-4 px-4 font-medium text-foreground'>
-                    Product
-                  </th>
-                  <th className='text-left py-4 px-4 font-medium text-foreground'>
-                    Stock
-                  </th>
-                  <th className='text-left py-4 px-4 font-medium text-foreground'>
-                    Price
-                  </th>
-                  <th className='text-left py-4 px-4 font-medium text-foreground'>
-                    Quantity
-                  </th>
-                  <th className='text-right py-4 px-4 font-medium text-foreground'>
-                    Total
-                  </th>
+                  <th className='text-left py-4 px-4'>Product</th>
+                  <th className='text-left py-4 px-4'>Stock</th>
+                  <th className='text-left py-4 px-4'>Price</th>
+                  <th className='text-left py-4 px-4'>Quantity</th>
+                  <th className='text-right py-4 px-4'>Total</th>
                 </tr>
               </thead>
               <tbody>
@@ -396,27 +392,46 @@ const Cart = () => {
             </table>
           </div>
 
+          {/* MOBILE CARD VIEW */}
+          <div className='md:hidden flex flex-col gap-4 mb-8'>
+            {cartItems.map((item) => (
+              <div
+                key={item.id}
+                className='border rounded-lg p-4 flex flex-col gap-3'
+              >
+                <CartItem
+                  {...item}
+                  isMobile
+                  onQuantityChange={handleQuantityChange}
+                  onRemove={handleRemove}
+                />
+              </div>
+            ))}
+          </div>
+
           {/* Summary */}
-          <div className='flex flex-col md:flex-row justify-end gap-4'>
-            <div className='md:w-96'>
+          <div className='flex flex-col md:flex-row justify-end'>
+            <div className='w-full md:w-96'>
               <div className='flex justify-between items-center text-lg'>
-                <span className='font-semibold text-foreground'>
-                  Sub Total:
-                </span>
-                <span className='font-bold text-foreground text-xl'>
+                <span className='font-semibold'>Sub Total:</span>
+                <span className='font-bold text-xl'>
                   ${subtotal.toFixed(2)}
                 </span>
               </div>
 
-              <div className='flex gap-3 pt-4 items-center justify-end my-10'>
+              <div className='flex flex-col sm:flex-row sm:justify-end gap-4 mt-6'>
                 <Link
-                  href={'/products'}
-                  className='underline hover:text-primary hover:underline-offset-2'
+                  href='/products'
+                  className='text-center underline hover:text-primary'
                 >
                   Continue Shopping
                 </Link>
-                <Button className='bg-primary hover:bg-primary/90'>
-                  Process To Checkout
+
+                <Button
+                  className='bg-primary hover:bg-primary/90 w-full sm:w-auto'
+                  onClick={() => router.push('/checkout')}
+                >
+                  Proceed To Checkout
                 </Button>
               </div>
             </div>
@@ -428,3 +443,4 @@ const Cart = () => {
 };
 
 export default Cart;
+

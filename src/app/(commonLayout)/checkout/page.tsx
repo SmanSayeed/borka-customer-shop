@@ -1,267 +1,82 @@
 'use client';
 
-import OrderStepper from '@/components/shared/OrderStepper';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import OrderForm from '@/components/modules/checkout/OrderForm';
+import OrderSummary from '@/components/modules/checkout/OrderSummary';
+import { useState } from 'react';
 
-const CheckoutPage = () => {
-  const router = useRouter();
-  const [sameAsBilling, setSameAsBilling] = useState(false);
+export interface CartItem {
+  product_id: number;
+  quantity: number;
+  size_id: number;
+  original_price: number;
+  discount_amount: number;
+}
 
-  const [billingAddress, setBillingAddress] = useState({
-    name: '',
-    address: '',
-    area: '',
-    zone_id: '',
-  });
+const Checkout = () => {
+  const [cartItems] = useState<CartItem[]>([
+    {
+      product_id: 1,
+      quantity: 6,
+      size_id: 1,
+      original_price: 1000,
+      discount_amount: 100,
+    },
+    {
+      product_id: 2,
+      quantity: 2,
+      size_id: 1,
+      original_price: 700,
+      discount_amount: 0,
+    },
+  ]);
 
-  const [shippingAddress, setShippingAddress] = useState({
-    name: '',
-    address: '',
-    area: '',
-    zone_id: '',
-  });
+  const [deliveryCharge, setDeliveryCharge] = useState(100); // Default delivery charge
+  const [totalPayable, setTotalPayable] = useState(0);
 
-  const [paymentMethod, setPaymentMethod] = useState('credit');
-  const [agree, setAgree] = useState(false);
+  const handleFormSubmit = (formData: any) => {
+    // Calculate total payable amount
+    const subtotal = cartItems.reduce(
+      (sum, item) =>
+        sum + item.original_price * item.quantity - item.discount_amount,
+      0
+    );
+    const total = subtotal + formData.deliveryCharge;
+    setTotalPayable(total);
 
-  useEffect(() => {
-    // Same as billing toggle হলে shipping address sync হবে
-    if (sameAsBilling) {
-      setShippingAddress({ ...billingAddress });
-    }
-  }, [sameAsBilling, billingAddress]);
-
-  const handleBillingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setBillingAddress((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleShippingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setShippingAddress((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handlePlaceOrder = () => {
-    if (!agree) {
-      alert('Please agree to the terms and conditions.');
-      return;
-    }
-
-    const orderSummary = checkoutData.products.map((p) => ({
-      product_id: p.id,
-      name: p.name,
-      quantity: p.quantity,
-      subtotal: p.subtotal,
-    }));
-
-    const orderPayload = {
-      billing_address: billingAddress,
-      shipping_address: sameAsBilling ? billingAddress : shippingAddress,
-      payment_method: paymentMethod,
-      order_summary: orderSummary,
-      coupon: checkoutData.coupon,
-      tax: checkoutData.tax,
-      total:
-        checkoutData.products.reduce((acc, p) => acc + p.subtotal, 0) -
-        checkoutData.coupon.discount +
-        checkoutData.tax,
+    const payload = {
+      phone_number: formData.phoneNumber,
+      items: cartItems,
+      shipping_address: formData.shippingAddress,
+      billing_address: formData.billingAddress,
+      notes: formData.notes || '',
+      delivery_charge: formData.deliveryCharge,
+      total_payable_amount: total,
     };
 
-    console.log('🧾 ORDER DATA:', orderPayload);
-    router.push('/success');
+    console.log('Order Payload:', payload);
   };
 
-  const { products, coupon, tax } = checkoutData;
-  const subtotal = products.reduce((acc, p) => acc + p.subtotal, 0);
-  const total = subtotal - coupon.discount + tax;
-
   return (
-    <div className='max-w-7xl mx-auto py-12 px-4'>
-      <OrderStepper currentStep={2}/>
+    <div className='container mx-auto px-4 py-8 max-w-7xl'>
+      <h1 className='text-3xl md:text-4xl font-bold text-foreground mb-8'>
+        Checkout
+      </h1>
 
-      <div className='grid md:grid-cols-2 gap-8'>
-        {/* Left Section - Address Forms */}
-        <div className='space-y-8'>
-          {/* Billing Address */}
-          <div className='space-y-4'>
-            <h3 className='text-lg font-semibold text-gray-800'>
-              Billing Address
-            </h3>
-            <Input
-              name='name'
-              value={billingAddress.name}
-              onChange={handleBillingChange}
-              placeholder='Full Name *'
-            />
-            <Input
-              name='address'
-              value={billingAddress.address}
-              onChange={handleBillingChange}
-              placeholder='Address *'
-            />
-            <Input
-              name='area'
-              value={billingAddress.area}
-              onChange={handleBillingChange}
-              placeholder='Area (optional)'
-            />
-            <Input
-              name='zone_id'
-              value={billingAddress.zone_id}
-              onChange={handleBillingChange}
-              placeholder='Zone ID *'
-            />
-          </div>
-
-          {/* Same as Billing Checkbox */}
-          <div className='flex items-center gap-2'>
-            <Checkbox
-              checked={sameAsBilling}
-              onCheckedChange={() => setSameAsBilling(!sameAsBilling)}
-              id='sameAddress'
-            />
-            <label htmlFor='sameAddress' className='text-sm'>
-              Shipping address same as billing
-            </label>
-          </div>
-
-          {/* Shipping Address */}
-          {!sameAsBilling && (
-            <div className='space-y-4'>
-              <h3 className='text-lg font-semibold text-gray-800'>
-                Shipping Address
-              </h3>
-              <Input
-                name='name'
-                value={shippingAddress.name}
-                onChange={handleShippingChange}
-                placeholder='Full Name *'
-              />
-              <Input
-                name='address'
-                value={shippingAddress.address}
-                onChange={handleShippingChange}
-                placeholder='Address *'
-              />
-              <Input
-                name='area'
-                value={shippingAddress.area}
-                onChange={handleShippingChange}
-                placeholder='Area (optional)'
-              />
-              <Input
-                name='zone_id'
-                value={shippingAddress.zone_id}
-                onChange={handleShippingChange}
-                placeholder='Zone ID *'
-              />
-            </div>
-          )}
+      <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+        <div className='lg:col-span-2'>
+          <OrderForm onFormSubmit={handleFormSubmit} />
         </div>
 
-        {/* Right Section - Order Summary */}
-        <div className='space-y-4 p-6 bg-gray-100 rounded-lg'>
-          <h3 className='text-lg font-bold mb-4'>Your Order</h3>
-
-          <div className='text-sm space-y-2'>
-            {products.map((item) => (
-              <div key={item.id} className='border-b pb-2'>
-                <p className='font-medium'>
-                  {item.name} × {item.quantity}
-                </p>
-                <p>Formulation: {item.formulation}</p>
-                <p>CBD Type: {item.cbdType}</p>
-                <p>Strength: {item.strength}</p>
-                <p>Subtotal: ${item.subtotal.toFixed(2)}</p>
-              </div>
-            ))}
-            <p>
-              Coupon: {coupon.code} -${coupon.discount.toFixed(2)}
-            </p>
-            <p>Tax: ${tax.toFixed(2)}</p>
-            <p className='font-bold text-base pt-2 border-t'>
-              Total: ${total.toFixed(2)}
-            </p>
-          </div>
-
-          {/* Payment Methods */}
-          <div className='space-y-2 mt-4'>
-            <label className='flex items-center gap-2'>
-              <input
-                type='radio'
-                name='payment'
-                checked={paymentMethod === 'credit'}
-                onChange={() => setPaymentMethod('credit')}
-              />
-              Credit Card
-            </label>
-            <label className='flex items-center gap-2'>
-              <input
-                type='radio'
-                name='payment'
-                checked={paymentMethod === 'sezzle'}
-                onChange={() => setPaymentMethod('sezzle')}
-              />
-              Interest Free Payments
-            </label>
-          </div>
-
-          {paymentMethod === 'credit' && (
-            <div className='space-y-2 mt-2'>
-              <Input placeholder='Card Number *' />
-              <div className='flex gap-2'>
-                <Input placeholder='MM/YY *' />
-                <Input placeholder='CSC *' />
-              </div>
-            </div>
-          )}
-
-          <div className='flex items-center gap-2 mt-3'>
-            <Checkbox
-              id='terms'
-              checked={agree}
-              onCheckedChange={() => setAgree(!agree)}
-            />
-            <label htmlFor='terms' className='text-sm'>
-              You agree to our privacy policy and terms *
-            </label>
-          </div>
-
-          <Button
-            className='w-full mt-4 bg-primary hover:bg-teal-700'
-            onClick={handlePlaceOrder}
-          >
-            Place Order
-          </Button>
+        <div className='lg:col-span-1'>
+          <OrderSummary
+            items={cartItems}
+            deliveryCharge={deliveryCharge}
+            totalPayableAmount={totalPayable}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default CheckoutPage;
-
-
-export const checkoutData = {
-  products: [
-    {
-      id: 1,
-      name: 'Energy Gummies',
-      quantity: 2,
-      formulation: 'Energy',
-      cbdType: 'Pure Isolate (Zero THC)',
-      strength: 'Regular (20mg/serving)',
-      price: 30,
-      subtotal: 60,
-    },
-  ],
-  coupon: {
-    code: 'gummy23',
-    discount: 12, 
-  },
-  tax: 0,
-};
+export default Checkout;
