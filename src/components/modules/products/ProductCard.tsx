@@ -9,7 +9,7 @@ import Link from 'next/link';
 const ProductCard = ({ product }: { product: IProduct }) => {
   return (
     <motion.div
-      className='relative border border-primary/20 overflow-hidden hover:bg-gray-50 hover:rounded-2xl group transition-all duration-700'
+      className='relative border border-primary/20 overflow-hidden hover:bg-gray-50 group transition-all duration-700'
       initial='hidden'
       whileInView='visible'
       viewport={{ once: true, amount: 0.2 }}

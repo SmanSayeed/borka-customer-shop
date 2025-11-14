@@ -1,12 +1,7 @@
 'use client';
 
 import BreadcrumbBanner from '@/components/shared/Breadcrumb';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
@@ -27,6 +22,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
+import ProductAdditionalInfo from './ProductAddionalInfo';
 
 const ProductDetails = ({ product }: { product: IProduct }) => {
   const [quantity, setQuantity] = useState(1);
@@ -36,20 +32,19 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
   const [zoomed, setZoomed] = useState(false);
 
   return (
-    <div className='px-6 lg:px-0'>
-      {/* Breadcrumb */}
+    <div className='px-4 lg:px-0'>
       <BreadcrumbBanner />
 
       <div className='container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6'>
-        {/* ---------- Left Section - Images ---------- */}
-        <div className='flex gap-8'>
-          {/* Thumbnails */}
-          <div className='flex flex-col gap-4'>
+        {/* ---------------- Left Section ---------------- */}
+        <div className='flex flex-col lg:flex-row gap-6 lg:gap-8'>
+          {/* Sub Images */}
+          <div className='flex lg:flex-col gap-2 lg:gap-4 order-2 lg:order-1'>
             {product.image.map((img, index) => (
               <div
                 key={index}
                 onClick={() => setMainImage(img)}
-                className={`relative w-28 h-28 border rounded-md cursor-pointer overflow-hidden ${
+                className={`relative w-20 h-20 lg:w-28 lg:h-28 border rounded-md cursor-pointer overflow-hidden ${
                   mainImage === img ? 'border-primary' : 'border-gray-200'
                 }`}
               >
@@ -59,25 +54,23 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
           </div>
 
           {/* Main Image */}
-          <div className='relative h-full flex items-center justify-center'>
+          <div className='relative w-full lg:w-[500px] h-[300px] lg:h-[500px] order-1 lg:order-2 flex items-center justify-center'>
             <div
-              className='relative rounded-lg overflow-hidden'
+              className='relative rounded-lg overflow-hidden w-full h-full'
               onMouseEnter={() => setZoomed(true)}
               onMouseLeave={() => setZoomed(false)}
             >
               <Image
                 src={mainImage}
                 alt={product.name}
-                width={500}
-                height={500}
+                fill
                 className={`object-contain transition-transform duration-300 ${
                   zoomed ? 'scale-110 cursor-zoom-in' : 'scale-100'
                 }`}
               />
             </div>
 
-            {/* Enlarge Button */}
-            <div className='absolute bottom-4 left-4'>
+            <div className='absolute bottom-2 left-2'>
               <Dialog>
                 <DialogTrigger asChild>
                   <TooltipProvider>
@@ -87,7 +80,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
                           <ZoomIn className='size-5 text-gray-700' />
                         </button>
                       </TooltipTrigger>
-                      <TooltipContent side='top' className='text-xs'>
+                      <TooltipContent className='text-xs'>
                         Click to enlarge
                       </TooltipContent>
                     </Tooltip>
@@ -110,9 +103,10 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
           </div>
         </div>
 
-        {/* ---------- Right Section - Product Info ---------- */}
-        <div>
+        {/* ---------------- Right Section ---------------- */}
+        <div className='space-y-4'>
           <Badge className='bg-green-500 my-3 rounded-none'>New Arrival</Badge>
+
           <h2 className='text-2xl font-semibold mb-2'>{product.name}</h2>
 
           <div className='flex items-center gap-2 mb-4'>
@@ -129,7 +123,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
             {product.discount && (
               <>
                 <p className='text-gray-400 line-through'>
-                  $
+                  ${' '}
                   {(
                     product.price +
                     (product.price * product.discount) / 100
@@ -142,17 +136,29 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
             )}
           </div>
 
+          {/* Product Info */}
+          <div className='space-y-1 mb-4 text-sm text-gray-700'>
+            <p>
+              <strong>SKU:</strong> FS0011GL
+            </p>
+            <p>
+              <strong>Available:</strong> In Stock
+            </p>
+            <p>
+              <strong>Categories:</strong> Sweaters, Tops
+            </p>
+          </div>
+
           {/* Colors & Sizes */}
-          <div className='flex gap-10 mb-4'>
-            {/* Colors */}
-            <div>
-              <p className='font-medium mb-2'>
+          <div className='flex flex-col lg:flex-row gap-4 mb-4'>
+            <div className='flex flex-col gap-2'>
+              <p className='font-medium'>
                 Color:{' '}
                 <span className='text-gray-500'>
                   {selectedColor || 'Select'}
                 </span>
               </p>
-              <div className='flex gap-2'>
+              <div className='flex gap-2 flex-wrap'>
                 {product.color?.map((color) => (
                   <button
                     key={color}
@@ -168,15 +174,14 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
               </div>
             </div>
 
-            {/* Sizes */}
-            <div>
-              <p className='font-medium mb-2'>
+            <div className='flex flex-col gap-2'>
+              <p className='font-medium'>
                 Size:{' '}
                 <span className='text-gray-500'>
                   {selectedSize || 'Select'}
                 </span>
               </p>
-              <div className='flex gap-2'>
+              <div className='flex gap-2 flex-wrap'>
                 {product.size?.map((size) => (
                   <button
                     key={size}
@@ -216,84 +221,30 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
             </div>
           </div>
 
-          {/* Extra Info */}
           <ul className='text-sm text-gray-600 mb-6 space-y-2'>
             <li>✅ In Stock</li>
             <li>✅ Free delivery available</li>
             <li>✅ Sales 10% Off Use Code: CODE123</li>
           </ul>
 
-          {/* Action Buttons */}
-          <div className='flex items-center justify-between gap-4 mt-6'>
-            <Button className='flex-1 bg-orange-500 hover:bg-orange-600 text-white'>
+          <div className='flex flex-col lg:flex-row items-center gap-4 mt-6'>
+            <Button className='flex-1 bg-primary hover:bg-primary/50 text-white'>
               <ShoppingCart className='mr-2' /> Add To Cart
             </Button>
+
             <Button variant='outline' className='flex-1'>
               <ShoppingBag className='mr-2' /> Buy Now
             </Button>
+
             <Button variant='ghost' size='icon'>
               <Heart className='text-gray-400' />
             </Button>
           </div>
-
-          {/* Accordion Section */}
-          <div className='mt-8 border-t border-gray-200 dark:border-gray-800'>
-            <Accordion type='single' collapsible className='w-full'>
-              <AccordionItem
-                value='description'
-                className='border-b border-gray-200 dark:border-gray-800'
-              >
-                <AccordionTrigger className='text-base font-medium text-gray-900 dark:text-gray-100 py-4'>
-                  <h4>Description</h4>
-                </AccordionTrigger>
-                <AccordionContent className='text-sm text-gray-600 dark:text-gray-400 pb-4'>
-                  This product is made from high-quality materials ensuring
-                  comfort, durability, and a perfect fit for everyday use.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem
-                value='additional-info'
-                className='border-b border-gray-200 dark:border-gray-800'
-              >
-                <AccordionTrigger className='text-base font-medium text-gray-900 dark:text-gray-100 py-4'>
-                  <h4>Additional Information</h4>
-                </AccordionTrigger>
-                <AccordionContent className='text-sm text-gray-600 dark:text-gray-400 pb-4'>
-                  Material: 100% cotton <br />
-                  Care: Machine wash cold, tumble dry low.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem
-                value='shipping'
-                className='border-b border-gray-200 dark:border-gray-800'
-              >
-                <AccordionTrigger className='text-base font-medium text-gray-900 dark:text-gray-100 py-4'>
-                  <h4>Shipping and Returns</h4>
-                </AccordionTrigger>
-                <AccordionContent className='text-sm text-gray-600 dark:text-gray-400 pb-4'>
-                  We offer free shipping for all orders above $50. Items can be
-                  returned within 7 days of delivery.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem
-                value='return-policy'
-                className='border-b border-gray-200 dark:border-gray-800'
-              >
-                <AccordionTrigger className='text-base font-medium text-gray-900 dark:text-gray-100 py-4'>
-                  <h4>Return Policies</h4>
-                </AccordionTrigger>
-                <AccordionContent className='text-sm text-gray-600 dark:text-gray-400 pb-4'>
-                  Products must be unused and in their original packaging to
-                  qualify for returns.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
         </div>
       </div>
+
+      {/* ---------------- Tabs Section ---------------- */}
+      <ProductAdditionalInfo />
     </div>
   );
 };
