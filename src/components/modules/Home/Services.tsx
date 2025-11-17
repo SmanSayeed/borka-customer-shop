@@ -1,32 +1,32 @@
-'use client';
+'use client'
 
 import { motion } from 'framer-motion';
-import { Package, BadgeCheck, HeartHandshake, ShieldCheck } from 'lucide-react';
+import { BadgeCheck, HeartHandshake, Package, ShieldCheck } from 'lucide-react';
+
+const services = [
+  {
+    icon: Package,
+    title: 'Free Shipping',
+    description: 'You will love at great low prices.',
+  },
+  {
+    icon: BadgeCheck,
+    title: 'Free Returns',
+    description: 'Within 15 days for an exchange.',
+  },
+  {
+    icon: HeartHandshake,
+    title: 'Flexible Payment',
+    description: 'Pay with multiple credit cards.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Support Online',
+    description: 'Outstanding premium support.',
+  },
+];
 
 const Services = () => {
-  const services = [
-    {
-      icon: Package,
-      title: 'Free Shipping',
-      description: 'You will love at great low prices.',
-    },
-    {
-      icon: BadgeCheck,
-      title: 'Free Returns',
-      description: 'Within 15 days for an exchange.',
-    },
-    {
-      icon: HeartHandshake,
-      title: 'Flexible Payment',
-      description: 'Pay with multiple credit cards.',
-    },
-    {
-      icon: ShieldCheck,
-      title: 'Support Online',
-      description: 'Outstanding premium support.',
-    },
-  ];
-
   const cardVariants = {
     hidden: { opacity: 0, y: 40 },
     visible: (i: number) => ({

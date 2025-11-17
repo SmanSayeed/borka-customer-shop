@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -56,7 +54,7 @@ const ShopFacebook = () => {
                   />
 
                   <div className='absolute inset-0 z-10 pointer-events-none'>
-                    <div className='absolute inset-0 bg-gradient-to-t from-black/40 via-primary/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out' />
+                    <div className='absolute inset-0 bg-linear-to-t from-black/40 via-primary/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out' />
                   </div>
 
                   <div className='absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-all duration-500'>

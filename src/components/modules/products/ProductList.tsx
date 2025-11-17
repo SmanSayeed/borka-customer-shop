@@ -1,8 +1,7 @@
 'use client';
 
 import {
-  getAllProducts,
-  getProductColors,
+  getProductColors
 } from '@/actions/product';
 import Loader from '@/components/shared/Loader';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -14,16 +13,18 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
+import useCategory from '@/hooks/useCategory';
+import useProducts from '@/hooks/useProducts';
 import { useQuery } from '@tanstack/react-query';
 import { ChevronDown } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
-import useCategory from '@/hooks/useCategory';
 
 export default function ProductList() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const {products} = useProducts();
 
   // ✅ Convert URL query → object
   const filters = Object.fromEntries(searchParams.entries());
@@ -104,20 +105,23 @@ export default function ProductList() {
   };
 
   // ✅ Fetch Data
-  const { data: productsData, isLoading: isProductLoading } = useQuery({
-    queryKey: ['products', filters],
-    queryFn: async () => await getAllProducts(filters),
-  });
+  // const { data: productsData, isLoading: isProductLoading } = useQuery({
+  //   queryKey: ['products', filters],
+  //   queryFn: async () => await getAllProducts(filters),
+  // });
 
-  const { data: colorsData, isLoading: isColorLoading } = useQuery({
+  const { data: colorsData } = useQuery({
     queryKey: ['colors'],
     queryFn: async () => await getProductColors(),
+    staleTime: 1000*60
   });
 
 const {categories, isCategoryLoading} = useCategory();
 
-  const products = productsData?.data?.data || [];
+  // const products = productsData?.data?.data || [];
   const colors = colorsData?.data || [];
+
+  console.log(products)
 
   return (
     <div className='grid grid-cols-12 gap-6'>
@@ -188,7 +192,7 @@ const {categories, isCategoryLoading} = useCategory();
               <Loader />
             ) : (
               categories.map((cat: any) => (
-                <div key={cat._id} className='flex items-center space-x-2'>
+                <div key={cat.name} className='flex items-center space-x-2'>
                   <Checkbox
                     id={cat.name}
                     checked={selectedCategories.includes(cat.name)}
@@ -210,12 +214,12 @@ const {categories, isCategoryLoading} = useCategory();
         </Collapsible>
 
         {/* 🎨 Color */}
-        {/* <Collapsible defaultOpen>
+        <Collapsible defaultOpen>
           <CollapsibleTrigger className='flex justify-between items-center w-full py-2 font-medium'>
             Colors <ChevronDown className='w-4 h-4' />
           </CollapsibleTrigger>
           <CollapsibleContent className='mt-3 flex flex-wrap gap-3'>
-            {isColorLoading? <Loader /> : colors.map((color: any) => (
+            {colors.map((color: any) => (
               <div
                 key={color._id}
                 onClick={() =>
@@ -236,15 +240,13 @@ const {categories, isCategoryLoading} = useCategory();
               ></div>
             ))}
           </CollapsibleContent>
-        </Collapsible> */}
+        </Collapsible>
       </div>
 
       {/* 🛍️ Product Grid */}
       <div className='col-span-12 md:col-span-9'>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {isProductLoading ? (
-            <Loader />
-          ) : products?.length ? (
+          {products?.length ? (
             products.map((item: any) => (
               <ProductCard key={item._id} product={item} />
             ))

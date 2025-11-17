@@ -1,13 +1,15 @@
-'use client';
+'use client'
 
 import Loader from '@/components/shared/Loader';
-import useProducts from '@/hooks/useProducts';
 import { IProduct } from '@/types';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import ProductCard from './ProductCard';
+import { useQuery } from '@tanstack/react-query';
+import { getAllProducts } from '@/actions/product';
+import useProducts from '@/hooks/useProducts';
 
 const NewArrivals = () => {
   const { products, isProductLoading } = useProducts();
@@ -47,9 +49,6 @@ const NewArrivals = () => {
             ))}
           </Swiper>
         )}
-        <button className='underline font-semibold text-foreground hover:underline-offset-3 hover:text-primary transition-colors'>
-          Discover New Arrival
-        </button>
       </div>
     </div>
   );

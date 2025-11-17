@@ -1,3 +1,5 @@
+'use client';
+
 import AddToCartButton from '@/components/shared/addToCartBtn';
 import { IProduct } from '@/types';
 import clsx from 'clsx';
@@ -9,17 +11,16 @@ import Link from 'next/link';
 const ProductCard = ({ product }: { product: IProduct }) => {
   return (
     <motion.div
-      className='relative border border-primary/20 overflow-hidden hover:bg-gray-50 group transition-all duration-700'
+      className='relative overflow-hidden bg-white rounded-xl transition-all duration-700 group' // <-- add group here
       initial='hidden'
       whileInView='visible'
       viewport={{ once: true, amount: 0.2 }}
       whileHover={{ scale: 1 }}
     >
-      {/* IMAGE CONTAINER */}
       <div
         className={clsx(
           'relative w-full overflow-hidden',
-          'aspect-[3/4] h-[380px] md:h-[520px]'
+          'aspect-3/4 h-[380px] md:h-[620px]'
         )}
       >
         {product.product_code && (
@@ -34,15 +35,14 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           </span>
         )}
 
-        {/* Product Image */}
         <Image
           src={product.thumbnail_url || '/placeholder.png'}
           alt={product.product_label || 'Product Image'}
-          fill
+          height={900}
+          width={500}
           className='object-cover transition-transform duration-500 ease-in-out group-hover:scale-110'
         />
 
-        {/* Hover Buttons */}
         <div className='absolute right-3 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10'>
           <AddToCartButton product={product} />
 
@@ -57,8 +57,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           </Link>
         </div>
       </div>
-
-      {/* TEXT AREA */}
+      
       <div className='py-6 text-center flex flex-col items-center justify-center transition-all duration-300'>
         <h4 className='font-semibold text-xl'>{product.product_label}</h4>
         <p className='text-sm text-gray-500 mt-1'>

@@ -1,11 +1,11 @@
 'use client';
 
+import { images } from '@/constants';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
-import Image from 'next/image';
 import { ChevronsRight } from 'lucide-react';
+import Image from 'next/image';
 import CustomBreadcrumb from './CustomBreadcrumb';
-import { images } from '@/constants';
 
 const PageBanner = ({ text }: { text: string }) => {
   const [sliderRef] = useKeenSlider<HTMLDivElement>(
@@ -53,7 +53,7 @@ const PageBanner = ({ text }: { text: string }) => {
   );
 
   return (
-    <div className='relative h-[100px] md:h-[180px] lg:h-[240px] w-full overflow-hidden'>
+    <div className='relative h-[100px] md:h-[180px] lg:h-60 w-full overflow-hidden'>
       {/* Slider */}
       <div ref={sliderRef} className='keen-slider h-full'>
         {images.map((src, index) => (
@@ -64,7 +64,8 @@ const PageBanner = ({ text }: { text: string }) => {
             <Image
               src={src}
               alt={`Banner ${index + 1}`}
-              fill
+              width={400}
+              height={450}
               className='object-cover'
               priority={index === 0}
             />
@@ -72,10 +73,7 @@ const PageBanner = ({ text }: { text: string }) => {
         ))}
       </div>
 
-      {/* Gradient Overlay */}
-      <div className='absolute inset-0 bg-gradient-to-t from-secondary/70 to-transparent z-10' />
-
-      {/* Text Content */}
+      <div className='absolute inset-0 bg-linear-to-t from-secondary/70 to-transparent z-10' />
       <div className='absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)] md:w-[calc(100%-4rem)] z-20'>
         <div className='max-w-7xl mx-auto text-white'>
           <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4'>

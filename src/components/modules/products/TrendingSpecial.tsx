@@ -9,7 +9,7 @@ import { IProduct } from '@/types';
 import useProducts from '@/hooks/useProducts';
 
 const TrendingSpecial = () => {
-  const { products, isProductLoading } = useProducts();
+   const {products, isProductLoading} = useProducts();
 
   return (
     <div className='container mx-auto mt-24 px-6 lg:px-0'>

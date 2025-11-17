@@ -1,7 +1,6 @@
-'use client';
-
 import Carousel from '@/components/ui/carousel';
 import { categoryLinks } from '@/constants/category';
+
 export function Testimonial() {
   const slideData = categoryLinks.map((category, index) => ({
     title: category.name,

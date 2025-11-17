@@ -1,7 +1,6 @@
 'use client';
 
 import BreadcrumbBanner from '@/components/shared/Breadcrumb';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
@@ -23,6 +22,7 @@ import {
 import Image from 'next/image';
 import { useState } from 'react';
 import ProductAdditionalInfo from './ProductAddionalInfo';
+import ProductDetailsSection from './ProductAddionalInfo';
 
 const ProductDetails = ({ product }: { product: IProduct }) => {
   const [quantity, setQuantity] = useState(1);
@@ -33,7 +33,13 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
 
   return (
     <div className='px-4 lg:px-0'>
-      <BreadcrumbBanner />
+      <BreadcrumbBanner
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Products', href: '/products' },
+          { label: 'Product Details' },
+        ]}
+      />
 
       <div className='container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6'>
         {/* ---------------- Left Section ---------------- */}
@@ -244,7 +250,8 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
       </div>
 
       {/* ---------------- Tabs Section ---------------- */}
-      <ProductAdditionalInfo />
+
+      <ProductDetailsSection />
     </div>
   );
 };

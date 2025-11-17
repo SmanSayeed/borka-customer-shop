@@ -10,7 +10,6 @@ interface FAQItem {
   answer: string;
 }
 
-// Faith Journey সম্পর্কিত FAQ data
 const faqData: FAQItem[] = [
   {
     id: 1,

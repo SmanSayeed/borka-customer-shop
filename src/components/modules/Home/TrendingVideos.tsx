@@ -1,48 +1,10 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Eye, Heart, MessageCircle, Share2, UserPlus } from 'lucide-react';
+import { videos } from '@/constants';
+import { Eye, Heart, MessageCircle, Share2 } from 'lucide-react';
 
 const TrendingVideo = () => {
-  const videos = [
-    {
-      id: 1,
-      url: 'https://www.facebook.com/reel/3087933404712855/',
-      iframe: `https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F3087933404712855%2F&show_text=false&width=267&t=0&autoplay=true&mute=1&loop=true`,
-      username: '@faithjourney',
-      likes: '1.2K',
-      comments: '230',
-      shares: '80',
-    },
-    {
-      id: 2,
-      url: 'https://www.facebook.com/reel/3650327968430482/',
-      iframe: `https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F3650327968430482%2F&show_text=false&width=267&t=0&autoplay=true&mute=1&loop=true`,
-      username: '@faithjourney',
-      likes: '950',
-      comments: '120',
-      shares: '60',
-    },
-    {
-      id: 3,
-      url: 'https://www.facebook.com/reel/2210782086110657/',
-      iframe: `https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2210782086110657%2F&show_text=false&width=267&t=0&autoplay=true&mute=1&loop=true`,
-      username: '@faithjourney',
-      likes: '560',
-      comments: '70',
-      shares: '25',
-    },
-    {
-      id: 4,
-      url: 'https://www.facebook.com/reel/685991903859388/',
-      iframe: `https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F685991903859388%2F&show_text=false&width=267&t=0&autoplay=true&mute=1&loop=true`,
-      username: '@faithjourney',
-      likes: '1.8K',
-      comments: '310',
-      shares: '120',
-    },
-  ];
-
   return (
     <section className='w-full mt-24 px-6 lg:px-0'>
       <div className='container mx-auto'>
@@ -61,8 +23,7 @@ const TrendingVideo = () => {
               key={video.id}
               className='relative overflow-hidden group border border-primary/20 hover:rounded-2xl duration-500'
             >
-              {/* Video */}
-              <div className='relative aspect-[9/16] overflow-hidden'>
+              <div className='relative aspect-9/16 overflow-hidden'>
                 <iframe
                   src={video.iframe}
                   width='100%'
@@ -73,7 +34,6 @@ const TrendingVideo = () => {
                   allowFullScreen
                 ></iframe>
 
-                {/* Interaction Buttons */}
                 <div className='absolute right-4 bottom-4 flex flex-col gap-3 z-20'>
                   <div className='flex flex-col items-center gap-1'>
                     <button className='w-10 h-10 rounded-full bg-muted/50 backdrop-blur-sm flex items-center justify-center hover:bg-muted transition-colors'>
