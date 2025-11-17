@@ -47,3 +47,13 @@ export const videos = [
     shares: '120',
   },
 ];
+
+export const reviewImages = [
+  '/images/review-1.jpg',
+  '/images/review-2.jpg',
+  '/images/review-3.jpg',
+  '/images/review-4.jpg',
+  '/images/review-5.jpg',
+  '/images/review-6.jpg',
+  '/images/review-7.jpg',
+];

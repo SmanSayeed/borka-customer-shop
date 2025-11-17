@@ -22,7 +22,7 @@ const ProductDetailsSection = () => {
   return (
     <div className='container mx-auto grid grid-cols-1 md:grid-cols-12 mt-10'>
       {/* LEFT SECTION */}
-      <div className='md:col-span-8'>
+      <div className='md:col-span-7'>
         <Tabs
           defaultValue='description'
           className='w-full border-t border-gray-200'
@@ -69,10 +69,10 @@ const ProductDetailsSection = () => {
 
           {/* ================= ADDITIONAL TAB ================= */}
           <TabsContent value='additional'>
-            <div className='max-w-3xl mx-auto text-gray-700 space-y-4 mt-6 pr-10'>
+            <div className='max-w-5xl text-gray-700 space-y-4 mt-6 pr-10'>
               <h2 className='text-2xl font-semibold'>Specifications</h2>
 
-              <ul className='space-y-1 list-none'>
+              <ol className='space-y-1'>
                 <li>
                   <strong>Product Code:</strong> COVER-UP-002
                 </li>
@@ -91,14 +91,14 @@ const ProductDetailsSection = () => {
                 <li>
                   <strong>Care:</strong> Hand wash recommended
                 </li>
-              </ul>
+              </ol>
             </div>
           </TabsContent>
         </Tabs>
       </div>
 
       {/* RIGHT SECTION */}
-      <div className='md:col-span-4 border border-gray-200 p-6'>
+      <div className='md:col-span-5 border border-gray-200 p-6'>
         <div className='flex justify-between items-center mb-3'>
           <h4 className='text-xl font-semibold'>Related Products</h4>
           <a href='#' className='text-sm underline'>

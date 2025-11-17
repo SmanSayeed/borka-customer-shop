@@ -21,8 +21,8 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
-import ProductAdditionalInfo from './ProductAddionalInfo';
 import ProductDetailsSection from './ProductAddionalInfo';
+import CustomerReviews from './CustomerReviews';
 
 const ProductDetails = ({ product }: { product: IProduct }) => {
   const [quantity, setQuantity] = useState(1);
@@ -33,13 +33,15 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
 
   return (
     <div className='px-4 lg:px-0'>
-      <BreadcrumbBanner
+      {/* <BreadcrumbBanner
         items={[
           { label: 'Home', href: '/' },
           { label: 'Products', href: '/products' },
           { label: 'Product Details' },
         ]}
-      />
+      /> */}
+
+      
 
       <div className='container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6'>
         {/* ---------------- Left Section ---------------- */}
@@ -54,7 +56,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
                   mainImage === img ? 'border-primary' : 'border-gray-200'
                 }`}
               >
-                <Image src={img} alt='' fill className='object-cover' />
+                <Image src={img} alt='product image' fill className='object-cover' />
               </div>
             ))}
           </div>
@@ -252,6 +254,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
       {/* ---------------- Tabs Section ---------------- */}
 
       <ProductDetailsSection />
+      <CustomerReviews />
     </div>
   );
 };

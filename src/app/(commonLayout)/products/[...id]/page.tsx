@@ -1,4 +1,4 @@
-import ProductDetails from '@/components/modules/products/ProductDetails';
+import ProductDetails from '@/components/modules/products/productDetails/ProductDetails';
 
 const product = {
   id: 1,
@@ -34,7 +34,6 @@ const ProductDetailsPage = async ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
-
   const { id } = await params;
   return (
     <div>
