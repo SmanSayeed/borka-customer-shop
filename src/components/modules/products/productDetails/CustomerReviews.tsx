@@ -12,7 +12,7 @@ import Image from 'next/image';
 
 export default function CustomerReviews() {
   return (
-    <section className='mt-24'>
+    <section className='mt-24 px-10 '>
       <h2 className='text-3xl font-semibold text-center mb-8'>
         What Our Customers Say
       </h2>
@@ -29,7 +29,7 @@ export default function CustomerReviews() {
                       alt={`Customer review ${idx + 1}`}
                       width={500}
                       height={500}
-                      className='w-full h-90 object-cover rounded-lg'
+                      className='w-full h-110 object-cover rounded-lg'
                     />
                   </div>
                 </div>

@@ -57,3 +57,15 @@ export const reviewImages = [
   '/images/review-6.jpg',
   '/images/review-7.jpg',
 ];
+
+export const defaultCheckoutForm = {
+      paymentMethod: 'delivery',
+      fullName: '',
+      phoneNumber: '',
+      notes: '',
+      shippingAddress: { address: '', zone_id: 0, area: '' },
+      billingAddress: { address: '', zone_id: 0, area: '' },
+      sameAsShipping: false,
+      deliveryCharge: 100,
+      agreeToTerms: false,
+    }

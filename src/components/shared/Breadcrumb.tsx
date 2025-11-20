@@ -1,3 +1,5 @@
+// components/ui/BreadcrumbBanner.tsx
+import React from 'react';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,9 +9,9 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 
-interface BreadcrumbItemType {
+export interface BreadcrumbItemType {
   label: string;
-  href?: string;
+  href?: string; // যদি href থাকে তাহলে clickable হবে
 }
 
 interface BreadcrumbBannerProps {
@@ -17,21 +19,34 @@ interface BreadcrumbBannerProps {
   className?: string;
 }
 
-const BreadcrumbBanner = ({ items, className = '' }: BreadcrumbBannerProps) => {
+const BreadcrumbBanner: React.FC<BreadcrumbBannerProps> = ({
+  items,
+  className = '',
+}) => {
   return (
-    <div className={`py-10 ${className}`}>
-      <Breadcrumb className='container mx-auto text-2xl'>
+    <div className={`py-6 sm:py-10 ${className}`}>
+      <Breadcrumb className='container mx-auto'>
         <BreadcrumbList>
           {items.map((item, index) => (
             <BreadcrumbItem key={index}>
               {item.href && index !== items.length - 1 ? (
-                <BreadcrumbLink href={item.href}>{item.label}</BreadcrumbLink>
+                <BreadcrumbLink
+                  href={item.href}
+                  className='text-sm sm:text-base font-medium hover:text-blue-600 transition-colors'
+                >
+                  {item.label}
+                </BreadcrumbLink>
               ) : (
-                <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                <BreadcrumbPage className='text-sm sm:text-base font-medium text-gray-700'>
+                  {item.label}
+                </BreadcrumbPage>
               )}
 
-              {/* Separator except last item */}
-              {index < items.length - 1 && <BreadcrumbSeparator />}
+              {index < items.length - 1 && (
+                <BreadcrumbSeparator className='text-gray-400 mx-1'>
+                  &gt;
+                </BreadcrumbSeparator>
+              )}
             </BreadcrumbItem>
           ))}
         </BreadcrumbList>

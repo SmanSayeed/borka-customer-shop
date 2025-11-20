@@ -1,6 +1,6 @@
 'use client';
 
-import AddToCartButton from '@/components/shared/addToCartBtn';
+import AddToCartButton from '@/components/modules/cart/addToCartBtn';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import useProducts from '@/hooks/useProducts';
@@ -12,8 +12,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 const ProductDetailsSection = () => {
-  const { products } = useProducts();
   const [images, setImages] = useState<File[]>([]);
+  const { products } = useProducts();
 
   const handleImageUpload = (e: any) => {
     setImages([...e.target.files]);
@@ -101,9 +101,9 @@ const ProductDetailsSection = () => {
       <div className='md:col-span-5 border border-gray-200 p-6'>
         <div className='flex justify-between items-center mb-3'>
           <h4 className='text-xl font-semibold'>Related Products</h4>
-          <a href='#' className='text-sm underline'>
+          <Link href='/products' className='text-sm underline'>
             See All
-          </a>
+          </Link>
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
@@ -144,10 +144,6 @@ const ProductDetailsSection = () => {
                 <div className='absolute right-3 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10'>
                   <AddToCartButton product={product} />
 
-                  <button className='bg-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-500'>
-                    <Heart className='w-5 h-5' />
-                  </button>
-
                   <Link href={`/products/${product.slug}`}>
                     <button className='bg-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-500'>
                       <Eye className='w-5 h-5' />
@@ -158,9 +154,7 @@ const ProductDetailsSection = () => {
 
               {/* PRODUCT INFO */}
               <div className='py-4  px-2 text-center flex flex-col items-center justify-center'>
-                <h4 className='font-semibold'>
-                  {product.product_label}
-                </h4>
+                <h4 className='font-semibold'>{product.product_label}</h4>
 
                 <p className='text-sm text-gray-500 mt-1'>
                   {Array.isArray(product.color_name)

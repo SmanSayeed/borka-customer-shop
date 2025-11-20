@@ -1,57 +1,75 @@
 'use client';
 
-import { useState } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { ChevronDown } from 'lucide-react';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
-import { FilterSidebarProps } from '@/types';
+import { ChevronDown } from 'lucide-react';
+import { useState } from 'react';
 
-const FilterSidebar = ({ filters, onFiltersChange }: FilterSidebarProps) => {
+const availabilityOptions = ['In Stock', 'Out of Stock'];
+
+const FilterSidebar = ({
+  filters,
+  onFiltersChange,
+  categories,
+  colorOptions,
+  sizeOptions,
+}: any) => {
   const [openSections, setOpenSections] = useState({
     availability: true,
     category: true,
     color: true,
+    size: true,
     price: true,
   });
 
-  // ✅ Handle Availability change
-  const handleAvailabilityChange = (checked: boolean, status: string) => {
-    const updatedAvailability = checked
-      ? [...filters.availability, status]
-      : filters.availability.filter((a) => a !== status);
+  // ---------------------------------------
+  // HANDLERS
+  // ---------------------------------------
 
+  const toggleValue = (list: string[], value: string, checked: boolean) => {
+    return checked ? [...list, value] : list.filter((v) => v !== value);
+  };
+
+  const handleAvailabilityChange = (checked: boolean, value: string) => {
     onFiltersChange({
       ...filters,
-      availability: updatedAvailability,
+      availability: toggleValue(filters.availability, value, checked),
       page: 1,
     });
   };
 
-  // ✅ Handle Category change
-  const handleCategoryChange = (checked: boolean, name: string) => {
-    const updatedCategories = checked
-      ? [...filters.category, name]
-      : filters.category.filter((c) => c !== name);
-    onFiltersChange({ ...filters, category: updatedCategories, page: 1 });
+  const handleCategoryChange = (checked: boolean, value: string) => {
+    onFiltersChange({
+      ...filters,
+      category: toggleValue(filters.category, value, checked),
+      page: 1,
+    });
   };
 
-  // ✅ Handle Color change
-  const handleColorChange = (checked: boolean, color: string) => {
-    const updatedColors = checked
-      ? [...filters.color, color]
-      : filters.color.filter((c) => c !== color);
-    onFiltersChange({ ...filters, color: updatedColors, page: 1 });
+  const handleColorChange = (checked: boolean, value: string) => {
+    onFiltersChange({
+      ...filters,
+      color: toggleValue(filters.color, value, checked),
+      page: 1,
+    });
   };
 
-  // ✅ Handle Price change
-  const handlePriceChange = (values: number[]) => {
+  const handleSizeChange = (checked: boolean, value: string) => {
+    onFiltersChange({
+      ...filters,
+      size: toggleValue(filters.size, value, checked),
+      page: 1,
+    });
+  };
+
+  const handlePriceRange = (values: number[]) => {
     onFiltersChange({
       ...filters,
       min_price: values[0],
@@ -60,65 +78,40 @@ const FilterSidebar = ({ filters, onFiltersChange }: FilterSidebarProps) => {
     });
   };
 
-  // Example category/color/availability data
-  const categoryOptions = [
-    'imarah-kurti-set',
-    'cotton-top',
-    'abaya',
-    'tunic',
-    'modest-wear',
-  ];
-  const colorOptions = [
-    'Black',
-    'White',
-    'Blue',
-    'Red',
-    'Green',
-    'Beige',
-    'Grey',
-  ];
-  const availabilityOptions = ['In Stock', 'Out of Stock'];
-
   return (
-    <section className='h-fit sticky top-6 bg-white/40 border border-primary/10 p-6 rounded-lg backdrop-blur-md shadow-sm'>
-      <div className='pb-4'>
-        <h4 className='text-lg font-bold text-gray-800'>Filter Products</h4>
-      </div>
+    <section className='h-fit sticky top-6 bg-white p-6 rounded-lg shadow-sm border border-gray-200'>
+      <h4 className='text-lg font-bold mb-4'>Filter Products</h4>
 
       <div className='space-y-6'>
-        {/* ✅ Availability */}
+        {/* Availability */}
         <Collapsible open={openSections.availability}>
           <CollapsibleTrigger
-            className='flex items-center justify-between w-full p-0 hover:no-underline'
+            className='flex justify-between items-center'
             onClick={() =>
-              setOpenSections((prev) => ({
-                ...prev,
-                availability: !prev.availability,
-              }))
+              setOpenSections({
+                ...openSections,
+                availability: !openSections.availability,
+              })
             }
           >
-            <Label className='text-sm font-medium cursor-pointer'>
-              Availability
-            </Label>
+            <Label className='text-sm font-semibold'>Availability</Label>
             <ChevronDown
-              className={`h-4 w-4 transition-transform ${
+              className={`w-4 h-4 transition-transform ${
                 openSections.availability ? 'rotate-180' : ''
               }`}
             />
           </CollapsibleTrigger>
+
           <CollapsibleContent className='mt-3 space-y-2'>
             {availabilityOptions.map((status) => (
-              <div key={status} className='flex items-center space-x-2'>
+              <div key={status} className='flex items-center gap-2'>
                 <Checkbox
-                  id={status}
                   checked={filters.availability.includes(status)}
                   onCheckedChange={(checked) =>
                     handleAvailabilityChange(!!checked, status)
                   }
                 />
-                <Label htmlFor={status} className='text-sm cursor-pointer'>
-                  {status}
-                </Label>
+                <Label>{status}</Label>
               </div>
             ))}
           </CollapsibleContent>
@@ -126,39 +119,35 @@ const FilterSidebar = ({ filters, onFiltersChange }: FilterSidebarProps) => {
 
         <Separator />
 
-        {/* ✅ Category */}
+        {/* Categories */}
         <Collapsible open={openSections.category}>
           <CollapsibleTrigger
-            className='flex items-center justify-between w-full p-0 hover:no-underline'
+            className='flex justify-between items-center'
             onClick={() =>
-              setOpenSections((prev) => ({
-                ...prev,
-                category: !prev.category,
-              }))
+              setOpenSections({
+                ...openSections,
+                category: !openSections.category,
+              })
             }
           >
-            <Label className='text-sm font-medium cursor-pointer'>
-              Category
-            </Label>
+            <Label className='text-sm font-semibold'>Category</Label>
             <ChevronDown
-              className={`h-4 w-4 transition-transform ${
+              className={`w-4 h-4 transition-transform ${
                 openSections.category ? 'rotate-180' : ''
               }`}
             />
           </CollapsibleTrigger>
+
           <CollapsibleContent className='mt-3 space-y-2'>
-            {categoryOptions.map((cat) => (
-              <div key={cat} className='flex items-center space-x-2'>
+            {categories.map((cat: any) => (
+              <div key={cat.name} className='flex items-center gap-2'>
                 <Checkbox
-                  id={cat}
-                  checked={filters.category.includes(cat)}
+                  checked={filters.category.includes(cat.name)}
                   onCheckedChange={(checked) =>
-                    handleCategoryChange(!!checked, cat)
+                    handleCategoryChange(!!checked, cat.name)
                   }
                 />
-                <Label htmlFor={cat} className='text-sm cursor-pointer'>
-                  {cat}
-                </Label>
+                <Label>{cat.name}</Label>
               </div>
             ))}
           </CollapsibleContent>
@@ -166,37 +155,32 @@ const FilterSidebar = ({ filters, onFiltersChange }: FilterSidebarProps) => {
 
         <Separator />
 
-        {/* ✅ Color */}
+        {/* Colors */}
         <Collapsible open={openSections.color}>
           <CollapsibleTrigger
-            className='flex items-center justify-between w-full p-0 hover:no-underline'
+            className='flex justify-between items-center'
             onClick={() =>
-              setOpenSections((prev) => ({ ...prev, color: !prev.color }))
+              setOpenSections({ ...openSections, color: !openSections.color })
             }
           >
-            <Label className='text-sm font-medium cursor-pointer'>Color</Label>
+            <Label className='text-sm font-semibold'>Colors</Label>
             <ChevronDown
-              className={`h-4 w-4 transition-transform ${
+              className={`w-4 h-4 transition-transform ${
                 openSections.color ? 'rotate-180' : ''
               }`}
             />
           </CollapsibleTrigger>
+
           <CollapsibleContent className='mt-3 space-y-2'>
-            {colorOptions.map((color) => (
-              <div key={color} className='flex items-center space-x-2'>
+            {colorOptions.map((c: any) => (
+              <div key={c.color_name} className='flex items-center gap-2'>
                 <Checkbox
-                  id={`color-${color}`}
-                  checked={filters.color.includes(color)}
+                  checked={filters.color.includes(c.color_name)}
                   onCheckedChange={(checked) =>
-                    handleColorChange(!!checked, color)
+                    handleColorChange(!!checked, c.color_name)
                   }
                 />
-                <Label
-                  htmlFor={`color-${color}`}
-                  className='text-sm cursor-pointer'
-                >
-                  {color}
-                </Label>
+                <Label>{c.color_name}</Label>
               </div>
             ))}
           </CollapsibleContent>
@@ -204,34 +188,67 @@ const FilterSidebar = ({ filters, onFiltersChange }: FilterSidebarProps) => {
 
         <Separator />
 
-        {/* ✅ Price Range */}
-        <Collapsible open={openSections.price}>
+        {/* Sizes */}
+        <Collapsible open={openSections.size}>
           <CollapsibleTrigger
-            className='flex items-center justify-between w-full p-0 hover:no-underline'
+            className='flex justify-between items-center'
             onClick={() =>
-              setOpenSections((prev) => ({ ...prev, price: !prev.price }))
+              setOpenSections({ ...openSections, size: !openSections.size })
             }
           >
-            <Label className='text-sm font-medium cursor-pointer'>
-              Price Range
-            </Label>
+            <Label className='text-sm font-semibold'>Sizes</Label>
             <ChevronDown
-              className={`h-4 w-4 transition-transform ${
+              className={`w-4 h-4 transition-transform ${
+                openSections.size ? 'rotate-180' : ''
+              }`}
+            />
+          </CollapsibleTrigger>
+
+          <CollapsibleContent className='mt-3 space-y-2'>
+            {sizeOptions.map((s: any) => (
+              <div key={s.label} className='flex items-center gap-2'>
+                <Checkbox
+                  checked={filters.size.includes(s.label)}
+                  onCheckedChange={(checked) =>
+                    handleSizeChange(!!checked, s.label)
+                  }
+                />
+                <Label>{s.label}</Label>
+              </div>
+            ))}
+          </CollapsibleContent>
+        </Collapsible>
+
+        <Separator />
+
+        {/* Price Range */}
+        <Collapsible open={openSections.price}>
+          <CollapsibleTrigger
+            className='flex justify-between items-center'
+            onClick={() =>
+              setOpenSections({ ...openSections, price: !openSections.price })
+            }
+          >
+            <Label className='text-sm font-semibold'>Price Range</Label>
+            <ChevronDown
+              className={`w-4 h-4 transition-transform ${
                 openSections.price ? 'rotate-180' : ''
               }`}
             />
           </CollapsibleTrigger>
-          <CollapsibleContent className='mt-4'>
-            <div className='flex justify-between text-sm text-gray-500 mb-2'>
-              <span>৳{filters.min_price || 0}</span>
-              <span>৳{filters.max_price || 10000}</span>
+
+          <CollapsibleContent className='mt-3'>
+            <div className='flex justify-between text-sm mb-2'>
+              <span>৳{filters.min_price}</span>
+              <span>৳{filters.max_price}</span>
             </div>
+
             <Slider
               min={0}
               max={10000}
               step={100}
-              value={[filters.min_price || 0, filters.max_price || 10000]}
-              onValueChange={handlePriceChange}
+              value={[filters.min_price, filters.max_price]}
+              onValueChange={handlePriceRange}
             />
           </CollapsibleContent>
         </Collapsible>

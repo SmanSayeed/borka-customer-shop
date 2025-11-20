@@ -1,7 +1,8 @@
-import type { Metadata } from 'next';
-import { Marcellus, DM_Sans, Marck_Script } from 'next/font/google';
-import './globals.css';
+import { Toaster } from '@/components/ui/sonner';
 import QueryProvider from '@/providers/Providers';
+import type { Metadata } from 'next';
+import { DM_Sans, Marcellus, Marck_Script } from 'next/font/google';
+import './globals.css';
 
 const marcellus = Marcellus({
   variable: '--font-marcellus',
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body
         className={` ${dmSans.variable} ${marcellus.variable} ${marckScript.variable} font-dmSans text-foreground antialiased bg-[#f7fbfe]`}
       >
+        <Toaster />
         <QueryProvider>{children}</QueryProvider>
       </body>
     </html>

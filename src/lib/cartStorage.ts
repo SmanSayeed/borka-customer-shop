@@ -1,13 +1,12 @@
-'use client'
+'use client';
 
-import { CartItem } from '@/app/(commonLayout)/cart/page';
+import { ICart } from '@/types';
 
 export const CART_KEY = 'cart';
+const EXPIRATION_TIME = 1 * 24 * 60 * 60 * 1000;
 
-const EXPIRATION_TIME = 3 * 24 * 60 * 60 * 1000;
-
-// set cart to storage
-export const saveCartToStorage = (cartItems: CartItem[]) => {
+// * set cart to storage
+export const saveCartToStorage = (cartItems: ICart[]) => {
   const data = {
     items: cartItems,
     timestamp: new Date().getTime(),
@@ -15,7 +14,7 @@ export const saveCartToStorage = (cartItems: CartItem[]) => {
   localStorage.setItem(CART_KEY, JSON.stringify(data));
 };
 
-// get cart from storage
+// * get cart from storage
 export const getCartFromStorage = (): CartItem[] => {
   if (typeof window === 'undefined') return [];
 

@@ -1,57 +1,46 @@
-'use client'
+'use client';
 
-import Loader from '@/components/shared/Loader';
-import { IProduct } from '@/types';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import { Navigation } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import ProductCard from './ProductCard';
-import { useQuery } from '@tanstack/react-query';
-import { getAllProducts } from '@/actions/product';
+import Container from '@/components/shared/Container';
 import useProducts from '@/hooks/useProducts';
+import { IProduct } from '@/types/product';
+import { motion } from 'framer-motion';
+import ProductCard from './ProductCard';
+import Loader from '@/components/shared/Loader';
 
-const NewArrivals = () => {
+export default function NewArrivals() {
   const { products, isProductLoading } = useProducts();
 
-  return (
-    <div className='container mx-auto mt-24 px-6 lg:px-0'>
-      {/* Left section */}
-      <div className='col-span-9 space-y-6'>
-        <div className='text-center mb-10'>
-          <h2 className='text-5xl font-bold mb-4'>New Arrivals</h2>
-          <p className='text-foreground/80'>
-            Discover the newest pieces in our collection and embrace timeless
-            fashion.
-          </p>
-        </div>
-
-        {isProductLoading ? (
-          <Loader skeleton skeletonCount={6} />
-        ) : products.length === 0 ? (
-          <p className='text-gray-500'>No new arrivals available.</p>
-        ) : (
-          <Swiper
-            modules={[Navigation]}
-            spaceBetween={20}
-            slidesPerView={1}
-            navigation
-            breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-            }}
-            className='py-2'
-          >
-            {products.map((product: IProduct) => (
-              <SwiperSlide key={product.id}>
-                <ProductCard product={product} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        )}
-      </div>
-    </div>
+  const displayProducts = Array.from(
+    { length: 8 },
+    (_, i) => products[i % products.length]
   );
-};
 
-export default NewArrivals;
+  return (
+    <Container className='border border-gray-200 rounded-lg lg:p-8'>
+      {/* Section Header */}
+      <div className='text-center mb-10'>
+        <h2 className='text-5xl font-bold mb-4'>New Arrivals</h2>
+        <p className='text-foreground/80'>
+          Discover the newest pieces in our collection and embrace timeless
+          fashion.
+        </p>
+      </div>
+
+      {/* PRODUCTS GRID */}
+      <motion.div
+        className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:px-6 p-2 rounded-sm'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {isProductLoading ? (
+          <Loader skeleton skeletonCount={12} />
+        ) : (
+          displayProducts.map((product: IProduct, index: number) => (
+            <ProductCard key={index} product={product} />
+          ))
+        )}
+      </motion.div>
+    </Container>
+  );
+}

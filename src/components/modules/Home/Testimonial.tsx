@@ -1,20 +1,45 @@
-import Carousel from '@/components/ui/carousel';
-import { categoryLinks } from '@/constants/category';
+"use client";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { reviewImages } from '@/constants';
 
 export function Testimonial() {
-  const slideData = categoryLinks.map((category, index) => ({
-    title: category.name,
-    button: `Explore ${category.name}`,
-    src: `/images/review-${(index % 7) + 1}.jpg`,
-  }));
   return (
-    <div className='mt-24'>
-      <h2 className='text-5xl font-bold mb-10 text-center'>
+    <div className="w-full mt-24">
+      <h2 className="text-4xl font-semibold mb-10 text-center">
         Top Customer Reviews
       </h2>
-      <div className='relative overflow-hidden w-full h-full pb-20'>
-        <Carousel slides={slideData} />
-      </div>
+
+      <Carousel
+        opts={{ align: "start", loop: true }}
+        className="relative w-full max-w-7xl mx-auto"
+      >
+        <CarouselContent>
+          {reviewImages.map((image, index) => (
+            <CarouselItem
+              key={index}
+              className="md:basis-1/3 lg:basis-1/3"
+            >
+              <div className="overflow-hidden rounded-xl shadow-lg">
+                <img
+                  src={image}
+                  alt="Review"
+                  className="w-full h-[420px] object-cover"
+                />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
     </div>
   );
 }

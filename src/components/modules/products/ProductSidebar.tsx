@@ -1,25 +1,25 @@
 'use client';
 
-import { useState } from 'react';
-import { Slider } from '@/components/ui/slider';
-import { Button } from '@/components/ui/button';
-import { categoryLinks } from '@/constants/category';
-import { IProduct } from '@/types';
 import BreadcrumbBanner from '@/components/shared/Breadcrumb';
-import ProductCard from './ProductCard';
-import useProducts from '@/hooks/useProducts';
+import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
   NavigationMenuContent,
+  NavigationMenuItem,
   NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
+import { Slider } from '@/components/ui/slider';
+import { categoryLinks } from '@/constants/category';
+import useProducts from '@/hooks/useProducts';
+import { IProduct } from '@/types';
+import { useState } from 'react';
+import ProductCard from './ProductCard';
 
 const ProductSidebar = () => {
   const [priceRange, setPriceRange] = useState([0]);
-  const { products, productFetchLoading } = useProducts();
+  const { products, isProductLoading } = useProducts();
 
   return (
     <div className='container mx-auto'>

@@ -1,7 +1,11 @@
 'use client';
 
-import { getAllProducts } from '@/actions/product';
-import { IProduct } from '@/types';
+import {
+  getAllProducts,
+  getProductColors,
+  getProductSizes,
+} from '@/actions/product';
+import { IColor, IProduct, ISize } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 
 interface Props {
@@ -10,14 +14,48 @@ interface Props {
 
 export default function useProducts({ filters }: Props = {}) {
   // * Get all products using filters
-  const { data, isLoading: isProductLoading } = useQuery<IProduct[], Error>({
+  const { data: productsData, isLoading: isProductLoading } = useQuery<
+    IProduct[],
+    Error
+  >({
     queryKey: ['products', filters || {}],
     queryFn: () => getAllProducts(filters),
     staleTime: 1000 * 60 * 2,
     onError: (err) => console.error('Error fetching products:', err),
   });
 
-  const products = data?.data?.data || [];
+  // * Get all product colors
+  const { data: colorsData, isLoading: isColorLoading } = useQuery<
+    IColor[],
+    Error
+  >({
+    queryKey: ['colors'],
+    queryFn: () => getProductColors(),
+    staleTime: 1000 * 60 * 2,
+    onError: (err) => console.error('Error fetching colors:', err),
+  });
 
-  return { products, isProductLoading };
+  // * Get all product sizes
+  const { data: sizesData, isLoading: isSizeLoading } = useQuery<
+    ISize[],
+    Error
+  >({
+    queryKey: ['sizes'],
+    queryFn: () => getProductSizes(),
+    staleTime: 1000 * 60 * 2,
+    onError: (err) => console.error('Error fetching sizes:', err),
+  });
+
+  const products = productsData?.data?.data || [];
+  const colors = colorsData?.data || [];
+  const sizes = sizesData?.data || [];
+
+  return {
+    products,
+    colors,
+    sizes,
+    isProductLoading,
+    isColorLoading,
+    isSizeLoading,
+  };
 }

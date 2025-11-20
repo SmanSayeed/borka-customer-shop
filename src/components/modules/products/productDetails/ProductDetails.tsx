@@ -10,7 +10,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { IProduct } from '@/types';
 import {
   Heart,
   Minus,
@@ -20,35 +19,85 @@ import {
   ZoomIn,
 } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
-import ProductDetailsSection from './ProductAddionalInfo';
+import { useMemo, useState } from 'react';
 import CustomerReviews from './CustomerReviews';
+import ProductDetailsSection from './ProductAddionalInfo';
+import Link from 'next/link';
 
 const ProductDetails = ({ product }: { product: IProduct }) => {
+  const galleryImages = useMemo(() => {
+    if (product.image && product.image.length > 0) {
+      return product.image;
+    }
+    const fallback = product.thumbnail_url || '/placeholder.png';
+    return [fallback];
+  }, [product.image, product.thumbnail_url]);
+
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [mainImage, setMainImage] = useState(product.image[0]);
+  const [mainImage, setMainImage] = useState(galleryImages[0]);
   const [zoomed, setZoomed] = useState(false);
+
+  const colorOptions = useMemo(() => {
+    if (Array.isArray(product.color)) {
+      return product.color;
+    }
+    if (typeof product.color === 'string') {
+      return [product.color];
+    }
+    if (Array.isArray(product.color_name)) {
+      return product.color_name;
+    }
+    if (product.color_name) {
+      return [product.color_name];
+    }
+    return [];
+  }, [product.color, product.color_name]);
+
+  const sizeOptions = product.size ?? [];
+
+  const salePrice =
+    typeof product.price === 'number'
+      ? product.price
+      : Number(product.sale_price ?? product.original_price ?? 0);
+  const normalizedPrice = Number.isFinite(salePrice) ? salePrice : 0;
+
+  const originalPrice =
+    typeof product.original_price === 'number'
+      ? product.original_price
+      : Number(product.original_price ?? normalizedPrice);
+  const normalizedOriginalPrice = Number.isFinite(originalPrice)
+    ? Number(originalPrice)
+    : normalizedPrice;
+
+  const computedDiscount =
+    product.discount ??
+    (normalizedOriginalPrice > 0
+      ? Math.max(
+          0,
+          Math.round(
+            ((normalizedOriginalPrice - normalizedPrice) /
+              normalizedOriginalPrice) *
+              100
+          )
+        )
+      : undefined);
+  const hasDiscount = Boolean(computedDiscount && computedDiscount > 0);
+
+  const productName = product.name || product.product_label || 'Product';
+  const rating = product.rating ?? 4.5;
+  const reviewCount = product.reviews ?? 55;
 
   return (
     <div className='px-4 lg:px-0'>
-      {/* <BreadcrumbBanner
-        items={[
-          { label: 'Home', href: '/' },
-          { label: 'Products', href: '/products' },
-          { label: 'Product Details' },
-        ]}
-      /> */}
-
-      
 
       <div className='container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6'>
         {/* ---------------- Left Section ---------------- */}
         <div className='flex flex-col lg:flex-row gap-6 lg:gap-8'>
           {/* Sub Images */}
           <div className='flex lg:flex-col gap-2 lg:gap-4 order-2 lg:order-1'>
-            {product.image.map((img, index) => (
+            {galleryImages.map((img, index) => (
               <div
                 key={index}
                 onClick={() => setMainImage(img)}
@@ -56,7 +105,12 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
                   mainImage === img ? 'border-primary' : 'border-gray-200'
                 }`}
               >
-                <Image src={img} alt='product image' fill className='object-cover' />
+                <Image
+                  src={img}
+                  alt='product image'
+                  fill
+                  className='object-cover'
+                />
               </div>
             ))}
           </div>
@@ -70,7 +124,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
             >
               <Image
                 src={mainImage}
-                alt={product.name}
+                alt={productName}
                 fill
                 className={`object-contain transition-transform duration-300 ${
                   zoomed ? 'scale-110 cursor-zoom-in' : 'scale-100'
@@ -99,7 +153,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
                   <div className='flex justify-center items-center'>
                     <Image
                       src={mainImage}
-                      alt={product.name}
+                      alt={productName}
                       width={800}
                       height={800}
                       className='rounded-lg object-contain'
@@ -111,34 +165,32 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
           </div>
         </div>
 
+        <Link href={'#similar-product'}>See Related Products</Link>
+
         {/* ---------------- Right Section ---------------- */}
         <div className='space-y-4'>
           <Badge className='bg-green-500 my-3 rounded-none'>New Arrival</Badge>
 
-          <h2 className='text-2xl font-semibold mb-2'>{product.name}</h2>
+          <h2 className='text-2xl font-semibold mb-2'>{productName}</h2>
 
           <div className='flex items-center gap-2 mb-4'>
             <span className='text-yellow-500'>★★★★☆</span>
             <span className='text-sm text-gray-500'>
-              {product.rating || 4.5} ({product.reviews || 55} Reviews)
+              {rating} ({reviewCount} Reviews)
             </span>
           </div>
 
           <div className='flex items-center gap-4 mb-4'>
             <p className='text-2xl font-bold text-gray-900'>
-              ${product.price.toFixed(2)}
+              ${normalizedPrice.toFixed(2)}
             </p>
-            {product.discount && (
+            {hasDiscount && (
               <>
                 <p className='text-gray-400 line-through'>
-                  ${' '}
-                  {(
-                    product.price +
-                    (product.price * product.discount) / 100
-                  ).toFixed(2)}
+                  $ {normalizedOriginalPrice.toFixed(2)}
                 </p>
                 <p className='text-red-500 text-sm font-semibold'>
-                  ({product.discount}% Off)
+                  ({computedDiscount}% Off)
                 </p>
               </>
             )}
@@ -147,13 +199,16 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
           {/* Product Info */}
           <div className='space-y-1 mb-4 text-sm text-gray-700'>
             <p>
-              <strong>SKU:</strong> FS0011GL
+              <strong>SKU:</strong>{' '}
+              {product.product_code?.toUpperCase() || 'N/A'}
             </p>
             <p>
-              <strong>Available:</strong> In Stock
+              <strong>Available:</strong>{' '}
+              {product.status ? product.status : 'In Stock'}
             </p>
             <p>
-              <strong>Categories:</strong> Sweaters, Tops
+              <strong>Categories:</strong>{' '}
+              {product.category || product.product_category || 'Uncategorized'}
             </p>
           </div>
 
@@ -167,7 +222,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
                 </span>
               </p>
               <div className='flex gap-2 flex-wrap'>
-                {product.color?.map((color) => (
+                {colorOptions.map((color) => (
                   <button
                     key={color}
                     onClick={() => setSelectedColor(color)}
@@ -190,7 +245,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
                 </span>
               </p>
               <div className='flex gap-2 flex-wrap'>
-                {product.size?.map((size) => (
+                {sizeOptions.map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
@@ -252,8 +307,10 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
       </div>
 
       {/* ---------------- Tabs Section ---------------- */}
+      <div id='similar-product'>
+        <ProductDetailsSection />
+      </div>
 
-      <ProductDetailsSection />
       <CustomerReviews />
     </div>
   );

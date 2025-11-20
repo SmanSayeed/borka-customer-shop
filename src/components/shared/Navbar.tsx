@@ -1,6 +1,8 @@
 'use client';
 
+import { CartItem } from '@/app/(commonLayout)/cart/page';
 import useCategory from '@/hooks/useCategory';
+import { getCartFromStorage } from '@/lib/cartStorage';
 import { ICategory } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, Search, ShoppingBag, User, X } from 'lucide-react';
@@ -8,8 +10,6 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Logo } from './assets';
 import Loader from './Loader';
-import { CartItem } from '@/app/(commonLayout)/cart/page';
-import { getCartFromStorage } from '@/lib/cartStorage';
 
 const Navbar = () => {
   const { categories, isCategoryLoading } = useCategory();
@@ -34,7 +34,6 @@ const Navbar = () => {
           <Logo />
         </Link>
 
-        {/* Categories */}
         {isCategoryLoading ? (
           <Loader skeleton skeletonCount={8} />
         ) : (

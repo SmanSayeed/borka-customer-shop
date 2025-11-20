@@ -1,177 +1,30 @@
-// 'use client';
-
-// import OrderForm from '@/components/modules/checkout/OrderForm';
-// import OrderSummary from '@/components/modules/checkout/OrderSummary';
-// import { useState } from 'react';
-
-// export interface CartItem {
-//   product_id: number;
-//   quantity: number;
-//   size_id: number;
-//   original_price: number;
-//   discount_amount: number;
-// }
-
-// const Checkout = () => {
-//   const [cartItems] = useState<CartItem[]>([
-//     {
-//       product_id: 1,
-//       quantity: 6,
-//       size_id: 1,
-//       original_price: 1000,
-//       discount_amount: 100,
-//     },
-//     {
-//       product_id: 2,
-//       quantity: 2,
-//       size_id: 1,
-//       original_price: 700,
-//       discount_amount: 0,
-//     },
-//   ]);
-
-//   const [deliveryCharge, setDeliveryCharge] = useState(100);
-//   const [totalPayable, setTotalPayable] = useState(0);
-
-//   const [formData, setFormData] = useState<any>(null); // save form data
-
-//   // Form submit from OrderForm
-//   const handleFormSubmit = (data: any) => {
-//     setFormData(data);
-
-//     // calculate subtotal
-//     const subtotal = cartItems.reduce(
-//       (sum, item) =>
-//         sum + item.original_price * item.quantity - item.discount_amount,
-//       0
-//     );
-
-//     const total = subtotal + data.deliveryCharge;
-//     setTotalPayable(total);
-//   };
-
-//   // Place order button from OrderSummary
-//   const handlePlaceOrder = () => {
-//     if (!formData) {
-//       return console.log('❌ Please fill the form first');
-//     }
-
-//     const subtotal = cartItems.reduce(
-//       (sum, item) =>
-//         sum + item.original_price * item.quantity - item.discount_amount,
-//       0
-//     );
-
-//     const total = subtotal + formData.deliveryCharge;
-
-//     const payload = {
-//       phone_number: formData.phoneNumber,
-//       items: cartItems,
-//       shipping_address: formData.shippingAddress,
-//       billing_address: formData.billingAddress,
-//       notes: formData.notes || '',
-//       delivery_charge: formData.deliveryCharge,
-//       total_payable_amount: total,
-//       payment_method: formData.paymentMethod,
-//     };
-
-//     console.log('✅ FINAL ORDER PAYLOAD:', payload);
-//   };
-
-//   return (
-//     <div className='container mx-auto px-4 py-8 max-w-7xl'>
-//       <h1 className='text-3xl md:text-4xl font-bold text-foreground mb-8'>
-//         Checkout
-//       </h1>
-
-//       <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-//         <div className='lg:col-span-2'>
-//           <OrderForm onFormSubmit={handleFormSubmit} />
-//         </div>
-
-//         <div className='lg:col-span-1'>
-//           <OrderSummary
-//             items={cartItems}
-//             deliveryCharge={deliveryCharge}
-//             totalPayableAmount={totalPayable}
-//             onPlaceOrder={handlePlaceOrder}
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Checkout;
-
-
-
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { createOrder } from '@/actions/order';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { HandCoins, Package, Lock } from 'lucide-react';
+import { defaultCheckoutForm } from '@/constants';
+import useCart from '@/hooks/useCart';
 import { cn } from '@/lib/utils';
+import { checkoutFormSchema } from '@/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { HandCoins, Package } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import * as z from 'zod';
 
-interface CartItem {
-  product_id: number;
-  quantity: number;
-  size_id: number;
-  original_price: number;
-  discount_amount: number;
-}
-
-const formSchema = z.object({
-  paymentMethod: z.enum(['delivery', 'pickup']),
-  fullName: z.string().min(1, 'Full name is required'),
-  phoneNumber: z.string().min(10, 'Valid phone number is required'),
-  notes: z.string().optional(),
-  shippingAddress: z.object({
-    address: z.string().min(1, 'Address required'),
-    zone_id: z.number(),
-    area: z.string().min(1, 'Area required'),
-  }),
-  billingAddress: z.object({
-    address: z.string().min(1, 'Address required'),
-    zone_id: z.number(),
-    area: z.string().min(1, 'Area required'),
-  }),
-  sameAsShipping: z.boolean().optional(),
-  deliveryCharge: z.number(),
-  agreeToTerms: z
-    .boolean()
-    .refine((val) => val === true, 'You must agree to terms'),
-});
-
-type FormData = z.infer<typeof formSchema>;
+type FormData = z.infer<typeof checkoutFormSchema>;
 
 const Checkout = () => {
-  const [cartItems] = useState<CartItem[]>([
-    {
-      product_id: 1,
-      quantity: 6,
-      size_id: 1,
-      original_price: 1000,
-      discount_amount: 100,
-    },
-    {
-      product_id: 2,
-      quantity: 2,
-      size_id: 1,
-      original_price: 700,
-      discount_amount: 0,
-    },
-  ]);
+  const router = useRouter();
+  const { carts, subtotal } = useCart();
 
   const [totalPayable, setTotalPayable] = useState(0);
-  const [formData, setFormData] = useState<FormData | null>(null);
 
   const {
     register,
@@ -181,90 +34,107 @@ const Checkout = () => {
     control,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      paymentMethod: 'delivery',
-      fullName: '',
-      phoneNumber: '',
-      notes: '',
-      shippingAddress: { address: '', zone_id: 0, area: '' },
-      billingAddress: { address: '', zone_id: 0, area: '' },
-      sameAsShipping: false,
-      deliveryCharge: 100,
-      agreeToTerms: false,
-    },
+    resolver: zodResolver(checkoutFormSchema),
+    defaultValues: defaultCheckoutForm,
   });
 
   const sameAsShipping = watch('sameAsShipping');
   const shippingAddress = watch('shippingAddress');
+  const deliveryCharge = watch('deliveryCharge');
 
+  /** Sync Billing with Shipping */
   useEffect(() => {
     if (sameAsShipping) {
       setValue('billingAddress', { ...shippingAddress });
     }
   }, [sameAsShipping, shippingAddress, setValue]);
 
-  // Calculate subtotal and total
+  /** Subtotal calculation */
   const calculateSubtotal = () =>
-    cartItems.reduce(
-      (sum, item) =>
-        sum + item.original_price * item.quantity - item.discount_amount,
+    carts.reduce(
+      (sum, cart) =>
+        sum + cart.price * cart.quantity - (cart.discount_amount || 0),
       0
     );
 
-  const calculateTotal = (deliveryCharge: number) => {
-    return calculateSubtotal() + deliveryCharge;
-  };
+  /** Total calculation */
+  const calculateTotal = (delivery: number) => calculateSubtotal() + delivery;
 
-  // This runs when user clicks "Save & Update Summary"
+  /** Save & Update Summary */
   const onSaveSummary = (data: FormData) => {
-    setFormData(data);
-    const total = calculateTotal(data.deliveryCharge);
-    setTotalPayable(total);
-    // optional: show toast/feedback here
-    console.log('📝 Form saved — summary updated', { data, total });
-  };
-
-  // This runs when user clicks "Place Order"
-  // We use handleSubmit so the form gets validated before placing the order.
-  const onPlaceOrder = (data: FormData) => {
-    // ensure state is in sync
-    setFormData(data);
     const total = calculateTotal(data.deliveryCharge);
     setTotalPayable(total);
 
-    const payload = {
-      phone_number: data.phoneNumber,
-      items: cartItems,
-      shipping_address: data.shippingAddress,
-      billing_address: data.billingAddress,
-      notes: data.notes || '',
-      delivery_charge: data.deliveryCharge,
-      total_payable_amount: total,
-      payment_method: data.paymentMethod,
-    };
-
-    // FINAL: place order (for now just console.log)
-    console.log('✅ FINAL ORDER PAYLOAD:', payload);
-
-    // TODO: call API here (fetch/axios) and handle success/error
+    console.log('📝 Summary Updated:', { data, total });
   };
+
+  /** Cart item format for payload */
+  const cartItems = carts.map((cart) => ({
+    product_id: cart.id,
+    quantity: cart.quantity,
+    size_id: cart.size_id || cart.size || 5,
+    original_price: cart.price,
+    discount_amount: cart.discount_amount || 0,
+  }));
+
+  // * Final order submit
+  const onPlaceOrder = async (data: FormData) => {
+    try {
+      const total = calculateTotal(data.deliveryCharge);
+      setTotalPayable(total);
+
+      const orderPayload = {
+        phone_number: data.phoneNumber,
+        name: data.fullName,
+
+        items: cartItems,
+
+        shipping_address: {
+          ...data.shippingAddress,
+          name: data.fullName,
+        },
+
+        billing_address: {
+          ...data.billingAddress,
+          name: data.fullName,
+        },
+
+        notes: data.notes || '',
+        delivery_charge: data.deliveryCharge,
+        total_payable_amount: total,
+        payment_method: data.paymentMethod,
+      };
+
+      const createdOrder = await createOrder(orderPayload);
+
+      if (createdOrder?.success) {
+        toast.success(`${createdOrder?.data || 'Order created successfully'}`);
+      }
+      router.push('/success');
+    } catch (error: any) {
+      console.error('Error placing order:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (deliveryCharge !== undefined) {
+      setTotalPayable(calculateTotal(deliveryCharge));
+    }
+  }, [deliveryCharge, carts]);
 
   return (
     <div className='container mx-auto px-4 py-8 max-w-7xl'>
-      <h1 className='text-3xl md:text-4xl font-bold text-foreground mb-8'>
-        Checkout
-      </h1>
+      <h1 className='text-3xl md:text-4xl font-bold mb-8'>Checkout</h1>
 
       <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-        {/* LEFT: FORM */}
+        {/* LEFT SIDE FORM */}
         <div className='lg:col-span-2 bg-white rounded-xl p-6 md:p-8'>
           <h2 className='text-xl font-semibold mb-6'>
             Shipping & Billing Information
           </h2>
 
           <form onSubmit={handleSubmit(onSaveSummary)} className='space-y-6'>
-            {/* Full Name / Phone */}
+            {/* FULL NAME + PHONE */}
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <div>
                 <Label>Full Name *</Label>
@@ -287,7 +157,7 @@ const Checkout = () => {
               </div>
             </div>
 
-            {/* Shipping */}
+            {/* SHIPPING ADDRESS */}
             <div>
               <Label>Shipping Address *</Label>
               <Input
@@ -304,13 +174,10 @@ const Checkout = () => {
               />
             </div>
 
-            {/* Billing */}
+            {/* BILLING SAME AS SHIPPING */}
             <div className='flex items-center gap-2 mb-4'>
               <Checkbox id='sameAsShipping' {...register('sameAsShipping')} />
-              <Label
-                htmlFor='sameAsShipping'
-                className='text-sm text-muted-foreground'
-              >
+              <Label htmlFor='sameAsShipping' className='text-sm'>
                 Billing address same as shipping
               </Label>
             </div>
@@ -342,7 +209,7 @@ const Checkout = () => {
               <Textarea className='h-24' {...register('notes')} />
             </div>
 
-            {/* Payment Method */}
+            {/* PAYMENT METHOD */}
             <div className='space-y-2'>
               <Label>Payment Method</Label>
 
@@ -351,26 +218,28 @@ const Checkout = () => {
                 name='paymentMethod'
                 render={({ field }) => (
                   <div className='flex gap-4'>
+                    {/* COD */}
                     <div
                       onClick={() => field.onChange('delivery')}
                       className={cn(
                         'flex-1 flex items-center justify-center gap-2 p-4 rounded-lg border cursor-pointer',
                         field.value === 'delivery'
                           ? 'border-primary bg-primary/10'
-                          : 'border-border hover:border-primary/50'
+                          : 'border-muted hover:border-primary/50'
                       )}
                     >
                       <HandCoins className='w-7 h-7' />
                       <span className='font-medium'>Cash On Delivery</span>
                     </div>
 
+                    {/* ADVANCE */}
                     <div
                       onClick={() => field.onChange('pickup')}
                       className={cn(
                         'flex-1 flex items-center justify-center gap-2 p-4 rounded-lg border cursor-pointer',
                         field.value === 'pickup'
                           ? 'border-primary bg-primary/10'
-                          : 'border-border hover:border-primary/50'
+                          : 'border-muted hover:border-primary/50'
                       )}
                     >
                       <Package className='w-7 h-7' />
@@ -381,7 +250,7 @@ const Checkout = () => {
               />
             </div>
 
-            {/* Terms */}
+            {/* TERMS */}
             <div className='flex items-start gap-2'>
               <Checkbox
                 id='terms'
@@ -389,8 +258,8 @@ const Checkout = () => {
                   setValue('agreeToTerms', checked as boolean)
                 }
               />
-              <Label htmlFor='terms' className='text-sm text-muted-foreground'>
-                I have read and agree to the Terms and Conditions.
+              <Label className='text-sm'>
+                I agree to the Terms and Conditions.
               </Label>
             </div>
 
@@ -402,37 +271,34 @@ const Checkout = () => {
           </form>
         </div>
 
-        {/* RIGHT: SUMMARY */}
+        {/* RIGHT SIDE SUMMARY */}
         <div className='lg:col-span-1 bg-white rounded-xl p-6 sticky top-12 h-fit'>
           <h2 className='text-xl font-semibold mb-6'>Review your order</h2>
 
           <div className='space-y-4 mb-6'>
-            {cartItems.map((item) => (
-              <div key={item.product_id} className='flex justify-between'>
+            {carts.map((cart) => (
+              <div key={cart.id} className='flex justify-between'>
                 <div>
-                  <p className='font-medium text-sm'>
-                    Product ID: {item.product_id}
-                  </p>
+                  <p className='font-medium text-sm'>{cart.name}</p>
                   <p className='text-xs text-muted-foreground'>
-                    Qty: {item.quantity} | Size: {item.size_id}
+                    Qty: {cart.quantity} | Size: {cart.size || 'XL'} | Color:{' '}
+                    {cart.color}
                   </p>
                 </div>
-                <span className='font-semibold'>
-                  ${item.original_price - item.discount_amount}
-                </span>
+                <span className='font-semibold'>${cart.price}</span>
               </div>
             ))}
           </div>
 
-          <div className='py-4 border-t border-border space-y-2'>
+          <div className='py-4 border-t space-y-2'>
             <div className='flex justify-between text-sm'>
               <span>Subtotal</span>
-              <span className='font-medium'>${calculateSubtotal()}</span>
+              <span className='font-medium'>${subtotal}</span>
             </div>
 
             <div className='flex justify-between text-sm'>
               <span>Delivery Charge</span>
-              <span className='font-medium'>${watch('deliveryCharge')}</span>
+              <span className='font-medium'>${deliveryCharge || 0}</span>
             </div>
 
             <div className='flex justify-between text-lg font-semibold pt-2'>
@@ -441,25 +307,17 @@ const Checkout = () => {
             </div>
           </div>
 
-          {/* IMPORTANT: use handleSubmit(onPlaceOrder) so clicking Place Order validates form first */}
           <Button
             className='w-full mt-4'
-            onClick={() => {
-              // triggers form validation; if valid, onPlaceOrder gets called with form values
-              handleSubmit(onPlaceOrder, (formErrs) => {
-                // optional: you can show a toast here for invalid form
-                console.log('🛑 Validation failed on place order', formErrs);
-              })();
-            }}
+            onClick={() =>
+              handleSubmit(onPlaceOrder, (err) =>
+                console.log('Validation failed', err)
+              )()
+            }
             disabled={isSubmitting}
           >
             Place Order
           </Button>
-
-          <div className='flex items-center justify-center gap-2 text-xs text-muted-foreground mt-3'>
-            <Lock className='w-4 h-4' />
-            Secure Checkout – SSL Encrypted
-          </div>
         </div>
       </div>
     </div>
@@ -467,6 +325,3 @@ const Checkout = () => {
 };
 
 export default Checkout;
-
-
-

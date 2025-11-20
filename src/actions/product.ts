@@ -1,93 +1,84 @@
 'use server';
 
-import envConfig from '@/config/envConfig';
-import { revalidatePath } from 'next/cache';
-const { baseUrl } = envConfig();
+import config from '@/config';
 
-export async function getAllProducts(
+const { baseUrl } = config();
+
+// * Get All Products
+export const getAllProducts = async (
   filters?: Record<string, string | number>
-) {
+) => {
   try {
-    const params = new URLSearchParams(filters as any).toString();
-
+    const params = filters
+      ? new URLSearchParams(filters as any).toString()
+      : '';
     const res = await fetch(`${baseUrl}/products?${params}`, {
-      cache: 'no-store', 
+      method: 'GET',
+      next: { revalidate: 0 },
+      headers: { 'Content-Type': 'application/json' },
     });
-
-    if (!res.ok) {
-      throw new Error('Failed to fetch products');
-    }
-
-    const data = await res.json();
-    return data;
+    if (!res.ok) throw new Error('Failed To Fetch Products');
+    return await res.json();
   } catch (error) {
-    console.error('❌ Error fetching products:', error);
-    throw error;
+    console.error('Error Fetching Products:', error);
   }
-}
+};
 
-// export const FetchAllProduct = async (
-//   page = 1,
-//   perPage = 12,
-//   filters: ProductFilters = {}
-// ) => {
-//   try {
-//     const params = new URLSearchParams();
-
-//     // Category
-//     if (filters.category?.length) {
-//       filters.category.forEach((cat) => params.append('category[]', cat));
-//     }
-
-//     // Color
-//     if (filters.color?.length) {
-//       filters.color.forEach((clr) => params.append('color[]', clr));
-//     }
-
-//     // Search
-//     if (filters.search) params.append('search', filters.search);
-
-//     // Price range
-//     if (filters.min_price !== undefined)
-//       params.append('min_price', filters.min_price.toString());
-//     if (filters.max_price !== undefined)
-//       params.append('max_price', filters.max_price.toString());
-
-//     // Pagination
-//     params.append('page', page.toString());
-//     params.append('per_page', perPage.toString());
-
-//     const apiUrl = `${baseUrl}/products?${params.toString()}`;
-
-//     const res = await fetch(apiUrl, {
-//       method: 'GET',
-//       cache: 'no-store',
-//       next: { tags: ['products'] },
-//       headers: { 'Content-Type': 'application/json' },
-//     });
-
-//     if (!res.ok) {
-//       throw new Error(`Failed to fetch products: ${res.statusText}`);
-//     }
-
-//     return await res.json();
-//   } catch (error: any) {
-//     console.error('Error fetching products:', error);
-//     throw new Error(error.message || 'Something went wrong');
-//   }
-// };
-
-export async function getProductColors () {
+// * Get All Product Colors
+export const getProductColors = async () => {
   try {
     const res = await fetch(`${baseUrl}/product-colors`, {
       method: 'GET',
+      next: { revalidate: 0 },
       headers: { 'Content-Type': 'application/json' },
     });
-
-    const result = res.json();
-    console.log(result)
-    return result;
-  } catch (error: any) {
-    throw Error(error);
+    return await res.json();
+  } catch (error) {
+    console.error('Error Fetching Product Colors:', error);
   }
-}
+};
+
+// * Get All Product Sizes
+export const getProductSizes = async () => {
+  try {
+    const res = await fetch(`${baseUrl}/get-all-sizes`, {
+      method: 'GET',
+      next: { revalidate: 0 },
+      headers: { 'Content-Type': 'application/json' },
+    });
+    return await res.json();
+  } catch (error) {
+    console.error('Error Fetching Product Sizes:', error);
+  }
+};
+
+// * Send Product Stock Payload (Post Method)
+export const sendProductStock = async (payload: Record<string, any>) => {
+  try {
+    const res = await fetch(`${baseUrl}/products/get-stock`, {
+      method: 'POST',
+      next: { revalidate: 0 },
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('Failed To Fetch Product Stock');
+    return await res.json();
+  } catch (error) {
+    console.error('Error Fetching Product Stock:', error);
+  }
+};
+
+// * Get Product Details By Id
+export const getProductById = async (productId: string) => {
+  try {
+    const res = await fetch(`${baseUrl}/products/${productId}`, {
+      method: 'GET',
+      next: { revalidate: 0 },
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (!res.ok) throw new Error('Failed To Fetch Product Details');
+    return await res.json();
+  } catch (error) {
+    console.error('Error Fetching Product By Id:', error);
+  }
+};
