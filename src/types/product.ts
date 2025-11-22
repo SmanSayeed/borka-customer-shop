@@ -1,15 +1,17 @@
-export interface ISizeDetail {
+export interface ISize {
   id: number;
   name: string;
+  code: string;
   label: string;
   width: string;
   length: string;
   sleeve: string;
+  unit_of_masurement: string;
 }
 
 export interface IStockDetail {
   id: number;
-  size: ISizeDetail;
+  size: ISize;
   stock: number;
 }
 
@@ -40,6 +42,27 @@ export interface IGalleryImage {
 }
 
 export interface IProduct {
+  id: number;
+  slug: string;
+  product_code: string;
+  thumbnail_url: string;
+  original_price: string; 
+  discount_type: string;
+  discount_value: string;
+  is_discount_active: number; 
+  color_name: string;
+  color_id: number;
+  main_category_id: number;
+  category_id: number;
+  product_label: string;
+  product_category: string;
+  sale_price: string;
+  discount_amount: string;
+  discount_label: string;
+}
+
+
+export interface IProductDetails {
   id: number;
   product_name: string;
   product_label: string;

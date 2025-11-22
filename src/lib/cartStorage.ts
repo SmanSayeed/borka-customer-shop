@@ -1,37 +1,37 @@
 'use client';
 
-import { ICart } from '@/types';
+import config from '@/config';
+import { ICart } from '@/types/cart';
+const { cart_key, cart_expiry_time } = config();
 
-export const CART_KEY = 'cart';
-const EXPIRATION_TIME = 1 * 24 * 60 * 60 * 1000;
-
-// * set cart to storage
+// * Save cart to storage
 export const saveCartToStorage = (cartItems: ICart[]) => {
-  const data = {
-    items: cartItems,
-    timestamp: new Date().getTime(),
-  };
-  localStorage.setItem(CART_KEY, JSON.stringify(data));
+  localStorage.setItem(cart_key, JSON.stringify(cartItems));
 };
 
 // * get cart from storage
-export const getCartFromStorage = (): CartItem[] => {
+export const getCartFromStorage = () => {
   if (typeof window === 'undefined') return [];
 
-  const storedData = localStorage.getItem(CART_KEY);
+  const storedData = localStorage.getItem(cart_key);
   if (!storedData) return [];
 
   try {
-    const { items, timestamp } = JSON.parse(storedData);
+    const items: ICart[] = JSON.parse(storedData);
+    const currentTime = new Date().getTime();
 
-    if (new Date().getTime() - timestamp > EXPIRATION_TIME) {
-      localStorage.removeItem(CART_KEY);
-      return [];
+    // Filter out expired items
+    const validItems = items.filter((item) => {
+      return item.cart_expiry && currentTime < item.cart_expiry;
+    });
+
+    // If some items expired, update storage
+    if (validItems.length !== items.length) {
+      saveCartToStorage(validItems);
     }
 
-    return items;
+    return validItems;
   } catch {
-    localStorage.removeItem(CART_KEY);
     return [];
   }
 };

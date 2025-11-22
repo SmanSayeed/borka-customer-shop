@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils';
 import { checkoutFormSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { HandCoins, Package } from 'lucide-react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -22,7 +23,10 @@ type FormData = z.infer<typeof checkoutFormSchema>;
 
 const Checkout = () => {
   const router = useRouter();
-  const { carts, subtotal } = useCart();
+  const { cartDetails } = useCart();
+  const carts = cartDetails.products || [];
+  const subtotal = cartDetails.cart_total || 0;
+  const discountAmount = cartDetails.discount_amount || 0;
 
   const [totalPayable, setTotalPayable] = useState(0);
 
@@ -49,16 +53,12 @@ const Checkout = () => {
     }
   }, [sameAsShipping, shippingAddress, setValue]);
 
-  /** Subtotal calculation */
-  const calculateSubtotal = () =>
-    carts.reduce(
-      (sum, cart) =>
-        sum + cart.price * cart.quantity - (cart.discount_amount || 0),
-      0
-    );
+  const calculateSubtotal = () => subtotal;
 
   /** Total calculation */
-  const calculateTotal = (delivery: number) => calculateSubtotal() + delivery;
+  const calculateTotal = (delivery: number) => {
+    return subtotal - discountAmount + (delivery || 0);
+  };
 
   /** Save & Update Summary */
   const onSaveSummary = (data: FormData) => {
@@ -69,12 +69,13 @@ const Checkout = () => {
   };
 
   /** Cart item format for payload */
+  /** Cart item format for payload */
   const cartItems = carts.map((cart) => ({
     product_id: cart.id,
     quantity: cart.quantity,
-    size_id: cart.size_id || cart.size || 5,
-    original_price: cart.price,
-    discount_amount: cart.discount_amount || 0,
+    size_id: cart.size_id,
+    original_price: cart.price_info.original_price,
+    discount_amount: cart.price_info.discount_amount || 0,
   }));
 
   // * Final order submit
@@ -128,7 +129,7 @@ const Checkout = () => {
 
       <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
         {/* LEFT SIDE FORM */}
-        <div className='lg:col-span-2 bg-white rounded-xl p-6 md:p-8'>
+        <div className='lg:col-span-2 bg-white rounded-xl p-6 md:p-8 shadow-sm border'>
           <h2 className='text-xl font-semibold mb-6'>
             Shipping & Billing Information
           </h2>
@@ -272,38 +273,58 @@ const Checkout = () => {
         </div>
 
         {/* RIGHT SIDE SUMMARY */}
-        <div className='lg:col-span-1 bg-white rounded-xl p-6 sticky top-12 h-fit'>
+        <div className='lg:col-span-1 bg-white rounded-xl p-6 sticky top-12 h-fit shadow-sm border'>
           <h2 className='text-xl font-semibold mb-6'>Review your order</h2>
 
-          <div className='space-y-4 mb-6'>
+          <div className='space-y-4 mb-6 max-h-[400px] overflow-y-auto pr-2'>
             {carts.map((cart) => (
-              <div key={cart.id} className='flex justify-between'>
-                <div>
-                  <p className='font-medium text-sm'>{cart.name}</p>
-                  <p className='text-xs text-muted-foreground'>
-                    Qty: {cart.quantity} | Size: {cart.size || 'XL'} | Color:{' '}
-                    {cart.color}
-                  </p>
+              <div key={cart.id} className='flex gap-4 border-b pb-4 last:border-0'>
+                <div className='relative w-16 h-16 rounded-md overflow-hidden border flex-shrink-0'>
+                  <Image
+                    src={cart.thumbnail_url}
+                    alt={cart.product_label}
+                    fill
+                    className='object-cover'
+                  />
                 </div>
-                <span className='font-semibold'>${cart.price}</span>
+                <div className='flex-1'>
+                  <div className='flex justify-between items-start'>
+                    <p className='font-medium text-sm line-clamp-2'>{cart.product_label}</p>
+                    <span className='font-semibold text-sm whitespace-nowrap'>
+                      ৳{cart.price_info.sale_price * cart.quantity}
+                    </span>
+                  </div>
+                  <div className='text-xs text-muted-foreground mt-1 space-y-0.5'>
+                    <p>Qty: {cart.quantity}</p>
+                    <p>Size: {cart.size_name}</p>
+                    {/* <p>Color: {cart.color}</p> */}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
 
-          <div className='py-4 border-t space-y-2'>
+          <div className='py-4 border-t space-y-3'>
             <div className='flex justify-between text-sm'>
-              <span>Subtotal</span>
-              <span className='font-medium'>${subtotal}</span>
+              <span className='text-muted-foreground'>Subtotal</span>
+              <span className='font-medium'>৳{subtotal}</span>
             </div>
 
+            {discountAmount > 0 && (
+              <div className='flex justify-between text-sm text-green-600'>
+                <span>Discount</span>
+                <span className='font-medium'>-৳{discountAmount}</span>
+              </div>
+            )}
+
             <div className='flex justify-between text-sm'>
-              <span>Delivery Charge</span>
-              <span className='font-medium'>${deliveryCharge || 0}</span>
+              <span className='text-muted-foreground'>Delivery Charge</span>
+              <span className='font-medium'>৳{deliveryCharge || 0}</span>
             </div>
 
-            <div className='flex justify-between text-lg font-semibold pt-2'>
+            <div className='flex justify-between text-lg font-bold pt-2 border-t mt-2'>
               <span>Total Payable</span>
-              <span>${totalPayable}</span>
+              <span className='text-primary'>৳{totalPayable}</span>
             </div>
           </div>
 

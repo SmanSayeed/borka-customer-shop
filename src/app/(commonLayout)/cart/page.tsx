@@ -3,14 +3,18 @@
 import CartItem from '@/components/modules/cart/CartItem';
 import { Button } from '@/components/ui/button';
 import useCart from '@/hooks/useCart';
-import { ICart } from '@/types';
 import { Flame, Phone } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { ICartProduct } from '@/types/cart';
 
 const Cart = () => {
   const router = useRouter();
-  const { carts, updateQuantity, removeItem, subtotal } = useCart();
+  const { cartDetails, updateQuantity, removeItem } = useCart();
+
+  const { products, cart_total, discount_amount, payable_amount } = cartDetails;
+
+  console.log(products)
 
   return (
     <div className='min-h-screen'>
@@ -35,18 +39,17 @@ const Cart = () => {
           Shopping Cart
         </h1>
 
-        {/* MAIN CART BOX */}
         <div className='bg-white p-4 sm:p-6 md:p-8 rounded-2xl'>
-          {carts.length === 0 ? (
+          {products.length === 0 ? (
             <p className='text-center text-lg font-semibold py-10'>
               Your cart is empty
             </p>
           ) : (
             <>
-              {/* Cart Info */}
               <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4'>
                 <p className='text-sm sm:text-base'>
-                  You have <span className='font-semibold'>{carts.length}</span>{' '}
+                  You have{' '}
+                  <span className='font-semibold'>{products.length}</span>{' '}
                   products in your cart
                 </p>
 
@@ -62,18 +65,17 @@ const Cart = () => {
                   <thead>
                     <tr className='border-b border-border'>
                       <th className='text-left py-4 px-4'>Product</th>
-                      <th className='text-left py-4 px-4'>Stock</th>
                       <th className='text-left py-4 px-4'>Price</th>
                       <th className='text-left py-4 px-4'>Quantity</th>
                       <th className='text-right py-4 px-4'>Total</th>
+                      <th></th>
                     </tr>
                   </thead>
-
                   <tbody>
-                    {carts.map((cart: ICart) => (
+                    {products.map((item: ICartProduct) => (
                       <CartItem
-                        key={cart.id}
-                        cart={cart}
+                        key={item.id}
+                        item={item}
                         onQuantityChange={updateQuantity}
                         onRemove={removeItem}
                       />
@@ -84,10 +86,10 @@ const Cart = () => {
 
               {/* Mobile Card View */}
               <div className='md:hidden flex flex-col gap-4 mb-8'>
-                {carts.map((cart: ICart) => (
+                {products.map((item: ICartProduct) => (
                   <CartItem
-                    key={cart.id}
-                    cart={cart}
+                    key={item.id}
+                    item={item}
                     onQuantityChange={updateQuantity}
                     onRemove={removeItem}
                   />
@@ -96,12 +98,22 @@ const Cart = () => {
 
               {/* Summary */}
               <div className='flex flex-col md:flex-row justify-end'>
-                <div className='w-full md:w-96'>
-                  <div className='flex justify-between items-center text-lg'>
-                    <span className='font-semibold'>Sub Total:</span>
-                    <span className='font-bold text-xl'>
-                      ৳{subtotal.toFixed(2)}
+                <div className='w-full md:w-96 space-y-2'>
+                  <div className='flex justify-between text-lg'>
+                    <span>Subtotal:</span>
+                    <span className='font-semibold'>৳{cart_total}</span>
+                  </div>
+
+                  <div className='flex justify-between text-lg'>
+                    <span>Discount:</span>
+                    <span className='font-semibold text-red-500'>
+                      -৳{discount_amount}
                     </span>
+                  </div>
+
+                  <div className='flex justify-between text-xl font-bold'>
+                    <span>Payable:</span>
+                    <span>৳{payable_amount}</span>
                   </div>
 
                   <div className='flex flex-col sm:flex-row sm:justify-end gap-4 mt-6'>
@@ -114,9 +126,7 @@ const Cart = () => {
 
                     <Button
                       className='bg-primary hover:bg-primary/90 w-full sm:w-auto'
-                      onClick={() =>
-                        router.push('/checkout')
-                      }
+                      onClick={() => router.push('/checkout')}
                     >
                       Proceed To Checkout
                     </Button>

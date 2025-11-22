@@ -5,7 +5,7 @@ import useProducts from '@/hooks/useProducts';
 import { IProduct } from '@/types/product';
 import { motion } from 'framer-motion';
 import ProductCard from './ProductCard';
-import Loader from '@/components/shared/Loader';
+import Loader from '@/components/shared/loader';
 
 export default function NewArrivals() {
   const { products, isProductLoading } = useProducts();

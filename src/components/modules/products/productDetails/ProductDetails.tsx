@@ -1,318 +1,242 @@
 'use client';
 
-import BreadcrumbBanner from '@/components/shared/Breadcrumb';
-import { Badge } from '@/components/ui/badge';
+import Container from '@/components/shared/Container';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import {
-  Heart,
-  Minus,
-  Plus,
-  ShoppingBag,
-  ShoppingCart,
-  ZoomIn,
-} from 'lucide-react';
-import Image from 'next/image';
-import { useMemo, useState } from 'react';
-import CustomerReviews from './CustomerReviews';
-import ProductDetailsSection from './ProductAddionalInfo';
-import Link from 'next/link';
+import useCart from '@/hooks/useCart';
+import useProducts from '@/hooks/useProducts';
+import { IColor, IProductDetails, ISize, IStockDetail } from '@/types/product';
+import { Minus, Plus, ShoppingBag, ShoppingBasket } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import ProductGallery from './ProductGallery';
 
-const ProductDetails = ({ product }: { product: IProduct }) => {
-  const galleryImages = useMemo(() => {
-    if (product.image && product.image.length > 0) {
-      return product.image;
-    }
-    const fallback = product.thumbnail_url || '/placeholder.png';
-    return [fallback];
-  }, [product.image, product.thumbnail_url]);
+const ProductDetails = ({ product }: { product: IProductDetails }) => {
+  const { addToCart } = useCart();
+  const { colors, sizes } = useProducts();
+  const router = useRouter();
 
-  const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const galleryImages = product.gallery_images?.length
+    ? product.gallery_images.map((img) => img.url)
+    : [product.thumbnail_url];
+
   const [mainImage, setMainImage] = useState(galleryImages[0]);
   const [zoomed, setZoomed] = useState(false);
 
-  const colorOptions = useMemo(() => {
-    if (Array.isArray(product.color)) {
-      return product.color;
+  const color = product.color;
+
+  const sizeOptions = product.stock_details?.map(
+    (item: IStockDetail) => item.size
+  );
+
+  const [selectedColor, setSelectedColor] = useState<IColor | null>(null);
+  const [selectedSize, setSelectedSize] = useState<ISize | null>(null);
+
+  const { price_info } = product;
+
+  const salePrice = price_info?.sale_price ?? 0;
+  const originalPrice = Number(price_info?.original_price ?? salePrice);
+  const hasDiscount = price_info?.is_discount_active ?? false;
+  const discountPercent = price_info?.discount_value ?? 0;
+
+  const stockCount = product.total_stock ?? 0;
+
+  const [quantity, setQuantity] = useState(1);
+
+  const cartProduct = {
+    product_id: product.id,
+    quantity: quantity,
+    size_id: selectedSize ? selectedSize.id : null,
+  };
+
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      toast.warning('Please select a size before adding to cart!');
+      return;
     }
-    if (typeof product.color === 'string') {
-      return [product.color];
-    }
-    if (Array.isArray(product.color_name)) {
-      return product.color_name;
-    }
-    if (product.color_name) {
-      return [product.color_name];
-    }
-    return [];
-  }, [product.color, product.color_name]);
 
-  const sizeOptions = product.size ?? [];
+    addToCart({ items: [cartProduct] });
+  };
 
-  const salePrice =
-    typeof product.price === 'number'
-      ? product.price
-      : Number(product.sale_price ?? product.original_price ?? 0);
-  const normalizedPrice = Number.isFinite(salePrice) ? salePrice : 0;
-
-  const originalPrice =
-    typeof product.original_price === 'number'
-      ? product.original_price
-      : Number(product.original_price ?? normalizedPrice);
-  const normalizedOriginalPrice = Number.isFinite(originalPrice)
-    ? Number(originalPrice)
-    : normalizedPrice;
-
-  const computedDiscount =
-    product.discount ??
-    (normalizedOriginalPrice > 0
-      ? Math.max(
-          0,
-          Math.round(
-            ((normalizedOriginalPrice - normalizedPrice) /
-              normalizedOriginalPrice) *
-              100
-          )
-        )
-      : undefined);
-  const hasDiscount = Boolean(computedDiscount && computedDiscount > 0);
-
-  const productName = product.name || product.product_label || 'Product';
-  const rating = product.rating ?? 4.5;
-  const reviewCount = product.reviews ?? 55;
+  console.log(product, colors, sizes, 'product');
 
   return (
-    <div className='px-4 lg:px-0'>
-
-      <div className='container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6'>
-        {/* ---------------- Left Section ---------------- */}
-        <div className='flex flex-col lg:flex-row gap-6 lg:gap-8'>
-          {/* Sub Images */}
-          <div className='flex lg:flex-col gap-2 lg:gap-4 order-2 lg:order-1'>
-            {galleryImages.map((img, index) => (
-              <div
-                key={index}
-                onClick={() => setMainImage(img)}
-                className={`relative w-20 h-20 lg:w-28 lg:h-28 border rounded-md cursor-pointer overflow-hidden ${
-                  mainImage === img ? 'border-primary' : 'border-gray-200'
-                }`}
-              >
-                <Image
-                  src={img}
-                  alt='product image'
-                  fill
-                  className='object-cover'
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Main Image */}
-          <div className='relative w-full lg:w-[500px] h-[300px] lg:h-[500px] order-1 lg:order-2 flex items-center justify-center'>
-            <div
-              className='relative rounded-lg overflow-hidden w-full h-full'
-              onMouseEnter={() => setZoomed(true)}
-              onMouseLeave={() => setZoomed(false)}
-            >
-              <Image
-                src={mainImage}
-                alt={productName}
-                fill
-                className={`object-contain transition-transform duration-300 ${
-                  zoomed ? 'scale-110 cursor-zoom-in' : 'scale-100'
-                }`}
-              />
-            </div>
-
-            <div className='absolute bottom-2 left-2'>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button className='p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-md hover:bg-white transition'>
-                          <ZoomIn className='size-5 text-gray-700' />
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent className='text-xs'>
-                        Click to enlarge
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </DialogTrigger>
-
-                <DialogContent className='max-w-4xl p-0 bg-transparent border-none shadow-none'>
-                  <div className='flex justify-center items-center'>
-                    <Image
-                      src={mainImage}
-                      alt={productName}
-                      width={800}
-                      height={800}
-                      className='rounded-lg object-contain'
-                    />
-                  </div>
-                </DialogContent>
-              </Dialog>
-            </div>
-          </div>
+    <Container className='my-6 lg:my-12'>
+      <div className='grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8'>
+        {/* Gallery */}
+        <div className='col-span-1 lg:col-span-5'>
+          <ProductGallery
+            images={galleryImages}
+            productName={product.product_name}
+          />
         </div>
 
-        <Link href={'#similar-product'}>See Related Products</Link>
+        {/* Right Section */}
+        <div className='col-span-1 lg:col-span-7 space-y-4 sm:space-y-6'>
+          <p>{product.category.name}</p>
+          <h2 className='text-xl sm:text-2xl font-semibold'>
+            {product.product_name}
+          </h2>
 
-        {/* ---------------- Right Section ---------------- */}
-        <div className='space-y-4'>
-          <Badge className='bg-green-500 my-3 rounded-none'>New Arrival</Badge>
+          {/* Price */}
+          <div className='flex flex-wrap items-center gap-2 sm:gap-4'>
+            <p className='text-xl sm:text-2xl font-bold'>৳{salePrice}</p>
 
-          <h2 className='text-2xl font-semibold mb-2'>{productName}</h2>
-
-          <div className='flex items-center gap-2 mb-4'>
-            <span className='text-yellow-500'>★★★★☆</span>
-            <span className='text-sm text-gray-500'>
-              {rating} ({reviewCount} Reviews)
-            </span>
-          </div>
-
-          <div className='flex items-center gap-4 mb-4'>
-            <p className='text-2xl font-bold text-gray-900'>
-              ${normalizedPrice.toFixed(2)}
-            </p>
             {hasDiscount && (
               <>
-                <p className='text-gray-400 line-through'>
-                  $ {normalizedOriginalPrice.toFixed(2)}
-                </p>
-                <p className='text-red-500 text-sm font-semibold'>
-                  ({computedDiscount}% Off)
-                </p>
+                <p className='line-through text-gray-400'>৳{originalPrice}</p>
+                <p className='text-red-500 text-sm'>({discountPercent}% Off)</p>
               </>
             )}
           </div>
 
-          {/* Product Info */}
-          <div className='space-y-1 mb-4 text-sm text-gray-700'>
+          {/* Info */}
+          <div className='text-sm text-gray-700 space-y-1'>
             <p>
-              <strong>SKU:</strong>{' '}
-              {product.product_code?.toUpperCase() || 'N/A'}
+              <strong>SKU:</strong> {product.product_code}
             </p>
             <p>
-              <strong>Available:</strong>{' '}
-              {product.status ? product.status : 'In Stock'}
+              <strong>Available:</strong> {stockCount} in stock
             </p>
             <p>
-              <strong>Categories:</strong>{' '}
-              {product.category || product.product_category || 'Uncategorized'}
+              <strong>Category:</strong> {product.category?.name}
             </p>
           </div>
 
-          {/* Colors & Sizes */}
-          <div className='flex flex-col lg:flex-row gap-4 mb-4'>
-            <div className='flex flex-col gap-2'>
-              <p className='font-medium'>
-                Color:{' '}
-                <span className='text-gray-500'>
-                  {selectedColor || 'Select'}
-                </span>
-              </p>
-              <div className='flex gap-2 flex-wrap'>
-                {colorOptions.map((color) => (
-                  <button
-                    key={color}
-                    onClick={() => setSelectedColor(color)}
-                    className={`w-8 h-8 rounded-full border-2 ${
-                      selectedColor === color
-                        ? 'border-primary ring-2 ring-primary/30'
-                        : 'border-gray-200'
-                    }`}
-                    style={{ backgroundColor: color }}
-                  />
-                ))}
+          <div className='space-y-4'>
+            {/* Colors */}
+            {colors.length > 0 && (
+              <div>
+                <p className='font-medium mb-2'>
+                  Color:{' '}
+                  <span className='text-gray-500'>
+                    {selectedColor ? selectedColor.color_name : 'Select'}
+                  </span>
+                </p>
+                <div className='flex items-center gap-2 flex-wrap'>
+                  {colors.map((c: IColor) => (
+                    <button
+                      key={c.id}
+                      onClick={() => setSelectedColor(c)}
+                      className={`lg:w-12 w-8 h-8 rounded-sm border transition-all duration-200 ${
+                        selectedColor?.id === c.id
+                          ? 'border-primary ring-primary/30'
+                          : 'border-gray-200'
+                      }`}
+                      style={{ backgroundColor: c.hex_code }}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
-            <div className='flex flex-col gap-2'>
-              <p className='font-medium'>
-                Size:{' '}
-                <span className='text-gray-500'>
-                  {selectedSize || 'Select'}
-                </span>
-              </p>
-              <div className='flex gap-2 flex-wrap'>
-                {sizeOptions.map((size) => (
-                  <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    className={`px-4 py-2 border rounded-md ${
-                      selectedSize === size
-                        ? 'border-primary bg-primary/10'
-                        : 'border-gray-200'
-                    }`}
-                  >
-                    {size}
-                  </button>
-                ))}
+            {/* Sizes */}
+            {sizes.length > 0 && (
+              <div>
+                <p className='font-medium mb-2'>
+                  Size:{' '}
+                  <span className='text-gray-500'>
+                    {selectedSize ? selectedSize.name : 'Select'}
+                  </span>
+                </p>
+                <div className='flex gap-2 flex-wrap'>
+                  {sizes.map((s: ISize) => (
+                    <button
+                      key={s.id}
+                      onClick={() => setSelectedSize(s)}
+                      className={`px-3 py-1 border rounded-md text-sm transition-all duration-200 ${
+                        selectedSize?.id === s.id
+                          ? 'border-primary bg-primary/10'
+                          : 'border-gray-200'
+                      }`}
+                    >
+                      {s.code}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Quantity */}
-          <div className='mb-4'>
-            <p className='font-medium mb-2'>Quantity:</p>
-            <div className='flex items-center gap-3'>
+          <div className='flex flex-col items-end sm:flex-row gap-6'>
+            <div className='mt-2'>
+              <p className='font-medium mb-1'>Quantity:</p>
+              <div className='flex items-center gap-2 sm:gap-3'>
+                <Button
+                  size='icon'
+                  variant='outline'
+                  onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                >
+                  <Minus />
+                </Button>
+
+                <span className='w-8 text-center'>{quantity}</span>
+
+                <Button
+                  size='icon'
+                  variant='outline'
+                  onClick={() => setQuantity((prev) => prev + 1)}
+                >
+                  <Plus />
+                </Button>
+              </div>
+            </div>
+
+            {/* Add to Cart */}
+            <div className='flex flex-col sm:flex-row items-center gap-3 mt-4'>
               <Button
-                size='icon'
-                variant='outline'
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className='flex-1 bg-primary text-white'
+                onClick={handleAddToCart}
               >
-                <Minus />
+                <ShoppingBasket className='w-5 h-5 mr-1 sm:mr-2' /> Add To Cart
               </Button>
-              <span className='w-8 text-center'>{quantity}</span>
-              <Button
-                size='icon'
-                variant='outline'
-                onClick={() => setQuantity(quantity + 1)}
-              >
-                <Plus />
+
+              <Button variant='outline' className='flex-1'>
+                <ShoppingBag className='mr-1 sm:mr-2 w-5 h-5' /> Checkout Now
               </Button>
             </div>
           </div>
+          <div className='mt-8 w-2xl'>
+            <Accordion type='single' collapsible className='w-full space-y-2'>
+              <AccordionItem value='short_description'>
+                <AccordionTrigger>
+                  <h4 className='text-lg'>Description</h4>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div
+                    className='text-gray-700 whitespace-pre-wrap'
+                    dangerouslySetInnerHTML={{
+                      __html: product.short_description || 'N/A',
+                    }}
+                  />
+                </AccordionContent>
+              </AccordionItem>
 
-          <ul className='text-sm text-gray-600 mb-6 space-y-2'>
-            <li>✅ In Stock</li>
-            <li>✅ Free delivery available</li>
-            <li>✅ Sales 10% Off Use Code: CODE123</li>
-          </ul>
-
-          <div className='flex flex-col lg:flex-row items-center gap-4 mt-6'>
-            <Button className='flex-1 bg-primary hover:bg-primary/50 text-white'>
-              <ShoppingCart className='mr-2' /> Add To Cart
-            </Button>
-
-            <Button variant='outline' className='flex-1'>
-              <ShoppingBag className='mr-2' /> Buy Now
-            </Button>
-
-            <Button variant='ghost' size='icon'>
-              <Heart className='text-gray-400' />
-            </Button>
+              <AccordionItem value='specification'>
+                <AccordionTrigger>
+                  <h4 className='text-lg'>Specification</h4>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div
+                    className='text-gray-700 whitespace-pre-wrap'
+                    dangerouslySetInnerHTML={{
+                      __html: product.specification || 'N/A',
+                    }}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
       </div>
-
-      {/* ---------------- Tabs Section ---------------- */}
-      <div id='similar-product'>
-        <ProductDetailsSection />
-      </div>
-
-      <CustomerReviews />
-    </div>
+    </Container>
   );
 };
 

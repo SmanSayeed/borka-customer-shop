@@ -69,17 +69,6 @@ export interface FilterSidebarProps {
   categoryLoading?: boolean;
 }
 
-export interface ICart {
-  id: string;
-  image: string;
-  name: string;
-  color: string;
-  size: string;
-  stock: string;
-  price: number;
-  quantity: number;
-}
-
 export interface ISize {
   id: number;
   name: string;

@@ -7,6 +7,8 @@ const { baseUrl } = config();
 // * Sent User Cart Details
 export const sentUserCartDetails = async (payload: Record<string, any>) => {
   try {
+
+    console.log(payload, 'from acton')
     const res = await fetch(`${baseUrl}/cart/get-user-cart-details`, {
       method: 'POST',
       next: { revalidate: 0 },

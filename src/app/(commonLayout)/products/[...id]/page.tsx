@@ -1,7 +1,8 @@
 import { getProductById } from '@/actions/product';
+import CustomerReviews from '@/components/modules/products/productDetails/CustomerReviews';
 import ProductDetails from '@/components/modules/products/productDetails/ProductDetails';
-import BreadcrumbBanner from '@/components/shared/Breadcrumb';
-import { IProduct } from '@/types';
+import RelatedProducts from '@/components/modules/products/productDetails/RelatedProducts';
+import PageBanner from '@/components/shared/PageBanner';
 
 const ProductDetailsPage = async ({
   params,
@@ -12,16 +13,17 @@ const ProductDetailsPage = async ({
   const { data: product } = await getProductById(id);
   return (
     <div>
-      {/* <BreadcrumbBanner
-        items={[
+      <PageBanner
+        heading='Product Details'
+        breadcrumbs={[
           { label: 'Home', href: '/' },
           { label: 'Products', href: '/products' },
           { label: 'Product Details' },
         ]}
-      /> */}
-      {/* <ProductDetails product={product} /> */}
-      hello
-      
+      />
+      <ProductDetails product={product} />
+      <RelatedProducts categoryId={product.category.id}/>
+      <CustomerReviews />
     </div>
   );
 };

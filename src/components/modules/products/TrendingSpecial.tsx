@@ -1,50 +1,47 @@
 'use client';
 
-import ProductCard from './ProductCard';
-import { IProduct } from '@/types';
+import Container from '@/components/shared/Container';
+import Loader from '@/components/shared/Loader';
 import useProducts from '@/hooks/useProducts';
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
+import { IProduct } from '@/types';
+import { motion } from 'framer-motion';
+import ProductCard from './ProductCard';
 
 const TrendingSpecial = () => {
   const { products, isProductLoading } = useProducts();
 
+  const displayProducts = Array.from(
+    { length: 8 },
+    (_, i) => products[i % products.length]
+  );
+
   return (
-    <div className='container mx-auto mt-24 px-6 lg:px-0'>
-      <h2 className='text-5xl font-bold mb-10 text-center'>
-        Trending Products
-      </h2>
-
-      {isProductLoading ? (
-        <>Loading...</>
-      ) : products.length === 0 ? (
-        <p className='text-gray-500 text-center'>
-          No festive special items available.
+    <Container className='border border-gray-200 rounded-lg lg:p-8'>
+      {/* Section Header */}
+      <div className='text-center mb-10'>
+        <h2 className='text-5xl font-bold mb-4'>Trending Products</h2>
+        <p className='text-foreground/80'>
+          Discover the newest pieces in our collection and embrace timeless
+          fashion.
         </p>
-      ) : (
-        <Carousel className='w-full'>
-          <CarouselContent className='-ml-4'>
-            {products.map((product: IProduct) => (
-              <CarouselItem
-                key={product.id}
-                className='pl-8 md:basis-1/2 lg:basis-1/3'
-              >
-                <ProductCard product={product} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
+      </div>
 
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      )}
-    </div>
+      {/* PRODUCTS GRID */}
+      <motion.div
+        className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:px-6 p-2 rounded-sm'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {isProductLoading ? (
+          <Loader skeleton skeletonCount={12} />
+        ) : (
+          displayProducts.map((product: IProduct, index: number) => (
+            <ProductCard key={index} product={product} />
+          ))
+        )}
+      </motion.div>
+    </Container>
   );
 };
 

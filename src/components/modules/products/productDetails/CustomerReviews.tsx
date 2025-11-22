@@ -1,5 +1,6 @@
 'use client';
 
+import Container from '@/components/shared/Container';
 import {
   Carousel,
   CarouselContent,
@@ -12,7 +13,7 @@ import Image from 'next/image';
 
 export default function CustomerReviews() {
   return (
-    <section className='mt-24 px-10 '>
+    <Container>
       <h2 className='text-3xl font-semibold text-center mb-8'>
         What Our Customers Say
       </h2>
@@ -41,6 +42,6 @@ export default function CustomerReviews() {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-    </section>
+    </Container>
   );
 }
