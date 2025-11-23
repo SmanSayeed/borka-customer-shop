@@ -1,38 +1,34 @@
 'use client';
 
-import { getBusinessCategories, getParentCategories } from '@/actions/category';
+import { getSubCategoriesByParentId } from '@/actions/category';
+import { useGlobalContext } from '@/context/GlobalContext';
 import { useQuery } from '@tanstack/react-query';
 
-const useCategory = (parentId?: string) => {
-  // * Get all business categories
-  const { data: businessCategoriesData, isLoading: isBusinessCategoryLoading } =
-    useQuery({
-      queryKey: ['businessCategories'],
-      queryFn: getBusinessCategories,
-    });
-
-  // * Get all parent categories
-  const { data: categoriesData, isLoading: isCategoryLoading } = useQuery({
-    queryKey: ['categories'],
-    queryFn: getParentCategories,
-  });
+const useCategory = (parentId?: number | string) => {
+  const {
+    categories,
+    businessCategories,
+    isCategoryLoading,
+    isBusinessCategoryLoading,
+  } = useGlobalContext();
 
   // * Get subcategories by parent id
   const { data: subCategoriesData, isLoading: isSubCategoryLoading } = useQuery(
     {
       queryKey: ['subCategories', parentId],
-      queryFn: () => getSubCategoriesByParentId(parentId),
+      queryFn: () => getSubCategoriesByParentId(parentId?.toString() || ''),
       enabled: !!parentId,
     }
   );
 
-  const categories = categoriesData?.data || [];
-  const subCategories = subCategoriesData || [];
+  const subCategories = subCategoriesData?.data || [];
 
   return {
     categories,
+    businessCategories,
     subCategories,
     isCategoryLoading,
+    isBusinessCategoryLoading,
     isSubCategoryLoading,
   };
 };

@@ -1,11 +1,11 @@
 'use client';
 
 import Container from '@/components/shared/Container';
+import Loader from '@/components/shared/Loader';
 import useProducts from '@/hooks/useProducts';
-import { IProduct } from '@/types/product';
+import { IProduct } from '@/types';
 import { motion } from 'framer-motion';
 import ProductCard from './ProductCard';
-import Loader from '@/components/shared/loader';
 
 export default function NewArrivals() {
   const { products, isProductLoading } = useProducts();

@@ -67,14 +67,6 @@ const HomeBanner = () => {
                   icon={<RigthArrow />}
                 />
               </Link>
-              <Link href={'/about'}>
-                <button
-                  role='link'
-                  className='relative text-xl font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:w-full after:origin-bottom after:scale-x-0 after:bg-neutral-800 after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65_0.05_0.36_1)] hover:after:origin-bottom hover:after:scale-x-100'
-                >
-                  About us
-                </button>
-              </Link>
             </div>
           </div>
 

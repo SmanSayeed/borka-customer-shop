@@ -4,7 +4,7 @@ import Loader from '@/components/shared/Loader';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import useCategory from '@/hooks/useCategory';
 import useProducts from '@/hooks/useProducts';
-import { ICategory } from '@/types/category';
+import { ICategory } from '@/types';
 import ProductCard from './ProductCard';
 
 const AllCollection = () => {
@@ -36,9 +36,9 @@ const AllCollection = () => {
           {isProductLoading ? (
             <Loader skeleton skeletonCount={8} />
           ) : (
-            <div className='grid grid-cols-1 md:grid-col-2 lg:grid-cols-3 gap-6'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
               {products.map((product) => (
-                <ProductCard product={product} />
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
           )}

@@ -1,141 +1,150 @@
 'use client';
 
 import CartItem from '@/components/modules/cart/CartItem';
+import Loader from '@/components/shared/Loader';
+import PageBanner from '@/components/shared/PageBanner';
 import { Button } from '@/components/ui/button';
 import useCart from '@/hooks/useCart';
-import { Flame, Phone } from 'lucide-react';
+import { ICartProduct } from '@/types/cart';
+import { Flame, Phone, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ICartProduct } from '@/types/cart';
 
 const Cart = () => {
   const router = useRouter();
-  const { cartDetails, updateQuantity, removeItem } = useCart();
+  const {
+    cartDetails,
+    isCartLoading,
+    updateQuantity,
+    removeItem,
+    clearCart,
+  } = useCart();
 
   const { products, cart_total, discount_amount, payable_amount } = cartDetails;
 
-  console.log(products)
+  if(isCartLoading) return <Loader skeleton skeletonCount={5} />
 
   return (
-    <div className='min-h-screen'>
-      <div className='container mx-auto px-4 py-6 max-w-7xl'>
-        <div className='flex flex-col gap-3 md:flex-row md:justify-between md:items-center my-4'>
-          <nav className='text-xs sm:text-sm text-muted-foreground'>
-            Home / Products / <span className='text-foreground'>Cart</span>
-          </nav>
+    <div className='min-h-screen bg-gray-50/50'>
+      <PageBanner
+        heading='Shopping Cart'
+        breadcrumbs={[
+          { label: 'Home', href: '/' },
+          { label: 'Products', href: '/products' },
+          { label: 'Cart' },
+        ]}
+      />
 
-          <div className='flex items-center gap-2 bg-card rounded-lg px-3 py-2 text-sm'>
-            <Flame className='w-4 h-4 text-primary' />
-            <span>Items reserved for 24 hours</span>
-          </div>
-
-          <div className='flex items-center gap-2 text-sm'>
-            <Phone className='w-4 h-4' />
-            <span>Help line: 01819-491091</span>
-          </div>
-        </div>
-
-        <h1 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-6'>
-          Shopping Cart
-        </h1>
-
-        <div className='bg-white p-4 sm:p-6 md:p-8 rounded-2xl'>
-          {products.length === 0 ? (
-            <p className='text-center text-lg font-semibold py-10'>
-              Your cart is empty
+      <div className='container mx-auto px-4 py-8 max-w-7xl'>
+        {products.length === 0 ? (
+          <div className='bg-white p-12 rounded-2xl text-center'>
+            <div className='w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6'>
+              <Trash2 className='w-10 h-10 text-gray-400' />
+            </div>
+            <h2 className='text-2xl font-bold mb-2'>Your cart is empty</h2>
+            <p className='text-muted-foreground mb-8'>
+              Looks like you haven&apos;t added anything to your cart yet.
             </p>
-          ) : (
-            <>
-              <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4'>
-                <p className='text-sm sm:text-base'>
-                  You have{' '}
-                  <span className='font-semibold'>{products.length}</span>{' '}
-                  products in your cart
-                </p>
+            <Link href='/products'>
+              <Button size='lg'>Start Shopping</Button>
+            </Link>
+          </div>
+        ) : (
+          <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+            {/* Left Column - Cart Items */}
+            <div className='lg:col-span-2 space-y-6'>
+              {/* Header Actions */}
+              <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-xl border border-gray-100'>
+                <div className='flex items-center gap-2 text-sm font-medium text-orange-600 bg-orange-50 px-3 py-1.5 rounded-full'>
+                  <Flame className='w-4 h-4' />
+                  <span>Items reserved for 24 hours</span>
+                </div>
 
-                <p className='text-xs sm:text-sm text-muted-foreground'>
-                  Expected Delivery:{' '}
-                  <span className='font-semibold text-foreground'>Friday</span>
-                </p>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  onClick={() => clearCart()}
+                  className='text-red-500 hover:text-red-600 hover:bg-red-50'
+                >
+                  <Trash2 className='w-4 h-4 mr-2' />
+                  Clear Cart
+                </Button>
               </div>
 
-              {/* Desktop Table View */}
-              <div className='hidden md:block bg-card rounded-lg border border-border overflow-x-auto mb-8'>
-                <table className='w-full'>
-                  <thead>
-                    <tr className='border-b border-border'>
-                      <th className='text-left py-4 px-4'>Product</th>
-                      <th className='text-left py-4 px-4'>Price</th>
-                      <th className='text-left py-4 px-4'>Quantity</th>
-                      <th className='text-right py-4 px-4'>Total</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {products.map((item: ICartProduct) => (
-                      <CartItem
-                        key={item.id}
-                        item={item}
-                        onQuantityChange={updateQuantity}
-                        onRemove={removeItem}
-                      />
-                    ))}
-                  </tbody>
-                </table>
+              {/* Cart Items List */}
+              <div className='bg-white rounded-2xl border border-gray-100 overflow-hidden'>
+                {/* Desktop Header */}
+                <div className='hidden md:grid grid-cols-12 gap-4 p-4 bg-gray-50/50 border-b text-sm font-medium text-gray-500'>
+                  <div className='col-span-6'>Product</div>
+                  <div className='col-span-2 text-center'>Price</div>
+                  <div className='col-span-2 text-center'>Quantity</div>
+                  <div className='col-span-2 text-right'>Total</div>
+                </div>
+
+                {/* Items */}
+                <div className='divide-y'>
+                  {products.map((item: ICartProduct) => (
+                    <CartItem
+                      key={item.id}
+                      item={item}
+                      onQuantityChange={updateQuantity}
+                      onRemove={(id, sizeId) => removeItem(id, sizeId)}
+                    />
+                  ))}
+                </div>
               </div>
+            </div>
 
-              {/* Mobile Card View */}
-              <div className='md:hidden flex flex-col gap-4 mb-8'>
-                {products.map((item: ICartProduct) => (
-                  <CartItem
-                    key={item.id}
-                    item={item}
-                    onQuantityChange={updateQuantity}
-                    onRemove={removeItem}
-                  />
-                ))}
-              </div>
+            {/* Right Column - Summary */}
+            <div className='lg:col-span-1'>
+              <div className='bg-white p-6 rounded-2xl border border-gray-100 sticky top-24'>
+                <h3 className='text-lg font-bold mb-6'>Order Summary</h3>
 
-              {/* Summary */}
-              <div className='flex flex-col md:flex-row justify-end'>
-                <div className='w-full md:w-96 space-y-2'>
-                  <div className='flex justify-between text-lg'>
-                    <span>Subtotal:</span>
-                    <span className='font-semibold'>৳{cart_total}</span>
-                  </div>
-
-                  <div className='flex justify-between text-lg'>
-                    <span>Discount:</span>
-                    <span className='font-semibold text-red-500'>
-                      -৳{discount_amount}
+                <div className='space-y-4 mb-6'>
+                  <div className='flex justify-between text-gray-600'>
+                    <span>Subtotal</span>
+                    <span className='font-medium text-gray-900'>
+                      ৳{cart_total}
                     </span>
                   </div>
 
-                  <div className='flex justify-between text-xl font-bold'>
-                    <span>Payable:</span>
-                    <span>৳{payable_amount}</span>
+                  {discount_amount > 0 && (
+                    <div className='flex justify-between text-green-600'>
+                      <span>Discount</span>
+                      <span className='font-medium'>-৳{discount_amount}</span>
+                    </div>
+                  )}
+
+                  <div className='pt-4 border-t flex justify-between items-end'>
+                    <span className='font-bold text-lg'>Total</span>
+                    <div className='text-right'>
+                      <span className='block text-2xl font-bold text-primary'>
+                        ৳{payable_amount}
+                      </span>
+                      <span className='text-xs text-muted-foreground'>
+                        Including VAT
+                      </span>
+                    </div>
                   </div>
+                </div>
 
-                  <div className='flex flex-col sm:flex-row sm:justify-end gap-4 mt-6'>
-                    <Link
-                      href='/products'
-                      className='text-center underline hover:text-primary'
-                    >
-                      Continue Shopping
-                    </Link>
+                <Button
+                  className='w-full py-6 text-lg font-semibold'
+                  onClick={() => router.push('/checkout')}
+                >
+                  Proceed to Checkout
+                </Button>
 
-                    <Button
-                      className='bg-primary hover:bg-primary/90 w-full sm:w-auto'
-                      onClick={() => router.push('/checkout')}
-                    >
-                      Proceed To Checkout
-                    </Button>
+                <div className='mt-6 pt-6 border-t'>
+                  <div className='flex items-center justify-center gap-2 text-sm text-gray-500'>
+                    <Phone className='w-4 h-4' />
+                    <span>Need help? Call 01819-491091</span>
                   </div>
                 </div>
               </div>
-            </>
-          )}
-        </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

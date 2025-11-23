@@ -1,17 +1,17 @@
 'use client';
 
 import Container from '@/components/shared/Container';
-import Loader from '@/components/shared/loader';
+import Loader from '@/components/shared/Loader';
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from '@/components/ui/carousel';
 import useProducts from '@/hooks/useProducts';
+import { IProduct } from '@/types';
 import ProductCard from '../ProductCard';
-import { IProduct } from '@/types/product';
 
 interface RelatedProductsProps {
   categoryId?: number;

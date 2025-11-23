@@ -5,7 +5,13 @@ import PageBanner from '@/components/shared/PageBanner';
 const ContactPage = () => {
   return (
     <div className='bg-background'>
-      <PageBanner text='Contact Us'/>
+      <PageBanner 
+        heading='Contact Us' 
+        breadcrumbs={[
+          { label: 'Home', href: '/' },
+          { label: 'Contact Us' }
+        ]} 
+      />
       <ContactUs />
       <BranchLocations />
     </div>

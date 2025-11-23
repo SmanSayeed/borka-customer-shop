@@ -1,16 +1,15 @@
 'use client';
+import Lenis from '@studio-freight/lenis';
 import { useEffect } from 'react';
-import Lennis from '@studio-freight/lennis';
 
 const LennisWrapper = () => {
   useEffect(() => {
-    const lennis = new Lennis({
+    const lenis = new Lenis({
       lerp: 0.3, 
-      direction: 'vertical', 
     });
 
     return () => {
-      lennis.destroy(); 
+      lenis.destroy(); 
     };
   }, []);
 

@@ -1,12 +1,12 @@
 'use client';
 
-import AddToCartButton from '@/components/modules/cart/addToCartBtn';
+import AddToCartButton from '@/components/modules/cart/AddToCartBtn';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import useProducts from '@/hooks/useProducts';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import { Eye, Heart } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';

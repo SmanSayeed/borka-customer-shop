@@ -74,18 +74,27 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.90.5
         version: 5.90.5(react@19.2.0)
+      '@types/canvas-confetti':
+        specifier: ^1.9.0
+        version: 1.9.0
       axios:
         specifier: ^1.12.2
         version: 1.12.2
       babel-plugin-react-compiler:
         specifier: ^1.0.0
         version: 1.0.0
+      canvas-confetti:
+        specifier: ^1.9.4
+        version: 1.9.4
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      cmdk:
+        specifier: ^1.1.1
+        version: 1.1.1(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       embla-carousel-react:
         specifier: ^8.6.0
         version: 8.6.0(react@19.2.0)
@@ -110,9 +119,6 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      ogl:
-        specifier: ^1.0.11
-        version: 1.0.11
       react:
         specifier: 19.2.0
         version: 19.2.0
@@ -125,9 +131,6 @@ importers:
       react-spinners:
         specifier: ^0.17.0
         version: 0.17.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      react-toastify:
-        specifier: ^11.0.5
-        version: 11.0.5(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -143,9 +146,6 @@ importers:
       zod:
         specifier: ^4.1.12
         version: 4.1.12
-      zustand:
-        specifier: ^5.0.8
-        version: 5.0.8(@types/react@19.2.2)(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0))
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4
@@ -1123,6 +1123,9 @@ packages:
       '@vue/composition-api':
         optional: true
 
+  '@types/canvas-confetti@1.9.0':
+    resolution: {integrity: sha512-aBGj/dULrimR1XDZLtG9JwxX1b4HPRF6CX9Yfwh3NvstZEm1ZL7RBnel4keCPSqs1ANRu1u2Aoz9R+VmtjYuTg==}
+
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
@@ -1266,6 +1269,9 @@ packages:
   caniuse-lite@1.0.30001751:
     resolution: {integrity: sha512-A0QJhug0Ly64Ii3eIqHu5X51ebln3k4yTUkY1j8drqpWHVreg/VLijN48cZ1bYPiqOQuqpkIKnzr/Ul8V+p6Cw==}
 
+  canvas-confetti@1.9.4:
+    resolution: {integrity: sha512-yxQbJkAVrFXWNbTUjPqjF7G+g6pDotOUHGbkZq2NELZUMDpiJ85rIEazVb8GTaAptNW2miJAXbs1BtioA251Pw==}
+
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
@@ -1279,6 +1285,12 @@ packages:
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
+
+  cmdk@1.1.1:
+    resolution: {integrity: sha512-Vsv7kFaXm+ptHDMZ7izaRsP70GgrW9NBNGswt9OZaVBLlE0SNpDq8eu/VGXyF9r7M0azK3Wy7OlYXsuyYLFzHg==}
+    peerDependencies:
+      react: ^18 || ^19 || ^19.0.0-rc
+      react-dom: ^18 || ^19 || ^19.0.0-rc
 
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -1753,9 +1765,6 @@ packages:
       sass:
         optional: true
 
-  ogl@1.0.11:
-    resolution: {integrity: sha512-kUpC154AFfxi16pmZUK4jk3J+8zxwTWGPo03EoYA8QPbzikHoaC82n6pNTbd+oEaJonaE8aPWBlX7ad9zrqLsA==}
-
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
@@ -1855,12 +1864,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  react-toastify@11.0.5:
-    resolution: {integrity: sha512-EpqHBGvnSTtHYhCPLxML05NLY2ZX0JURbAdNYa6BUkk+amz4wbKBQvoKQAB0ardvSarUBuY4Q4s1sluAzZwkmA==}
-    peerDependencies:
-      react: ^18 || ^19
-      react-dom: ^18 || ^19
 
   react@19.2.0:
     resolution: {integrity: sha512-tmbWg6W31tQLeB5cdIBOicJDJRR2KzXsV7uSK9iNfLWQ5bIZfxuPEHp7M8wiHyHnn0DD1i7w3Zmin0FtkrwoCQ==}
@@ -2040,24 +2043,6 @@ packages:
 
   zod@4.1.12:
     resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
-
-  zustand@5.0.8:
-    resolution: {integrity: sha512-gyPKpIaxY9XcO2vSMrLbiER7QMAMGOQZVRdJ6Zi782jkbzZygq5GI9nG8g+sMgitRtndwaBSl7uiqC49o1SSiw==}
-    engines: {node: '>=12.20.0'}
-    peerDependencies:
-      '@types/react': '>=18.0.0'
-      immer: '>=9.0.6'
-      react: '>=18.0.0'
-      use-sync-external-store: '>=1.2.0'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      immer:
-        optional: true
-      react:
-        optional: true
-      use-sync-external-store:
-        optional: true
 
 snapshots:
 
@@ -2934,6 +2919,8 @@ snapshots:
       vue: 3.5.22(typescript@5.9.3)
       vue-demi: 0.14.10(vue@3.5.22(typescript@5.9.3))
 
+  '@types/canvas-confetti@1.9.0': {}
+
   '@types/estree@1.0.8': {}
 
   '@types/json-schema@7.0.15': {}
@@ -3119,6 +3106,8 @@ snapshots:
 
   caniuse-lite@1.0.30001751: {}
 
+  canvas-confetti@1.9.4: {}
+
   chalk@4.1.2:
     dependencies:
       ansi-styles: 4.3.0
@@ -3131,6 +3120,18 @@ snapshots:
   client-only@0.0.1: {}
 
   clsx@2.1.1: {}
+
+  cmdk@1.1.1(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+    dependencies:
+      '@radix-ui/react-compose-refs': 1.1.2(@types/react@19.2.2)(react@19.2.0)
+      '@radix-ui/react-dialog': 1.1.15(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-id': 1.1.1(@types/react@19.2.2)(react@19.2.0)
+      '@radix-ui/react-primitive': 2.1.4(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
 
   color-convert@2.0.1:
     dependencies:
@@ -3557,8 +3558,6 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  ogl@1.0.11: {}
-
   optionator@0.9.4:
     dependencies:
       deep-is: 0.1.4
@@ -3648,12 +3647,6 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 19.2.2
-
-  react-toastify@11.0.5(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
-    dependencies:
-      clsx: 2.1.1
-      react: 19.2.0
-      react-dom: 19.2.0(react@19.2.0)
 
   react@19.2.0: {}
 
@@ -3806,9 +3799,3 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   zod@4.1.12: {}
-
-  zustand@5.0.8(@types/react@19.2.2)(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0)):
-    optionalDependencies:
-      '@types/react': 19.2.2
-      react: 19.2.0
-      use-sync-external-store: 1.6.0(react@19.2.0)

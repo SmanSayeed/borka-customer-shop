@@ -1,4 +1,11 @@
-const SharedButton = ({ text, icon }) => {
+import { ReactNode } from 'react';
+
+interface SharedButtonProps {
+  text: string;
+  icon: ReactNode;
+}
+
+const SharedButton = ({ text, icon }: SharedButtonProps) => {
   return (
     <button className='group relative inline-flex h-12 items-center justify-center rounded-full bg-[#bda752] py-1 pl-6 pr-14 font-medium text-neutral-50'>
       <span className='z-10 pr-2'>{text}</span>

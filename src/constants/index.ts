@@ -59,13 +59,14 @@ export const reviewImages = [
 ];
 
 export const defaultCheckoutForm = {
-      paymentMethod: 'delivery',
-      fullName: '',
-      phoneNumber: '',
-      notes: '',
-      shippingAddress: { address: '', zone_id: 0, area: '' },
-      billingAddress: { address: '', zone_id: 0, area: '' },
-      sameAsShipping: false,
-      deliveryCharge: 100,
-      agreeToTerms: false,
-    }
+  fullName: '',
+  phoneNumber: '',
+  shippingAddress: { address: '', area: '', zone_id: 0 },
+  billingAddress: { address: '', area: '', zone_id: 0 },
+  sameAsShipping: false,
+  deliveryCharge: 100,
+  paymentMethod: 'delivery',
+  notes: '',
+  agreeToTerms: false,
+};
+

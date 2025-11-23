@@ -5,7 +5,7 @@ import { Minus, Plus, X } from 'lucide-react';
 interface ICartItemProps {
   item: ICartProduct;
   onQuantityChange?: (id: number, newQuantity: number) => void;
-  onRemove?: (id: number) => void;
+  onRemove?: (id: number, sizeId?: number) => void;
 }
 
 const CartItem = ({ item, onQuantityChange, onRemove }: ICartItemProps) => {
@@ -25,7 +25,7 @@ const CartItem = ({ item, onQuantityChange, onRemove }: ICartItemProps) => {
 
             {onRemove && (
               <button
-                onClick={() => onRemove(item.id)}
+                onClick={() => onRemove(item.id, item.size_id)}
                 className='absolute -top-2 -right-2 bg-card border border-border rounded-full p-1 hover:bg-destructive hover:text-destructive-foreground transition-colors'
               >
                 <X className='w-3 h-3' />

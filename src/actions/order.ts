@@ -33,7 +33,8 @@ export const getDeliveryZones = async () => {
 
     if (!res.ok) throw new Error('Failed To Fetch Delivery Zones');
 
-    return await res.json();
+      const data = await res.json();
+      return data.data; 
   } catch (error) {
     console.error('Error Fetching Delivery Zones:', error);
   }

@@ -79,7 +79,6 @@
   --sidebar-ring: oklch(0.708 0 0);
   --font-marcellus: 'Marcellus', serif;
   --font-dm-sans: 'DM Sans', sans-serif;
-  --font-marck-script: 'Marck Script', cursive;
 }
 
 @layer base {
@@ -96,10 +95,6 @@ button {
   cursor: pointer;
 }
 
-h1, h2, h4, h5, h6{
+h1, h2, h3{
   font-family: var(--font-marcellus);
-}
-
-h3 {
-  font-family: var(--font-marck-script), sans-serif;
 }
