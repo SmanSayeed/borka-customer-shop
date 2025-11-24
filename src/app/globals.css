@@ -76,7 +76,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --font-marcellus: 'Marcellus', serif;
   --font-dm-sans: 'DM Sans', sans-serif;
 }
 
@@ -92,8 +91,4 @@
 
 button {
   cursor: pointer;
-}
-
-h1, h2, h3{
-  font-family: var(--font-marcellus);
 }

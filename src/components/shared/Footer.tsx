@@ -14,22 +14,67 @@ import { Logo } from './assets';
 
 const Footer = () => {
   return (
-    <footer className='bg-background text-gray-200 px-6 md:px-0 mt-12 lg:mt-24'>
+    <footer className='bg-background text-gray-200 px-4 md:px-0 mt-10 lg:mt-20'>
       <div className='container mx-auto py-14'>
+
+        {/* Grid */}
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
-          {/* Logo & About section*/}
-          <div className='space-y-6 '>
+
+          {/* Logo & About */}
+          <div className='space-y-6'>
             <Logo height={120} width={120} />
             <p className='text-sm text-gray-300 leading-relaxed'>
               Faith Journey is your go-to online destination for elegant and
               modest women's wear. We specialize in premium-quality borqas and
-              abayas that blend style, comfort, and grace. Our mission is to
-              empower women with fashionable choices while honoring tradition.
+              abayas that blend style, comfort, and grace.
             </p>
           </div>
 
-          {/* Categories */}
-          <div className='space-y-4 lg:ml-20'>
+          {/* Mobile Layout: Categories + Quick Links SIDE BY SIDE */}
+          <div className='grid grid-cols-2 gap-6 md:hidden'>
+
+            {/* Categories (Mobile) */}
+            <div className='space-y-4'>
+              <h4 className='font-bold text-sm uppercase tracking-wide'>
+                Categories
+              </h4>
+              <ul className='space-y-2'>
+                {categoryLinks.slice(0, 6).map(({ name, path }) => (
+                  <li key={path}>
+                    <Link
+                      href={path}
+                      className='text-sm hover:text-primary transition-colors'
+                    >
+                      {name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Quick Links (Mobile) */}
+            <div className='space-y-4'>
+              <h4 className='font-bold text-sm uppercase tracking-wide'>
+                Quick Links
+              </h4>
+              <ul className='space-y-2'>
+                {quickLinks.map(({ name, path }) => (
+                  <li key={path}>
+                    <Link
+                      href={path}
+                      className='text-sm hover:text-primary transition-colors'
+                    >
+                      {name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+
+          {/* Desktop Layout (Hidden on Mobile) */}
+          <div className='hidden md:block space-y-4 lg:ml-20'>
             <h4 className='font-bold text-sm uppercase tracking-wide'>
               Categories
             </h4>
@@ -47,8 +92,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Quick Links */}
-          <div className='space-y-4'>
+          <div className='hidden md:block space-y-4'>
             <h4 className='font-bold text-sm uppercase tracking-wide'>
               Quick Links
             </h4>
@@ -91,10 +135,12 @@ const Footer = () => {
                 <MapPin className='w-4 h-4 mt-0.5 shrink-0' />
                 <div className='text-sm'>
                   Shop# 117, Ground Floor, Prokousholi Bhaban, Rajbari Road,
-                  Joydebpur,, Gazipur, Bangladesh
+                  Joydebpur, Gazipur, Bangladesh
                 </div>
               </div>
             </div>
+
+            {/* Social Icons */}
             <div className='flex gap-4 mt-8'>
               <Link
                 href='#'
@@ -125,8 +171,8 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Copyright Section */}
-      <div className='py-10 container mx-auto'>
+      {/* Copyright */}
+      <div className='pb-10 container mx-auto'>
         <div className='border-b border-gray-50/5' />
         <p className='text-[12px] text-center pt-6'>
           Copyright © 2025 Faith Journey. All Rights Reserved.

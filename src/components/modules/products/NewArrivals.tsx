@@ -16,10 +16,9 @@ export default function NewArrivals() {
   );
 
   return (
-    <Container className='border border-gray-200 rounded-lg lg:p-8'>
-      {/* Section Header */}
+    <Container>
       <div className='text-center mb-10'>
-        <h2 className='text-5xl font-bold mb-4'>New Arrivals</h2>
+        <h2 className='md:text-5xl text-2xl font-bold mb-4'>New Arrivals</h2>
         <p className='text-foreground/80'>
           Discover the newest pieces in our collection and embrace timeless
           fashion.
@@ -28,7 +27,7 @@ export default function NewArrivals() {
 
       {/* PRODUCTS GRID */}
       <motion.div
-        className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:px-6 p-2 rounded-sm'
+        className='grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}

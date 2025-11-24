@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Container from '@/components/shared/Container';
 
 const images = [
   '/images/shop-1.jpg',
@@ -12,11 +13,11 @@ const images = [
 
 const ShopFacebook = () => {
   return (
-    <section className='max-w-7xl mx-auto mt-24 rounded-2xl px-6 md:px-0'>
+    <Container>
       {/* Section Header */}
-      <div className='text-center mb-12'>
-        <h2 className='text-3xl md:text-5xl font-bold text-heading'>
-          Explore Faith Journey on{' '}
+      <div className='text-center mb-6'>
+        <h2 className='text-xl md:text-5xl font-bold text-heading'>
+          Follow Us on{' '}
           <span className='text-primary'>Facebook</span>
         </h2>
         <p className='text-muted-foreground mt-2'>
@@ -24,7 +25,7 @@ const ShopFacebook = () => {
         </p>
       </div>
 
-      <div className='grid grid-cols-12 gap-6'>
+      <div className='grid grid-cols-12 gap-4 md:gap-6'>
         {images.map((image, index) => {
           const colSpanClass =
             index < 3
@@ -38,11 +39,11 @@ const ShopFacebook = () => {
                 href='https://www.facebook.com/Hijabicrown'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='group relative block overflow-hidden rounded-xl'
+                className='group relative block overflow-hidden'
               >
                 <div
                   className={cn(
-                    'relative w-full overflow-hidden rounded-xl shadow-sm',
+                    'relative w-full overflow-hidden',
                     aspectRatio
                   )}
                 >
@@ -74,7 +75,7 @@ const ShopFacebook = () => {
           );
         })}
       </div>
-    </section>
+    </Container>
   );
 };
 

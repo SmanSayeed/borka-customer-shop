@@ -9,20 +9,19 @@
      · serverActions
 
    Creating an optimized production build ...
- ✓ Compiled successfully in 15.0s
+ ✓ Compiled successfully in 8.0s
    Running TypeScript ...
 Failed to compile.
 
-./src/components/modules/products/ProductGrid.tsx:52:11
-Type error: Type 'number | undefined' is not assignable to type 'number'.
-  Type 'undefined' is not assignable to type 'number'.
+./src/components/modules/Home/Advertisement.tsx:7:41
+Type error: Property 'ads' does not exist on type 'IAdContent[]'.
 
-[0m [90m 50 |[39m       {totalPages [33m>[39m [35m1[39m [33m&&[39m (
- [90m 51 |[39m         [33m<[39m[33mProductPagination[39m
-[31m[1m>[22m[39m[90m 52 |[39m           currentPage[33m=[39m{currentPage}
- [90m    |[39m           [31m[1m^[22m[39m
- [90m 53 |[39m           totalPages[33m=[39m{totalPages}
- [90m 54 |[39m           onPageChange[33m=[39m{setPage}
- [90m 55 |[39m         [33m/[39m[33m>[39m[0m
+[0m [90m  5 |[39m [36mimport[39m [33mLink[39m [36mfrom[39m [32m"next/link"[39m[33m;[39m
+ [90m  6 |[39m
+[31m[1m>[22m[39m[90m  7 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mAdvertisement[39m({ ads }[33m:[39m [33mIAdContent[39m[]) {
+ [90m    |[39m                                         [31m[1m^[22m[39m
+ [90m  8 |[39m
+ [90m  9 |[39m   console[33m.[39mlog(ads)[33m;[39m
+ [90m 10 |[39m                 [0m
 Next.js build worker exited with code: 1 and signal: null
  ELIFECYCLE  Command failed with exit code 1.

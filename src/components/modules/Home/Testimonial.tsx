@@ -1,5 +1,6 @@
 "use client";
 
+import Container from '@/components/shared/Container';
 import {
   Carousel,
   CarouselContent,
@@ -11,14 +12,14 @@ import { reviewImages } from '@/constants';
 
 export function Testimonial() {
   return (
-    <div className="w-full mt-24">
-      <h2 className="text-4xl font-semibold mb-10 text-center">
+    <Container>
+      <h2 className="text-2xl md:text-5xl font-semibold mb-6 text-center">
         Top Customer Reviews
       </h2>
 
       <Carousel
         opts={{ align: "start", loop: true }}
-        className="relative w-full max-w-7xl mx-auto"
+        className="relative w-full mx-auto"
       >
         <CarouselContent>
           {reviewImages.map((image, index) => (
@@ -26,7 +27,7 @@ export function Testimonial() {
               key={index}
               className="md:basis-1/3 lg:basis-1/3"
             >
-              <div className="overflow-hidden rounded-xl shadow-lg">
+              <div className="overflow-hidden">
                 <img
                   src={image}
                   alt="Review"
@@ -37,9 +38,21 @@ export function Testimonial() {
           ))}
         </CarouselContent>
 
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious
+  className="
+    absolute top-1/2 -translate-y-1/2 left-2 z-50
+    bg-black/60 text-white 
+    md:static md:translate-y-0 md:bg-white md:text-black
+  "
+/>
+<CarouselNext
+  className="
+    absolute top-1/2 -translate-y-1/2 right-2 z-50
+    bg-black/60 text-white
+    md:static md:translate-y-0 md:bg-white md:text-black
+  "
+/>
       </Carousel>
-    </div>
+    </Container>
   );
 }

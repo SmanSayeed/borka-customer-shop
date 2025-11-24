@@ -68,6 +68,15 @@ export const videos = [
     comments: '310',
     shares: '120',
   },
+  {
+    id: 5,
+    url: 'https://www.facebook.com/reel/2210782086110657/',
+    iframe: `https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2210782086110657%2F&show_text=false&width=267&t=0&autoplay=true&mute=1&loop=true`,
+    username: '@faithjourney',
+    likes: '560',
+    comments: '70',
+    shares: '25',
+  },
 ];
 
 export const reviewImages = [
