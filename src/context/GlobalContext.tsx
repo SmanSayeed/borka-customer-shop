@@ -6,19 +6,18 @@ import { getCartFromStorage, saveCartToStorage } from '@/lib/cartStorage';
 import { ICategory, IColor, ISize } from '@/types';
 import { ICart, ICartData } from '@/types/cart';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { toast } from 'sonner';
 
-// -------------------------------------------------------
-// 1. Create Context
-// -------------------------------------------------------
 interface GlobalContextType {
-  user: string | null;
-  setUser: (value: string | null) => void;
-  theme: 'light' | 'dark';
-  toggleTheme: () => void;
   categories: ICategory[];
-  businessCategories: any[]; // Replace 'any' with proper type if available
+  businessCategories: any[];
   isCategoryLoading: boolean;
   isBusinessCategoryLoading: boolean;
   cartDetails: ICartData;
@@ -37,20 +36,13 @@ interface GlobalContextType {
 
 const GlobalContext = createContext<GlobalContextType | null>(null);
 
-// -------------------------------------------------------
-// 2. Provider Component
-// -------------------------------------------------------
 export const GlobalContextProvider = ({
   children,
 }: {
   children: ReactNode;
 }) => {
-  const [user, setUser] = useState<string | null>(null);
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
-  };
+  const [cartDetails, setCartDetails] = useState<ICartData>(initialCart);
+  const [isCartLoading, setIsCartLoading] = useState(false);
 
   // * Get all business categories
   const { data: businessCategoriesData, isLoading: isBusinessCategoryLoading } =
@@ -63,7 +55,7 @@ export const GlobalContextProvider = ({
   const { data: categoriesData, isLoading: isCategoryLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: getParentCategories,
-    staleTime: 60 * 60 * 1000,
+    staleTime: 20 * 60 * 1000,
   });
 
   const categories = categoriesData?.data || [];
@@ -73,24 +65,19 @@ export const GlobalContextProvider = ({
   const { data: colorsData, isLoading: isColorLoading } = useQuery({
     queryKey: ['colors'],
     queryFn: getProductColors,
+    staleTime: 20 * 60 * 1000,
   });
 
   // * Get all product sizes
   const { data: sizesData, isLoading: isSizeLoading } = useQuery({
     queryKey: ['sizes'],
     queryFn: getProductSizes,
+    staleTime: 20 * 60 * 1000,
   });
 
   const colors = colorsData?.data || [];
   const sizes = sizesData?.data || [];
 
-  // * Cart State
-  const [cartDetails, setCartDetails] = useState<ICartData>(initialCart);
-  const [isCartLoading, setIsCartLoading] = useState(false);
-
-  // -------------------------------
-  // 🔥 Mutation: Fetch Cart Details
-  // -------------------------------
   const fetchCartMutation = useMutation({
     mutationFn: (products: ICart[]) => {
       setIsCartLoading(true);
@@ -118,9 +105,6 @@ export const GlobalContextProvider = ({
     }
   }, []);
 
-  // -------------------------------
-  // 🔥 Mutation: Add to Cart
-  // -------------------------------
   const addToCartMutation = useMutation({
     mutationFn: async (payload: { items: ICart[] }) => {
       const currentCart = getCartFromStorage();
@@ -165,9 +149,6 @@ export const GlobalContextProvider = ({
     onError: () => toast.error('Something went wrong!'),
   });
 
-  // -------------------------------
-  // 🔥 Mutation: Update Quantity
-  // -------------------------------
   const updateQuantityMutation = useMutation({
     mutationFn: async ({ id, quantity }: { id: number; quantity: number }) => {
       const currentCart = getCartFromStorage();
@@ -188,18 +169,14 @@ export const GlobalContextProvider = ({
     onError: () => toast.error('Something went wrong!'),
   });
 
-  // -------------------------------
-  // 🔥 Mutation: Remove Item
-  // -------------------------------
   const removeItemMutation = useMutation({
     mutationFn: async ({ id, sizeId }: { id: number; sizeId?: number }) => {
-      console.log('Removing item:', { id, sizeId });
       const currentCart = getCartFromStorage();
-      
+
       const updatedCart = currentCart.filter((p) => {
         const isSameProduct = Number(p.product_id) === Number(id);
         const isSameSize = sizeId ? Number(p.size_id) === Number(sizeId) : true;
-        
+
         // Keep item if it's NOT the one we want to remove
         return !(isSameProduct && isSameSize);
       });
@@ -221,12 +198,8 @@ export const GlobalContextProvider = ({
     },
   });
 
-  // -------------------------------
-  // 🔥 Mutation: Clear Cart
-  // -------------------------------
   const clearCartMutation = useMutation({
     mutationFn: async () => {
-      console.log('Clearing cart...');
       saveCartToStorage([]);
       return sentUserCartDetails({ items: [] });
     },
@@ -246,10 +219,6 @@ export const GlobalContextProvider = ({
   });
 
   const value = {
-    user,
-    setUser,
-    theme,
-    toggleTheme,
     categories,
     businessCategories,
     isCategoryLoading,
@@ -258,8 +227,6 @@ export const GlobalContextProvider = ({
     setCartDetails,
     colors,
     sizes,
-    isColorLoading,
-    isSizeLoading,
     fetchCart: fetchCartMutation.mutate,
     addToCart: addToCartMutation.mutate,
     updateQuantity: (id: number, quantity: number) =>
@@ -267,6 +234,8 @@ export const GlobalContextProvider = ({
     removeItem: (id: number, sizeId?: number) =>
       removeItemMutation.mutate({ id, sizeId }),
     clearCart: clearCartMutation.mutate,
+    isColorLoading,
+    isSizeLoading,
     isCartLoading,
   };
 

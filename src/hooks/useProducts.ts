@@ -19,7 +19,7 @@ export default function useProducts({ filters }: Props = {}) {
   >({
     queryKey: ['products', filters || {}],
     queryFn: () => getAllProducts(filters),
-    staleTime: 1000 * 60 * 2,
+    staleTime: 1000 * 60 * 20,
   });
 
   const products: IProduct[] = productsData?.data?.data || [];

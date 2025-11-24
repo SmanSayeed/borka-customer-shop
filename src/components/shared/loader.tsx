@@ -16,7 +16,7 @@ interface LoaderProps {
 const Loader: React.FC<LoaderProps> = ({
   fullscreen = false,
   size = 48,
-  text = 'Loading...',
+  text,
   circle = false,
   skeleton,
   skeletonCount,

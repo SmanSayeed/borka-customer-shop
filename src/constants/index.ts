@@ -9,6 +9,28 @@ export const images = [
   '/images/product-2.jpg',
 ];
 
+export const slides = [
+  {
+    id: 1,
+    image: "/images/banner/banner-3.png",
+    title: "Faith Meets Fashion",
+    subtitle: "A perfect blend of contemporary design and timeless modesty.",
+  },
+  {
+    id: 2,
+    image: "/images/banner/banner-2.png",
+    title: "Grace in Every Step",
+    subtitle: "Experience comfort, confidence, and elegance in every abaya.",
+  },
+  {
+    id: 3,
+    image: "/images/banner/banner-1.png",
+    title: "Embrace Your Journey",
+    subtitle: "Wear your faith beautifully with our handcrafted abaya styles.",
+  },
+];
+
+
 export const videos = [
   {
     id: 1,

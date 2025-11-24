@@ -29,8 +29,6 @@ const CategoryFilterItem = ({
     category.id
   );
 
-  console.log(subCategories, category.id, 'from subCategories');
-
   return (
     <div className='space-y-2'>
       <div className='flex items-center space-x-2'>

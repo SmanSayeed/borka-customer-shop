@@ -19,8 +19,6 @@ const CategoryMenuItem = ({ category }: Props) => {
   const hasSubCategories = subCategories && subCategories.length > 0;
 
   if (isSubCategoryLoading) return <Loader />;
-  
-  console.log(subCategories);
 
   return (
     <div

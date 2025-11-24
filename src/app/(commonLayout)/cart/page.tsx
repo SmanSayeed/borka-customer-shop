@@ -22,7 +22,7 @@ const Cart = () => {
 
   const { products, cart_total, discount_amount, payable_amount } = cartDetails;
 
-  if(isCartLoading) return <Loader skeleton skeletonCount={5} />
+  if (isCartLoading) return <Loader skeleton skeletonCount={5} />;
 
   return (
     <div className='min-h-screen bg-gray-50/50'>
@@ -71,27 +71,24 @@ const Cart = () => {
                 </Button>
               </div>
 
-              {/* Cart Items List */}
-              <div className='bg-white rounded-2xl border border-gray-100 overflow-hidden'>
-                {/* Desktop Header */}
-                <div className='hidden md:grid grid-cols-12 gap-4 p-4 bg-gray-50/50 border-b text-sm font-medium text-gray-500'>
-                  <div className='col-span-6'>Product</div>
-                  <div className='col-span-2 text-center'>Price</div>
-                  <div className='col-span-2 text-center'>Quantity</div>
-                  <div className='col-span-2 text-right'>Total</div>
-                </div>
+              {/* Cart List Header (Desktop) */}
+              <div className='hidden md:grid grid-cols-12 gap-4 p-4 bg-gray-50/50 border-b border-gray-100 text-sm font-medium text-gray-500 rounded-t-2xl'>
+                <div className='col-span-6'>Product</div>
+                <div className='col-span-2 text-center'>Price</div>
+                <div className='col-span-2 text-center'>Quantity</div>
+                <div className='col-span-2 text-right'>Total</div>
+              </div>
 
-                {/* Items */}
-                <div className='divide-y'>
-                  {products.map((item: ICartProduct) => (
-                    <CartItem
-                      key={item.id}
-                      item={item}
-                      onQuantityChange={updateQuantity}
-                      onRemove={(id, sizeId) => removeItem(id, sizeId)}
-                    />
-                  ))}
-                </div>
+              {/* Cart Items */}
+              <div className='bg-white rounded-b-2xl border border-gray-100 border-t-0 overflow-hidden'>
+                {products.map((item: ICartProduct) => (
+                  <CartItem
+                    key={item.id}
+                    item={item}
+                    onQuantityChange={updateQuantity}
+                    onRemove={(id, sizeId) => removeItem(id, sizeId)}
+                  />
+                ))}
               </div>
             </div>
 

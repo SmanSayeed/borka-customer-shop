@@ -13,51 +13,50 @@ const CartItem = ({ item, onQuantityChange, onRemove }: ICartItemProps) => {
   const total = price * item.quantity;
 
   return (
-    <tr className='border-b border-border'>
-      <td className='py-4 pl-4'>
+    <div className='grid grid-cols-1 md:grid-cols-12 gap-4 p-4 border-b border-gray-100 items-center relative bg-white'>
+      {/* Product Info - Spans 6 columns on desktop */}
+      <div className='col-span-1 md:col-span-6'>
         <div className='flex items-start gap-4'>
-          <div className='relative'>
+          <div className='relative shrink-0'>
             <img
               src={item.thumbnail_url}
               alt={item.product_label}
               className='w-20 h-20 object-cover rounded-lg bg-secondary'
             />
-
-            {onRemove && (
-              <button
-                onClick={() => onRemove(item.id, item.size_id)}
-                className='absolute -top-2 -right-2 bg-card border border-border rounded-full p-1 hover:bg-destructive hover:text-destructive-foreground transition-colors'
-              >
-                <X className='w-3 h-3' />
-              </button>
-            )}
           </div>
 
-          <div className='flex-1'>
-            <h4 className='font-medium text-foreground mb-2'>
+          <div className='flex-1 min-w-0'>
+            <h4 className='font-medium text-foreground mb-1 truncate pr-8 md:pr-0'>
               {item.product_label}
             </h4>
 
             <div className='text-sm text-muted-foreground space-y-1'>
               <p>
-                Size:{' '}
-                <span className='text-foreground'>{item.size_name || '-'}</span>
+                Size: <span className='text-foreground'>{item.size_name || '-'}</span>
               </p>
               <p>
                 Stock: <span className='text-foreground'>{item.stock}</span>
               </p>
+              {/* Mobile Price Display */}
+              <p className='md:hidden font-medium text-primary mt-1'>
+                ৳{price}
+              </p>
             </div>
           </div>
         </div>
-      </td>
+      </div>
 
-      <td className='py-4 px-4'>
+      {/* Price - Spans 2 columns, hidden on mobile */}
+      <div className='hidden md:block md:col-span-2 text-center'>
         <span className='font-medium text-foreground'>৳{price}</span>
-      </td>
+      </div>
 
-      <td className='py-4 px-4'>
+      {/* Quantity - Spans 2 columns */}
+      <div className='col-span-1 md:col-span-2 flex items-center justify-between md:justify-center'>
+        <span className='md:hidden text-sm text-muted-foreground'>Quantity:</span>
+        
         {onQuantityChange ? (
-          <div className='flex items-center gap-2 bg-[#f7fbfe] rounded-md p-1 w-fit'>
+          <div className='flex items-center gap-2 bg-[#f7fbfe] rounded-md p-1'>
             <Button
               variant='ghost'
               size='icon'
@@ -85,14 +84,27 @@ const CartItem = ({ item, onQuantityChange, onRemove }: ICartItemProps) => {
         ) : (
           <span>{item.quantity}</span>
         )}
-      </td>
+      </div>
 
-      <td className='py-4 px-4 text-right'>
+      {/* Total - Spans 2 columns */}
+      <div className='col-span-1 md:col-span-2 flex items-center justify-between md:justify-end'>
+        <span className='md:hidden text-sm text-muted-foreground'>Total:</span>
         <span className='font-semibold text-foreground'>
           ৳{total.toFixed(2)}
         </span>
-      </td>
-    </tr>
+      </div>
+
+      {/* Remove Button - Absolute on mobile, part of layout/hover on desktop could be better but sticking to design */}
+      {onRemove && (
+        <button
+          onClick={() => onRemove(item.id, item.size_id)}
+          className='absolute top-4 right-4 md:static md:ml-4 text-muted-foreground hover:text-destructive transition-colors p-1'
+          title="Remove item"
+        >
+          <X className='w-5 h-5' />
+        </button>
+      )}
+    </div>
   );
 };
 

@@ -9,30 +9,25 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Logo } from './assets';
 import CategoryMenuItem from './CategoryMenuItem';
-import Loader from './Loader';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { categories, isCategoryLoading } = useCategory();
+  const { categories } = useCategory();
   const { cartDetails } = useCart();
 
   return (
-    <header className='bg-secondary text-white relative'>
+    <header className='bg-background text-white relative'>
       <nav className='container mx-auto flex items-center justify-between py-3 px-6 lg:px-0'>
         {/* Logo */}
         <Link href='/'>
           <Logo />
         </Link>
 
-        {isCategoryLoading ? (
-          <Loader skeleton skeletonCount={8} />
-        ) : (
-          <ul className='hidden lg:flex items-center gap-6'>
-            {categories.map((category: ICategory) => (
-              <CategoryMenuItem key={category.id} category={category} />
-            ))}
-          </ul>
-        )}
+        <ul className='hidden lg:flex items-center gap-6'>
+          {categories.map((category: ICategory) => (
+            <CategoryMenuItem key={category.id} category={category} />
+          ))}
+        </ul>
 
         <div className='flex items-center gap-4'>
           <button
@@ -90,13 +85,13 @@ const Navbar = () => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className='lg:hidden bg-secondary overflow-hidden flex flex-col gap-2 px-6 py-8 text-sm'
+            className='lg:hidden bg-background/50 overflow-hidden flex flex-col gap-2 px-6 py-8 text-sm'
           >
             {categories.map(({ id, slug, name }: ICategory) => (
               <Link
                 key={id}
                 href={`/category/${slug}`}
-                className='py-2 hover:text-primary border-b border-white/10 transition-colors'
+                className='py-2 hover:text-primary transition-colors'
                 onClick={() => setMenuOpen(false)}
               >
                 {name}

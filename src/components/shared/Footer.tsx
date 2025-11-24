@@ -14,7 +14,7 @@ import { Logo } from './assets';
 
 const Footer = () => {
   return (
-    <footer className='bg-secondary text-gray-200 px-6 md:px-0'>
+    <footer className='bg-background text-gray-200 px-6 md:px-0 mt-12 lg:mt-24'>
       <div className='container mx-auto py-14'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           {/* Logo & About section*/}
