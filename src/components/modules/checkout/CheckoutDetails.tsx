@@ -57,7 +57,7 @@ type FormData = z.infer<typeof checkoutFormSchema>;
 
 const CheckoutDetails = () => {
   const router = useRouter();
-  const { cartDetails } = useCart();
+  const { cartDetails, clearCart } = useCart();
   const carts = cartDetails.products || [];
 
   const subtotal = cartDetails.cart_total || 0;
@@ -123,7 +123,7 @@ const CheckoutDetails = () => {
         billing_address: { ...data.billingAddress, name: data.fullName },
         notes: data.notes || '',
         delivery_charge: data.deliveryCharge,
-        total_payable_amount: 0,
+        total_payable_amount: data.paymentMethod === 'pickup' ? 500 : 0,
         payment_method: data.paymentMethod,
       };
 
@@ -131,14 +131,23 @@ const CheckoutDetails = () => {
 
       if (created?.success) {
         toast.success(created.message);
-
+        
+        console.log(created, 'in success');
+        
         if (created.data?.gateway_status) {
           window.location.href = created.data.gateway_url;
+        } else {
+          router.push(
+            `/success?order_number=${created.data.order_number}&phone_number=${created.data.phone_number}`
+          );
         }
+        clearCart();
       }
     } catch (err) {
       toast.error('Failed to place order');
       console.error(err);
+    } finally {
+      clearCart();
     }
   };
 
@@ -326,7 +335,7 @@ const CheckoutDetails = () => {
 
             <div className='flex justify-between text-sm'>
               <span>Delivery Charge</span>
-              <span>৳{deliveryCharge}</span>
+              <span>৳{deliveryCharge ?? 0}</span>
             </div>
 
             <div className='flex justify-between text-lg font-bold border-t pt-2'>

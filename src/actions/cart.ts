@@ -7,8 +7,7 @@ const { baseUrl } = config();
 // * Sent User Cart Details
 export const sentUserCartDetails = async (payload: Record<string, any>) => {
   try {
-
-    console.log(payload, 'from acton')
+    console.log(payload, 'from acton');
     const res = await fetch(`${baseUrl}/cart/get-user-cart-details`, {
       method: 'POST',
       next: { revalidate: 0 },
@@ -21,5 +20,6 @@ export const sentUserCartDetails = async (payload: Record<string, any>) => {
     return await res.json();
   } catch (error) {
     console.error('Error Fetching User Cart Details:', error);
-}
+    return { success: false, message: 'Failed to fetch cart details' };
+  }
 };

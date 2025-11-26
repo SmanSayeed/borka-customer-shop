@@ -5,7 +5,7 @@ import { Minus, Plus, Trash2 } from 'lucide-react';
 
 interface ICartItemProps {
   item: ICartProduct;
-  onQuantityChange?: (id: number, newQuantity: number) => void;
+  onQuantityChange?: (id: number, newQuantity: number, sizeId?: number) => void;
   onRemove?: (id: number, sizeId?: number) => void;
 }
 
@@ -54,7 +54,11 @@ const CartItem = ({ item, onQuantityChange, onRemove }: ICartItemProps) => {
               <button
                 className='border p-2 rounded-sm hover:border-primary hover:bg-primary/10 transition'
                 onClick={() =>
-                  onQuantityChange?.(item.id, Math.max(1, item.quantity - 1))
+                  onQuantityChange?.(
+                    item.id,
+                    Math.max(1, item.quantity - 1),
+                    item.size_id
+                  )
                 }
               >
                 <Minus size={14} />
@@ -66,7 +70,9 @@ const CartItem = ({ item, onQuantityChange, onRemove }: ICartItemProps) => {
 
               <button
                 className='border p-2 rounded-sm hover:border-primary hover:bg-primary/10 transition'
-                onClick={() => onQuantityChange?.(item.id, item.quantity + 1)}
+                onClick={() =>
+                  onQuantityChange?.(item.id, item.quantity + 1, item.size_id)
+                }
               >
                 <Plus size={14} />
               </button>
