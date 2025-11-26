@@ -1,201 +1,64 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import Image from 'next/image';
+import { Confetti, type ConfettiRef } from '@/components/ui/confetti';
+import { CheckCircle } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 
-const SuccessPage = () => {
-  const orderData = {
-    date: '02 May 2023',
-    orderNumber: '024-125478956',
-    paymentMethod: 'Mastercard',
-    items: [
-      {
-        id: 1,
-        name: 'All In One Chocolate Combo',
-        size: 'Pack: Medium',
-        quantity: 1,
-        price: 50.0,
-        image:
-          'https://res.cloudinary.com/do6tvtff8/image/upload/v1761205488/1756636393926759_tugedf.jpg',
-      },
-      {
-        id: 2,
-        name: 'Desire Of Hearts',
-        size: 'Pack: Large',
-        quantity: 1,
-        price: 50.0,
-        image:
-          'https://res.cloudinary.com/do6tvtff8/image/upload/v1761205484/171524926895183_kyxvfe.jpg',
-      },
-    ],
-    subtotal: 100.0,
-    shipping: 2.0,
-    tax: 5.0,
-  };
+export default function OrderSuccessPage() {
+  const confettiRef = useRef<ConfettiRef>(null);
 
-  const billingAddress = {
-    name: 'Jane Smith',
-    address: '456 Oak St #3b, San Francisco,',
-    addressLine2: 'CA 94102, United States',
-    phone: '+1 (415) 555-1234',
-    email: 'jane.smith@email.com',
-  };
-
-  const orderTotal = orderData.subtotal + orderData.shipping + orderData.tax;
+  useEffect(() => {
+    confettiRef.current?.fire({});
+  }, []);
 
   return (
-    <div className='bg-background py-20 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-7xl mx-auto'>
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12'>
-          {/* Left Column - Thank You Message & Billing */}
-          <div className='space-y-8'>
-            <div>
-              <h1 className='text-4xl lg:text-5xl font-bold text-foreground mb-4'>
-                Thank you for your purchase!
-              </h1>
-              <p className='text-muted-foreground text-base'>
-                Your order will be processed within 24 hours during working
-                days. We will notify you by email once your order has been
-                shipped.
-              </p>
-            </div>
+    <div className='relative flex items-center justify-center px-4 py-12 overflow-hidden'>
+      {/* Confetti Layer */}
+      <div className='relative z-10 max-w-xl w-full text-center space-y-6 bg-white p-6 sm:p-10 rounded-xl'>
+        <Confetti
+          ref={confettiRef}
+          className='absolute inset-0 z-0 pointer-events-none'
+        />
 
-            <div className='space-y-4'>
-              <h2 className='text-xl font-semibold text-foreground'>
-                Billing address
-              </h2>
-              <div className='space-y-3'>
-                <div className='grid grid-cols-[100px_1fr] gap-2'>
-                  <span className='font-medium text-foreground'>Name</span>
-                  <span className='text-muted-foreground'>
-                    {billingAddress.name}
-                  </span>
-                </div>
-                <div className='grid grid-cols-[100px_1fr] gap-2'>
-                  <span className='font-medium text-foreground'>Address</span>
-                  <div className='text-muted-foreground'>
-                    <div>{billingAddress.address}</div>
-                    <div>{billingAddress.addressLine2}</div>
-                  </div>
-                </div>
-                <div className='grid grid-cols-[100px_1fr] gap-2'>
-                  <span className='font-medium text-foreground'>Phone</span>
-                  <span className='text-muted-foreground'>
-                    {billingAddress.phone}
-                  </span>
-                </div>
-                <div className='grid grid-cols-[100px_1fr] gap-2'>
-                  <span className='font-medium text-foreground'>Email</span>
-                  <span className='text-muted-foreground'>
-                    {billingAddress.email}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <Button variant='default' size='lg' className='rounded-none'>
-              Track Your Order
-            </Button>
-          </div>
-
-          {/* Right Column - Order Summary */}
-          <div>
-            <div
-              className='relative p-6 lg:p-8 shadow-sm flex flex-col items-center bg-cover bg-center bg-no-repeat border-none'
-              style={{ backgroundImage: "url('/success.png')"
-              }}
-            >
-              {/* Overlay for better readability */}
-              <div className='absolute inset-0 bg-background/70 backdrop-blur-sm rounded-xl'></div>
-
-              {/* Content on top of the background */}
-              <div className='relative z-10 w-full'>
-                <h2 className='text-2xl font-semibold text-foreground mb-6'>
-                  Order Summary
-                </h2>
-
-                {/* Order Details */}
-                <div className='grid grid-cols-3 gap-4 mb-6 pb-6 border-b'>
-                  <div>
-                    <div className='text-sm text-muted-foreground mb-1'>
-                      Date
-                    </div>
-                    <div className='font-medium text-foreground'>
-                      {orderData.date}
-                    </div>
-                  </div>
-                  <div>
-                    <div className='text-sm text-muted-foreground mb-1'>
-                      Order Number
-                    </div>
-                    <div className='font-medium text-foreground'>
-                      {orderData.orderNumber}
-                    </div>
-                  </div>
-                  <div>
-                    <div className='text-sm text-muted-foreground mb-1'>
-                      Payment Method
-                    </div>
-                    <div className='font-medium text-foreground'>
-                      {orderData.paymentMethod}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Product Items */}
-                <div className='space-y-4 mb-6'>
-                  {orderData.items.map((item) => (
-                    <div key={item.id} className='flex gap-4'>
-                      <div className='w-20 h-20 rounded-lg overflow-hidden bg-muted shrink-0'>
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className='w-full h-full object-cover'
-                        />
-                      </div>
-                      <div className='flex-1 min-w-0'>
-                        <h3 className='font-semibold text-foreground mb-1'>
-                          {item.name}
-                        </h3>
-                        <p className='text-sm text-muted-foreground mb-1'>
-                          {item.size}
-                        </p>
-                        <p className='text-sm text-muted-foreground'>
-                          Qty: {item.quantity}
-                        </p>
-                      </div>
-                      <div className='font-semibold text-foreground shrink-0'>
-                        ${item.price.toFixed(2)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Price Breakdown */}
-                <div className='space-y-3 pt-4 border-t'>
-                  <div className='flex justify-between text-muted-foreground'>
-                    <span>Sub Total</span>
-                    <span>${orderData.subtotal.toFixed(2)}</span>
-                  </div>
-                  <div className='flex justify-between text-muted-foreground'>
-                    <span>Shipping</span>
-                    <span>${orderData.shipping.toFixed(2)}</span>
-                  </div>
-                  <div className='flex justify-between text-muted-foreground'>
-                    <span>Tax</span>
-                    <span>${orderData.tax.toFixed(2)}</span>
-                  </div>
-                  <div className='flex justify-between text-xl font-bold text-foreground pt-3 border-t'>
-                    <span>Order Total</span>
-                    <span>${orderTotal.toFixed(2)}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className='flex justify-center'>
+          <CheckCircle className='w-16 h-16 sm:w-20 sm:h-20 text-green-500' />
         </div>
+
+        <h1 className='text-2xl sm:text-3xl md:text-4xl font-bold text-foreground'>
+          Order Placed Successfully!
+        </h1>
+
+        <p className='text-muted-foreground text-base sm:text-lg'>
+          Thank you for your purchase! Your order has been received and is now
+          being processed.
+        </p>
+
+        <div className='border rounded-xl p-4 sm:p-6 text-left space-y-2'>
+          <h2 className='font-semibold text-lg sm:text-xl'>Order Summary</h2>
+
+          <p className='text-muted-foreground text-sm sm:text-base'>
+            Order ID: <span className='font-medium'>#MDG-45219</span>
+          </p>
+
+          <p className='text-muted-foreground text-sm sm:text-base'>
+            Payment Status:{' '}
+            <span className='font-medium text-green-600'>Paid</span>
+          </p>
+
+          <p className='text-muted-foreground text-sm sm:text-base'>
+            Estimated Delivery:{' '}
+            <span className='font-medium'>3–5 Business Days</span>
+          </p>
+        </div>
+
+        <Link href='/products'>
+          <Button className='mt-4 px-6 py-4 text-base sm:text-lg rounded-lg'>
+            Continue Shopping
+          </Button>
+        </Link>
       </div>
     </div>
   );
-};
-
-export default SuccessPage;
+}
