@@ -42,6 +42,7 @@ function useCarousel() {
   return context
 }
 
+<<<<<<< HEAD
 function Carousel({
   orientation = "horizontal",
   opts,
@@ -55,6 +56,55 @@ function Carousel({
     {
       ...opts,
       axis: orientation === "horizontal" ? "x" : "y",
+=======
+const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
+  const slideRef = useRef<HTMLLIElement>(null);
+  const xRef = useRef(0);
+  const yRef = useRef(0);
+  const frameRef = useRef<number | undefined>(undefined);
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    const animate = () => {
+      if (!slideRef.current) return;
+      const x = xRef.current;
+      const y = yRef.current;
+      slideRef.current.style.setProperty('--x', `${x}px`);
+      slideRef.current.style.setProperty('--y', `${y}px`);
+      frameRef.current = requestAnimationFrame(animate);
+    };
+
+    frameRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frameRef.current!);
+  }, []);
+
+  const handleMouseMove = (event: React.MouseEvent) => {
+    const el = slideRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    xRef.current = event.clientX - (r.left + Math.floor(r.width / 2));
+    yRef.current = event.clientY - (r.top + Math.floor(r.height / 2));
+  };
+
+  const handleMouseLeave = () => {
+    xRef.current = 0;
+    yRef.current = 0;
+  };
+
+  const { src, button, title } = slide;
+
+  const overlayVariants = {
+    initial: { y: '100%' },
+    hover: { y: '0%', transition: { duration: 0.5, ease: 'easeOut' as const } },
+  };
+
+  const contentVariants = {
+    initial: { opacity: 0, y: 20 },
+    hover: {
+      opacity: 1,
+      y: 0,
+      transition: { delay: 0.5, duration: 0.5, ease: 'easeOut' as const }, // overlay এর পরে
+>>>>>>> 811aa7daddb20053522508ce2af68cce8085fe2d
     },
     plugins
   )
