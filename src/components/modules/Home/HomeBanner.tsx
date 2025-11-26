@@ -35,7 +35,7 @@ export default function HomeBanner({ slides }: { slides: IHomeProduct[] }) {
               ${index === current ? 'opacity-100 z-[15]' : 'opacity-0 z-[10]'}`}
           >
             <Image
-              src={slide.content[0]?.url || ''}
+              src={slide.content?.url || ''}
               alt={`banner image ${index + 1}`}
               fill
               className='object-cover'

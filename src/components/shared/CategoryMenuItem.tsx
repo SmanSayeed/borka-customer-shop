@@ -6,7 +6,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
-import Loader from './Loader';
 
 interface Props {
   category: ICategory;
@@ -18,7 +17,7 @@ const CategoryMenuItem = ({ category }: Props) => {
 
   const hasSubCategories = subCategories && subCategories.length > 0;
 
-  if (isSubCategoryLoading) return <Loader />;
+  // if (isSubCategoryLoading) return <Loader />;
 
   return (
     <div
