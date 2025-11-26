@@ -14,6 +14,7 @@ export interface IProduct {
   original_price: string | number;
   discount_type: string | null;
   discount_value: string | number | null;
+  is_discount_active?: number | boolean;
   discount_start_date: string | Date | null;
   discount_end_date: string | Date | null;
   color_name: string | string[];

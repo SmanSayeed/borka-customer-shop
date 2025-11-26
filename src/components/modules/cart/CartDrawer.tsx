@@ -36,7 +36,6 @@ export default function CartDrawer() {
       open={isCartDrawerOpen}
       onOpenChange={setIsCartDrawerOpen}
       direction='right'
-      className='w-full'
     >
       <DrawerContent
         className='

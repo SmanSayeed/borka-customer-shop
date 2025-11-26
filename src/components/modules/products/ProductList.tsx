@@ -6,22 +6,20 @@ import useProducts from '@/hooks/useProducts';
 import { IProduct } from '@/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import ProductCard from './ProductCard';
 import FilterSidebar from './FilterSidebar';
+import ProductCard from './ProductCard';
 
 export default function ProductList() {
-  const { products, colors, sizes, isProductLoading } = useProducts();
-  const { categories } = useCategory();
+  const [selectedParentId, setSelectedParentId] = useState<
+    number | string | undefined
+  >(undefined);
+  const { categories, subCategories } = useCategory(selectedParentId);
 
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Convert URL params to usable object
   const filtersFromUrl = Object.fromEntries(searchParams.entries());
 
-  // -------------------------------
-  // LOCAL STATE FOR ALL FILTERS
-  // -------------------------------
   const [filters, setFilters] = useState({
     search: filtersFromUrl.search || '',
     availability: searchParams.getAll('availability') || [],
@@ -33,9 +31,10 @@ export default function ProductList() {
     page: Number(filtersFromUrl.page) || 1,
   });
 
-  // -------------------------------
-  // URL UPDATE HELPER
-  // -------------------------------
+  const { products, colors, sizes, isProductLoading } = useProducts({
+    filters,
+  });
+
   const updateQueryParams = (key: string, value: any) => {
     const params = new URLSearchParams(searchParams.toString());
 
@@ -51,37 +50,32 @@ export default function ProductList() {
     router.push(`?${params.toString()}`);
   };
 
-  // -------------------------------
-  // UPDATE URL WHEN FILTERS CHANGE
-  // -------------------------------
   useEffect(() => {
     Object.keys(filters).forEach((key) => {
       updateQueryParams(key, (filters as any)[key]);
     });
   }, [filters]);
 
-  // -------------------------------
-  // HANDLE FILTER CHANGE
-  // -------------------------------
   const handleFiltersChange = (newFilters: any) => {
     setFilters(newFilters);
   };
 
   return (
     <div className='grid grid-cols-12 gap-6'>
-      {/* FILTER SIDEBAR */}
-      <div className='col-span-12 md:col-span-3'>
+      <div className='col-span-12 md:col-span-3 px-4 md:px-0'>
         <FilterSidebar
           filters={filters}
           onFiltersChange={handleFiltersChange}
           categories={categories || []}
+          subCategories={subCategories || []}
+          selectedParentId={selectedParentId}
+          setSelectedParentId={setSelectedParentId}
           colorOptions={colors || []}
           sizeOptions={sizes || []}
         />
       </div>
 
-      {/* PRODUCT GRID */}
-      <div className='col-span-12 md:col-span-9'>
+      <div className='col-span-12 md:col-span-9 px-4 md:px-0'>
         {isProductLoading ? (
           <Loader skeleton skeletonCount={6} />
         ) : (

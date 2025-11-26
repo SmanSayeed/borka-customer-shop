@@ -10,7 +10,7 @@ interface ContainerProps {
 const Container = ({ children, className = '' }: ContainerProps) => {
   return (
     <section
-      className={`w-full container mx-auto pt-12 md:px-0 ${className}`}
+      className={`w-full container mx-auto pt-12 md:px-0 px-2 ${className}`}
     >
       {children}
     </section>

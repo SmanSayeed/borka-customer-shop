@@ -1,13 +1,13 @@
 'use client';
 
 import { RigthArrow } from '@/components/shared/assets';
-import { IBannerSlide } from '@/types/home';
+import { IHomeProduct } from '@/types/home';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-export default function HomeBanner({ slides }: { slides: IBannerSlide }) {
+export default function HomeBanner({ slides }: { slides: IHomeProduct[] }) {
   const [current, setCurrent] = useState(0);
 
   const nextSlide = () => {
@@ -27,7 +27,7 @@ export default function HomeBanner({ slides }: { slides: IBannerSlide }) {
 
   return (
     <div className='bg-background w-full flex justify-center'>
-      <div className='relative w-full h-[250px] sm:h-[320px] md:h-[450px] lg:h-[550px] xl:h-[650px] overflow-hidden rounded-lg sm:rounded-xl'>
+      <div className='relative w-full h-[250px] sm:h-[320px] md:h-[450px] lg:h-[550px] xl:h-[650px] overflow-hidden'>
         {slides.map((slide, index) => (
           <div
             key={slide.id}
@@ -35,21 +35,24 @@ export default function HomeBanner({ slides }: { slides: IBannerSlide }) {
               ${index === current ? 'opacity-100 z-[15]' : 'opacity-0 z-[10]'}`}
           >
             <Image
-              src={slide.content.url}
-              alt={`banner image ${index + 1 }`}
+              src={slide.content[0]?.url || ''}
+              alt={`banner image ${index + 1}`}
               fill
               className='object-cover'
             />
 
-
             <div className='absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent' />
 
             <div className='absolute inset-0 flex flex-col items-center justify-end pb-20 text-center text-white px-4 sm:px-6 pointer-events-none'>
-              <Link prefetch={true} href='/products' className='pointer-events-auto'>
-                <button className='group relative inline-flex h-8 md:h-10 items-center justify-center overflow-hidden rounded-md bg-black/50 hover:bg-black/70 hover:text-primary px-5 md:px-6 font-medium text-neutral-200'>
+              <Link
+                prefetch={true}
+                href='/products'
+                className='pointer-events-auto'
+              >
+                <button className='group relative inline-flex h-8 md:h-10 items-center justify-center overflow-hidden rounded-md bg-black/50 hover:bg-black/70 hover:text-primary px-5 md:px-6 md:font-medium text-neutral-200'>
                   <span>Browse Collection</span>
                   <div className='w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100'>
-                    <RigthArrow className='text-primary'/>
+                    <RigthArrow className='text-primary' />
                   </div>
                 </button>
               </Link>

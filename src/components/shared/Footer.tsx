@@ -14,7 +14,7 @@ import { Logo } from './assets';
 
 const Footer = () => {
   return (
-    <footer className='bg-background text-gray-200 px-4 md:px-0 mt-10 lg:mt-20'>
+    <footer className='bg-background text-gray-200 px-6 md:px-0 mt-12 lg:mt-24'>
       <div className='container mx-auto py-14'>
 
         {/* Grid */}
@@ -141,7 +141,7 @@ const Footer = () => {
             </div>
 
             {/* Social Icons */}
-            <div className='flex gap-4 mt-8'>
+            {/* <div className='flex gap-4 mt-8'>
               <Link
                 href='#'
                 className='size-9 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-colors'
@@ -166,7 +166,7 @@ const Footer = () => {
               >
                 <Music2 className='w-5 h-5 text-gray-700' />
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

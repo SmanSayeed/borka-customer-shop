@@ -6,13 +6,23 @@ const { baseUrl } = config();
 
 // * Get All Products
 export const getAllProducts = async (
-  filters?: Record<string, string | number>
+  filters?: Record<string, string | number | string[]>
 ) => {
   try {
-    const params = filters
-      ? new URLSearchParams(filters as any).toString()
-      : '';
-    const res = await fetch(`${baseUrl}/products?${params}`, {
+    const params = new URLSearchParams();
+
+    if (filters) {
+      Object.entries(filters).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((val) => params.append(`${key}[]`, val.toString()));
+        } else if (value !== undefined && value !== null && value !== '') {
+          params.append(key, value.toString());
+        }
+      });
+    }
+
+    const queryString = params.toString();
+    const res = await fetch(`${baseUrl}/products?${queryString}`, {
       method: 'GET',
       next: { revalidate: 0 },
       headers: { 'Content-Type': 'application/json' },

@@ -6,7 +6,7 @@ import { IProduct } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 
 interface Props {
-  filters?: Record<string, string | number>;
+  filters?: Record<string, string | number | string[]>;
 }
 
 export default function useProducts({ filters }: Props = {}) {

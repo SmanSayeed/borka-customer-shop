@@ -18,8 +18,8 @@ const HomeProducts = ({ section }: { section: IHomeProduct }) => {
   const products: IProduct[] = productsData?.data?.data || [];
 
   return (
-    <div className='px-2'>
-      <div className='text-center mb-10'>
+    <div className='px-2 md:px-0 mt-12 md:mt-24'>
+      <div className='text-center mb-4 md:mb-8'>
         <h2
           className={`md:text-5xl text-2xl font-bold mb-4 ${section.type_color}`}
         >

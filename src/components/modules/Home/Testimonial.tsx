@@ -13,8 +13,8 @@ import { reviewImages } from '@/constants';
 
 export function Testimonial() {
   return (
-    <Container>
-      <h2 className="text-2xl md:text-5xl font-semibold mb-6 text-center">
+    <section className='px-2 md:px-0 mt-12 md:mt-24 md:container mx-auto'>
+      <h2 className="text-2xl md:text-5xl font-bold mb-4 md:mb-8 text-center">
         Top Customer Reviews
       </h2>
 
@@ -41,6 +41,6 @@ export function Testimonial() {
 
         <CarouselIcon />
       </Carousel>
-    </Container>
+    </section>
   );
 }

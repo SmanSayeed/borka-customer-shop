@@ -13,47 +13,51 @@ import CategoryMenuItem from './CategoryMenuItem';
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { categories } = useCategory();
-  const { cartDetails, isCartDrawerOpen, setIsCartDrawerOpen } = useGlobalContext();
+  const { cartDetails, setIsCartDrawerOpen } = useGlobalContext();
 
   return (
-    <header className='bg-background text-white relative'>
-      <nav className='container mx-auto flex items-center justify-between py-3 px-6 lg:px-0'>
+    <header className='bg-background text-white sticky top-0 z-20 leading-none'>
+      <nav className='container mx-auto flex items-center justify-between py-3 px-4 lg:px-0'>
+        {/* Logo */}
         <Link prefetch={true} href='/'>
           <Logo />
         </Link>
 
+        {/* Desktop Menu */}
         <ul className='hidden lg:flex items-center gap-6'>
           {categories.map((category: ICategory) => (
             <CategoryMenuItem key={category.id} category={category} />
           ))}
         </ul>
 
+        {/* Right Section */}
         <div className='flex items-center gap-4'>
+          {/* Search */}
           <button
             onClick={() => console.log('Search clicked')}
-            className='p-3 rounded-full hover:bg-primary dark:hover:bg-gray-800 transition relative'
+            className='h-10 w-10 flex items-center justify-center rounded-full hover:bg-primary transition'
             aria-label='Search'
           >
             <Search className='size-5' />
           </button>
 
-     
-            <button
-        onClick={() => setIsCartDrawerOpen(true)}
-        className="relative md:p-3 p-2 rounded-full hover:bg-primary transition"
-        aria-label="Shopping Cart"
-      >
-        <ShoppingBag className="size-5" />
-        {cartDetails.products.length > 0 && (
-          <span className="absolute -top-1.5 -right-1.5 bg-primary text-black text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center">
-            {cartDetails.products.length}
-          </span>
-        )}
-      </button>
-
-          {/* Menu Toggle */}
+          {/* Cart Button */}
           <button
-            className='lg:hidden p-2 rounded-full hover:bg-primary transition'
+            onClick={() => setIsCartDrawerOpen(true)}
+            className='relative h-10 w-10 flex items-center justify-center rounded-full hover:bg-primary transition'
+            aria-label='Shopping Cart'
+          >
+            <ShoppingBag className='size-5' />
+            {cartDetails.products.length > 0 && (
+              <span className='absolute -top-1.5 -right-1.5 bg-primary text-black text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center'>
+                {cartDetails.products.length}
+              </span>
+            )}
+          </button>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className='lg:hidden h-10 w-10 flex items-center justify-center rounded-full hover:bg-primary transition'
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label='Menu'
           >
@@ -70,7 +74,7 @@ const Navbar = () => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className='lg:hidden bg-background/50 overflow-hidden flex flex-col gap-2 px-6 py-8 text-sm'
+            className='lg:hidden bg-background/50 backdrop-blur-md overflow-hidden flex flex-col gap-2 px-6 py-8 text-sm'
           >
             {categories.map(({ id, slug, name }: ICategory) => (
               <Link

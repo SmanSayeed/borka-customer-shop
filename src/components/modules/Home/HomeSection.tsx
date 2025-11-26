@@ -25,7 +25,7 @@ export default function HomeSection() {
     <div>
       {bannerSlides.length > 0 && <HomeBanner slides={bannerSlides} />}
 
-      <div className=''>
+      <div className='md:container mx-auto'>
         {sections.map((section) => {
           switch (section.type) {
             case 2:

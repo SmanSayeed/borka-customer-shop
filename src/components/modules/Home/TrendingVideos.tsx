@@ -14,15 +14,10 @@ import { videos } from '@/constants';
 
 export default function TrendingVideo() {
   return (
-    <Container>
-      <div className='text-center mb-12'>
-        <h2 className='md:text-5xl text-2xl font-bold mb-4'>
+    <section className='px-2 md:px-0 mt-12 md:mt-24 md:container mx-auto'>
+        <h2 className='md:text-5xl text-2xl font-bold mb-4 md:mb-8 text-center'>
           Trending on <span className='text-primary'>Facebook</span>
         </h2>
-        <p className='text-muted-foreground max-w-2xl mx-auto'>
-          Watch our latest fashion reels — unboxings, try-ons & new arrivals.
-        </p>
-      </div>
 
       <Carousel className="w-full">
         
@@ -54,6 +49,6 @@ export default function TrendingVideo() {
 
         <CarouselIcon />
       </Carousel>
-    </Container>
+    </section>
   );
 }

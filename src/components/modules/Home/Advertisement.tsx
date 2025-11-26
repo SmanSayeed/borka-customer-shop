@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export default function Advertisement({ section }: { section: IHomeProduct }) {
   return (
-    <Container>
+    <section className='px-0 mt-12 md:mt-24 md:container mx-auto'>
       <div className="grid grid-cols-12 md:gap-6">
         {section.content.map((ad, index) => {
           let colClass = '';
@@ -36,6 +36,6 @@ export default function Advertisement({ section }: { section: IHomeProduct }) {
           );
         })}
       </div>
-    </Container>
+    </section>
   );
 }

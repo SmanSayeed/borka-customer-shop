@@ -18,6 +18,9 @@ const FilterSidebar = ({
   filters,
   onFiltersChange,
   categories,
+  subCategories,
+  selectedParentId,
+  setSelectedParentId,
   colorOptions,
   sizeOptions,
 }: any) => {
@@ -28,10 +31,6 @@ const FilterSidebar = ({
     size: true,
     price: true,
   });
-
-  // ---------------------------------------
-  // HANDLERS
-  // ---------------------------------------
 
   const toggleValue = (list: string[], value: string, checked: boolean) => {
     return checked ? [...list, value] : list.filter((v) => v !== value);
@@ -45,10 +44,30 @@ const FilterSidebar = ({
     });
   };
 
-  const handleCategoryChange = (checked: boolean, value: string) => {
+  const handleParentCategoryChange = (checked: boolean, category: any) => {
+    if (checked) {
+      setSelectedParentId(category.id);
+      onFiltersChange({
+        ...filters,
+        category: [...filters.category, category.slug],
+        page: 1,
+      });
+    } else {
+      if (selectedParentId === category.id) {
+        setSelectedParentId(undefined);
+      }
+      onFiltersChange({
+        ...filters,
+        category: filters.category.filter((c: string) => c !== category.slug),
+        page: 1,
+      });
+    }
+  };
+
+  const handleSubCategoryChange = (checked: boolean, slug: string) => {
     onFiltersChange({
       ...filters,
-      category: toggleValue(filters.category, value, checked),
+      category: toggleValue(filters.category, slug, checked),
       page: 1,
     });
   };
@@ -79,7 +98,7 @@ const FilterSidebar = ({
   };
 
   return (
-    <section className='h-fit sticky top-6 bg-white p-6 rounded-lg shadow-sm border border-gray-200'>
+    <section className='h-fit sticky top-6 bg-white p-6'>
       <h4 className='text-lg font-bold mb-4'>Filter Products</h4>
 
       <div className='space-y-6'>
@@ -138,18 +157,43 @@ const FilterSidebar = ({
             />
           </CollapsibleTrigger>
 
-          <CollapsibleContent className='mt-3 space-y-2'>
-            {categories.map((cat: any) => (
-              <div key={cat.name} className='flex items-center gap-2'>
-                <Checkbox
-                  checked={filters.category.includes(cat.name)}
-                  onCheckedChange={(checked) =>
-                    handleCategoryChange(!!checked, cat.name)
-                  }
-                />
-                <Label>{cat.name}</Label>
-              </div>
-            ))}
+          <CollapsibleContent className='mt-3 space-y-4'>
+            <div className='space-y-2'>
+              {categories.map((cat: any) => (
+                <div key={cat.id} className='flex flex-col'>
+                  <div className='flex items-center gap-2'>
+                    <Checkbox
+                      checked={filters.category.includes(cat.slug)}
+                      onCheckedChange={(checked) =>
+                        handleParentCategoryChange(!!checked, cat)
+                      }
+                    />
+                    <Label>{cat.name}</Label>
+                  </div>
+
+                  {/* Subcategories */}
+                  {selectedParentId === cat.id &&
+                    subCategories &&
+                    subCategories.length > 0 && (
+                      <div className='ml-6 mt-2 space-y-2 border-l-2 border-gray-100 pl-2'>
+                        {subCategories.map((sub: any) => (
+                          <div key={sub.id} className='flex items-center gap-2'>
+                            <Checkbox
+                              checked={filters.category.includes(sub.slug)}
+                              onCheckedChange={(checked) =>
+                                handleSubCategoryChange(!!checked, sub.slug)
+                              }
+                            />
+                            <Label className='text-sm text-gray-600'>
+                              {sub.name}
+                            </Label>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                </div>
+              ))}
+            </div>
           </CollapsibleContent>
         </Collapsible>
 

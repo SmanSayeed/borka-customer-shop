@@ -36,4 +36,5 @@ export interface IBannerSlide {
   updated_at: string;
   type_label: string;
   type_color: string;
+  length: number;
 }

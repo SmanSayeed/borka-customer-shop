@@ -31,10 +31,8 @@ export default function RelatedProducts({ categoryId }: RelatedProductsProps) {
   );
 
   return (
-    <Container className='my-12'>
-      <div className='text-center mb-8'>
-        <h2 className='text-3xl sm:text-4xl font-bold'>Related Products</h2>
-      </div>
+    <section className='px-2 md:px-0 mt-12 md:mt-24 md: container mx-auto'>
+        <h2 className='text-2xl md:text-5xl font-bold text-center mb-4 md:mb-8'>Related Products</h2>
 
       {isProductLoading ? (
         <Loader skeleton skeletonCount={8} />
@@ -44,7 +42,7 @@ export default function RelatedProducts({ categoryId }: RelatedProductsProps) {
             {displayProducts.map((product: IProduct, index: number) => (
               <CarouselItem
                 key={index}
-                className='basis-1/2 sm:basis-1/2 lg:basis-1/5 p-2'
+                className='basis-1/2 sm:basis-1/2 lg:basis-1/5'
               >
                 <ProductCard product={product} />
               </CarouselItem>
@@ -54,6 +52,6 @@ export default function RelatedProducts({ categoryId }: RelatedProductsProps) {
           <CarouselIcon />
         </Carousel>
       )}
-    </Container>
+    </section>
   );
 }

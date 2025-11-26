@@ -13,19 +13,13 @@ const images = [
 
 const ShopFacebook = () => {
   return (
-    <Container>
-      {/* Section Header */}
-      <div className='text-center mb-6'>
-        <h2 className='text-xl md:text-5xl font-bold text-heading'>
-          Follow Us on{' '}
-          <span className='text-primary'>Facebook</span>
-        </h2>
-        <p className='text-muted-foreground mt-2'>
-          Follow us for the latest collections, stories, and inspiration ✨
-        </p>
-      </div>
+    <section className='px-2 md:px-0 mt-12 md:mt-24 md:container mx-auto'>
+      <h2 className='text-2xl md:text-5xl font-bold text-center mb-4 md:mb-8'>
+        Follow Us on{' '}
+        <span className='text-primary'>Facebook</span>
+      </h2>
 
-      <div className='grid grid-cols-12 gap-4 md:gap-6'>
+      <div className='grid grid-cols-12 gap-2 md:gap-6'>
         {images.map((image, index) => {
           const colSpanClass =
             index < 3
@@ -75,7 +69,7 @@ const ShopFacebook = () => {
           );
         })}
       </div>
-    </Container>
+    </section>
   );
 };
 
