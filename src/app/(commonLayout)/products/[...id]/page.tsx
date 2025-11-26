@@ -14,16 +14,18 @@ const ProductDetailsPage = async ({
   return (
     <div>
       <PageBanner
-        heading='Product Details'
+        heading= {product.product_name}
         breadcrumbs={[
           { label: 'Home', href: '/' },
           { label: 'Products', href: '/products' },
           { label: 'Product Details' },
         ]}
       />
-      <ProductDetails product={product} />
+      <div className='px-4 md:px-0'>
+        <ProductDetails product={product} />
       <RelatedProducts categoryId={product.category.id}/>
       <CustomerReviews />
+      </div>
     </div>
   );
 };

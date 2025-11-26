@@ -1,24 +1,15 @@
-import HomeBanner from '@/components/modules/Home/HomeBanner';
-import ShopFacebook from '@/components/modules/Home/ShopFacebook';
-import TrendingVideo from '@/components/modules/Home/TrendingVideos';
-import AllCollection from '@/components/modules/products/AllCollection';
-import NewArrivals from '@/components/modules/products/NewArrivals';
-import TrendingSpecial from '@/components/modules/products/TrendingSpecial';
 import HomeSection from '@/components/modules/Home/HomeSection';
+import ShopFacebook from '@/components/modules/Home/ShopFacebook';
 import { Testimonial } from '@/components/modules/Home/Testimonial';
+import TrendingVideo from '@/components/modules/Home/TrendingVideos';
 
 const RootLayout = () => {
   return (
     <div>
-      {/* <HomeBanner /> */}
-      <HomeBanner />
-      <div className='px-4'>
-      <NewArrivals />
-        <HomeSection />
+      <HomeSection />
       <TrendingVideo />
       <Testimonial />
       <ShopFacebook />
-      </div>
     </div>
   );
 };

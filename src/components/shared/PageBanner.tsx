@@ -18,7 +18,7 @@ export default function PageBanner({
 }: PageBannerProps) {
   return (
     <div
-      className="w-full h-36 flex flex-col items-center justify-center bg-[#F8F7ED] text-center px-5"
+      className="w-full h-36 flex flex-col items-center bg-[#F5F5F5] justify-center text-center px-5 md:mb-10"
     >
       <h1 className="text-2xl md:text-4xl font-bold text-[#2C2C2C]">
         {heading}

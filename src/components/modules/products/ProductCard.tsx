@@ -30,9 +30,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           <h4 className='font-semibold text-base sm:text-xl'>{product.product_label}</h4>
           <p className='font-semibold text-lg text-gray-400'>
             ৳ {' '}{Number(product.sale_price ?? 0).toLocaleString()}
-          {product.discount_label && (
-            <span className='text-xs text-primary ml-3'>{product.discount_label} OFF</span>
-          )}
+          {product.is_discount_active ? (
+            <span className='text-xs text-gray-500 line-through ml-2'>৳ {Number(product.original_price ?? 0).toLocaleString()}</span>
+          ) : null}
           </p>
         </div>
       </Link>

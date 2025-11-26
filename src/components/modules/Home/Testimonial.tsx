@@ -1,5 +1,6 @@
 "use client";
 
+import CarouselIcon from '@/components/shared/CarouselIcon';
 import Container from '@/components/shared/Container';
 import {
   Carousel,
@@ -38,20 +39,7 @@ export function Testimonial() {
           ))}
         </CarouselContent>
 
-        <CarouselPrevious
-  className="
-    absolute top-1/2 -translate-y-1/2 left-2 z-50
-    bg-black/60 text-white 
-    md:static md:translate-y-0 md:bg-white md:text-black
-  "
-/>
-<CarouselNext
-  className="
-    absolute top-1/2 -translate-y-1/2 right-2 z-50
-    bg-black/60 text-white
-    md:static md:translate-y-0 md:bg-white md:text-black
-  "
-/>
+        <CarouselIcon />
       </Carousel>
     </Container>
   );

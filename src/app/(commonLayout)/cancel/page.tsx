@@ -26,7 +26,7 @@ export default function CancelPage() {
 
         {/* Actions */}
         <div className='flex flex-wrap gap-4 justify-center'>
-          <Link href='/products'>
+          <Link prefetch={true} href='/products'>
             <Button variant='default'>Back to Shop</Button>
           </Link>
 

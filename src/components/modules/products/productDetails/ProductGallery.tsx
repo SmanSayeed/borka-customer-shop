@@ -42,13 +42,13 @@ export default function ProductGallery({
   };
 
   return (
-    <div className='w-full flex flex-col lg:flex-row gap-6 lg:gap-8'>
-      <div className='flex lg:flex-col gap-2 lg:gap-4 order-2 lg:order-1 overflow-x-auto lg:overflow-x-visible'>
+    <div className='w-full flex flex-col lg:flex-row gap-4 lg:gap-6'>
+      <div className='flex lg:flex-col gap-4 md:gap-6 order-2 lg:order-1 overflow-x-auto lg:overflow-x-visible'>
         {images.map((img, idx) => (
           <div
             key={idx}
             onClick={() => handleThumbnailClick(idx)}
-            className={`relative w-20 h-20 lg:w-24 lg:h-24 border rounded-md cursor-pointer overflow-hidden ${
+            className={`relative w-20 h-20 lg:w-24 lg:h-24 border cursor-pointer overflow-hidden ${
               mainImage === img
                 ? 'border-primary ring-2 ring-primary/30'
                 : 'border-gray-200'
@@ -62,7 +62,7 @@ export default function ProductGallery({
       {/* Main Image */}
       <div className='relative w-full lg:w-[500px] order-1 lg:order-2 flex flex-col'>
         <div
-          className='relative w-full aspect-3/4 rounded-lg overflow-hidden'
+          className='relative w-full aspect-3/4 overflow-hidden'
           onMouseEnter={() => setZoom(true)}
           onMouseLeave={() => setZoom(false)}
         >

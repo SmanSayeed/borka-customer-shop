@@ -83,14 +83,12 @@ const CheckoutDetails = () => {
 
   const [totalPayable, setTotalPayable] = useState(0);
 
-  /* -------------------- AUTO TOTAL UPDATE -------------------- */
   useEffect(() => {
     const total = subtotal - discountAmount + Number(deliveryCharge || 0);
 
     setTotalPayable(total);
   }, [subtotal, discountAmount, deliveryCharge]);
 
-  /* -------------------- SELECT AREA → SET ID + CHARGE -------------------- */
   const handleAreaSelect = (
     type: 'shipping' | 'billing',
     areaLabel: string
@@ -107,7 +105,6 @@ const CheckoutDetails = () => {
     }
   };
 
-  /* -------------------- CART ITEMS PAYLOAD -------------------- */
   const cartItems = carts.map((cart: ICartProduct) => ({
     product_id: cart.id,
     quantity: cart.quantity,
@@ -116,7 +113,6 @@ const CheckoutDetails = () => {
     discount_amount: cart.price_info.discount_amount || 0,
   }));
 
-  /* -------------------- PLACE ORDER -------------------- */
   const onPlaceOrder: SubmitHandler<FormData> = async (data) => {
     try {
       const orderPayload = {
@@ -127,7 +123,7 @@ const CheckoutDetails = () => {
         billing_address: { ...data.billingAddress, name: data.fullName },
         notes: data.notes || '',
         delivery_charge: data.deliveryCharge,
-        total_payable_amount: 1500,
+        total_payable_amount: 0,
         payment_method: data.paymentMethod,
       };
 
@@ -147,7 +143,7 @@ const CheckoutDetails = () => {
   };
 
   return (
-    <div className='container mx-auto my-6 lg:my-12'>
+    <div className='container mx-auto mb-6 lg:mb-12'>
       <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
         <div className='lg:col-span-2 bg-white rounded-xl p-6 md:p-8'>
           <h2 className='text-xl font-semibold mb-6'>

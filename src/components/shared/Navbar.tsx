@@ -1,10 +1,10 @@
 'use client';
 
-import useCart from '@/hooks/useCart';
+import { useGlobalContext } from '@/context/GlobalContext';
 import useCategory from '@/hooks/useCategory';
 import { ICategory } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Menu, Search, ShoppingBag, User, X } from 'lucide-react';
+import { Menu, Search, ShoppingBag, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Logo } from './assets';
@@ -13,13 +13,12 @@ import CategoryMenuItem from './CategoryMenuItem';
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { categories } = useCategory();
-  const { cartDetails } = useCart();
+  const { cartDetails, isCartDrawerOpen, setIsCartDrawerOpen } = useGlobalContext();
 
   return (
     <header className='bg-background text-white relative'>
       <nav className='container mx-auto flex items-center justify-between py-3 px-6 lg:px-0'>
-        {/* Logo */}
-        <Link href='/'>
+        <Link prefetch={true} href='/'>
           <Logo />
         </Link>
 
@@ -32,39 +31,25 @@ const Navbar = () => {
         <div className='flex items-center gap-4'>
           <button
             onClick={() => console.log('Search clicked')}
-            className='p-2 rounded-full hover:bg-primary dark:hover:bg-gray-800 transition relative'
+            className='p-3 rounded-full hover:bg-primary dark:hover:bg-gray-800 transition relative'
             aria-label='Search'
           >
             <Search className='size-5' />
           </button>
 
-          {/* Cart */}
-          <Link
-            href='/cart'
-            className='relative p-2 rounded-full hover:bg-primary dark:hover:bg-gray-800 transition'
-            aria-label='Shopping Cart'
-          >
-            <ShoppingBag className='size-5' />
-            {cartDetails?.products?.length > 0 && (
-              <span
-                className='absolute -top-1.5 -right-1.5 bg-primary text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center'
-                title={`${cartDetails.products.length} item${
-                  cartDetails.products.length > 1 ? 's' : ''
-                }`}
-              >
-                {cartDetails.products.length}
-              </span>
-            )}
-          </Link>
-
-          {/* User */}
-          <Link
-            href='/signin'
-            className='p-2 rounded-full hover:bg-primary dark:hover:bg-gray-800 transition'
-            aria-label='User Account'
-          >
-            <User className='size-5' />
-          </Link>
+     
+            <button
+        onClick={() => setIsCartDrawerOpen(true)}
+        className="relative md:p-3 p-2 rounded-full hover:bg-primary transition"
+        aria-label="Shopping Cart"
+      >
+        <ShoppingBag className="size-5" />
+        {cartDetails.products.length > 0 && (
+          <span className="absolute -top-1.5 -right-1.5 bg-primary text-black text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+            {cartDetails.products.length}
+          </span>
+        )}
+      </button>
 
           {/* Menu Toggle */}
           <button

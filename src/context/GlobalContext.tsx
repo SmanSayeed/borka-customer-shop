@@ -32,6 +32,8 @@ interface GlobalContextType {
   removeItem: (id: number, sizeId?: number) => void;
   clearCart: () => void;
   isCartLoading: boolean;
+  isCartDrawerOpen: boolean;
+  setIsCartDrawerOpen: (open: boolean) => void;
 }
 
 const GlobalContext = createContext<GlobalContextType | null>(null);
@@ -43,6 +45,7 @@ export const GlobalContextProvider = ({
 }) => {
   const [cartDetails, setCartDetails] = useState<ICartData>(initialCart);
   const [isCartLoading, setIsCartLoading] = useState(false);
+  const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
 
   // * Get all business categories
   const { data: businessCategoriesData, isLoading: isBusinessCategoryLoading } =
@@ -140,7 +143,6 @@ export const GlobalContextProvider = ({
       if (response.success) {
         setCartDetails(response.data);
         toast.success('Added to cart successfully!');
-        window.location.href = '/cart';
       } else {
         toast.error('Failed to update cart');
       }
@@ -237,6 +239,8 @@ export const GlobalContextProvider = ({
     isColorLoading,
     isSizeLoading,
     isCartLoading,
+     isCartDrawerOpen,
+  setIsCartDrawerOpen,
   };
 
   return (

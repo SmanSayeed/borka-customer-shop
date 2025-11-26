@@ -20,7 +20,7 @@ export default function ProductAdditionalInfo({ product }: Props) {
         <AccordionTrigger>
           <h4 className='text-base sm:text-lg'>Description</h4>
         </AccordionTrigger>
-        <AccordionContent className='px-2 sm:px-4'>
+        <AccordionContent className=''>
           <div
             className='text-gray-700 whitespace-pre-wrap text-sm sm:text-base'
             dangerouslySetInnerHTML={{
@@ -30,12 +30,11 @@ export default function ProductAdditionalInfo({ product }: Props) {
         </AccordionContent>
       </AccordionItem>
 
-      {/* Specification */}
       <AccordionItem value='specification'>
         <AccordionTrigger>
           <h4 className='text-base sm:text-lg'>Specification</h4>
         </AccordionTrigger>
-        <AccordionContent className='px-2 sm:px-4'>
+        <AccordionContent className=''>
           <div
             className='text-gray-700 whitespace-pre-wrap text-sm sm:text-base'
             dangerouslySetInnerHTML={{
@@ -51,7 +50,7 @@ export default function ProductAdditionalInfo({ product }: Props) {
           <h4 className='text-base sm:text-lg'>Stock Details</h4>
         </AccordionTrigger>
 
-        <AccordionContent className='px-1 sm:px-4'>
+        <AccordionContent className=''>
           <div className='overflow-x-auto mt-2 border rounded-md'>
             <table className='min-w-[500px] w-full text-xs sm:text-sm border-collapse'>
               <thead className='bg-gray-100'>

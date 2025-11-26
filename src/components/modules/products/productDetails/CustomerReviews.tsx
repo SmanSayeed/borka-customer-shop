@@ -1,5 +1,6 @@
-'use client';
+"use client";
 
+import CarouselIcon from '@/components/shared/CarouselIcon';
 import Container from '@/components/shared/Container';
 import {
   Carousel,
@@ -7,40 +8,38 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel';
+} from "@/components/ui/carousel";
 import { reviewImages } from '@/constants';
-import Image from 'next/image';
 
 export default function CustomerReviews() {
   return (
     <Container>
-      <h2 className='text-3xl font-semibold text-center mb-8'>
-        What Our Customers Say
+      <h2 className="text-2xl md:text-5xl font-semibold mb-6 text-center">
+        Top Customer Reviews
       </h2>
 
-      <Carousel className='w-full max-w-7xl mx-auto'>
-        <CarouselContent className='-ml-2'>
-          {reviewImages.map((src, idx) => (
-            <CarouselItem key={idx} className='pl-2 md:basis-1/2 lg:basis-1/3'>
-              <div className='p-2'>
-                <div className='overflow-hidden'>
-                  <div className='p-0'>
-                    <Image
-                      src={src}
-                      alt={`Customer review ${idx + 1}`}
-                      width={500}
-                      height={500}
-                      className='w-full h-110 object-cover rounded-lg'
-                    />
-                  </div>
-                </div>
+      <Carousel
+        opts={{ align: "start", loop: true }}
+        className="relative w-full mx-auto"
+      >
+        <CarouselContent>
+          {reviewImages.map((image, index) => (
+            <CarouselItem
+              key={index}
+              className="md:basis-1/3 lg:basis-1/3"
+            >
+              <div className="overflow-hidden">
+                <img
+                  src={image}
+                  alt="Review"
+                  className="w-full h-[420px] object-cover"
+                />
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
 
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselIcon />
       </Carousel>
     </Container>
   );

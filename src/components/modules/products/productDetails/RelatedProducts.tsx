@@ -12,6 +12,7 @@ import {
 import useProducts from '@/hooks/useProducts';
 import { IProduct } from '@/types';
 import ProductCard from '../ProductCard';
+import CarouselIcon from '@/components/shared/CarouselIcon';
 
 interface RelatedProductsProps {
   categoryId?: number;
@@ -24,7 +25,6 @@ export default function RelatedProducts({ categoryId }: RelatedProductsProps) {
     ? products.filter((p: IProduct) => p.category_id === categoryId)
     : products;
 
-  // --- ALWAYS SHOW 8 ITEMS ---
   const displayProducts = Array.from(
     { length: 8 },
     (_, i) => filteredProducts[i % filteredProducts.length]
@@ -34,9 +34,6 @@ export default function RelatedProducts({ categoryId }: RelatedProductsProps) {
     <Container className='my-12'>
       <div className='text-center mb-8'>
         <h2 className='text-3xl sm:text-4xl font-bold'>Related Products</h2>
-        <p className='text-foreground/70 mt-2'>
-          You may also like these similar items.
-        </p>
       </div>
 
       {isProductLoading ? (
@@ -54,8 +51,7 @@ export default function RelatedProducts({ categoryId }: RelatedProductsProps) {
             ))}
           </CarouselContent>
 
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselIcon />
         </Carousel>
       )}
     </Container>
