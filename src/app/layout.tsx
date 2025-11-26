@@ -32,6 +32,7 @@ export default function RootLayout({
     <html lang='en'>
       <body
         className={` ${dmSans.variable} ${marcellus.variable} font-dmSans text-foreground antialiased bg-[#f7fbfe]`}
+        suppressHydrationWarning
       >
         <Providers>
           <Toaster position='top-right' richColors />
