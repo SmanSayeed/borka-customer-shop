@@ -1,0 +1,19 @@
+src/components/modules/Home/Advertisement.tsx(8,41): error TS2339: Property 'ads' does not exist on type 'IAdContent'.
+src/components/modules/Home/HomeSection.tsx(3,36): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+src/components/modules/Home/HomeSection.tsx(22,24): error TS2322: Type '{ ads: any; }' is not assignable to type 'IntrinsicAttributes & IAdContent'.
+  Property 'ads' does not exist on type 'IntrinsicAttributes & IAdContent'.
+src/components/modules/Home/ProductSection.tsx(6,50): error TS2552: Cannot find name 'Section'. Did you mean 'Selection'?
+src/components/modules/Home/ProductSection.tsx(8,5): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(options: DefinedInitialDataOptions<unknown, Error, unknown, readonly unknown[]>, queryClient?: QueryClient | undefined): DefinedUseQueryResult<unknown, Error>', gave the following error.
+    Argument of type 'any[]' is not assignable to parameter of type 'DefinedInitialDataOptions<unknown, Error, unknown, readonly unknown[]>'.
+      Property 'queryKey' is missing in type 'any[]' but required in type 'Omit<UseQueryOptions<unknown, Error, unknown, readonly unknown[]>, "queryFn">'.
+  Overload 2 of 3, '(options: UndefinedInitialDataOptions<unknown, Error, unknown, readonly unknown[]>, queryClient?: QueryClient | undefined): UseQueryResult<unknown, Error>', gave the following error.
+    Argument of type 'any[]' is not assignable to parameter of type 'UndefinedInitialDataOptions<unknown, Error, unknown, readonly unknown[]>'.
+      Property 'queryKey' is missing in type 'any[]' but required in type 'UseQueryOptions<unknown, Error, unknown, readonly unknown[]>'.
+  Overload 3 of 3, '(options: UseQueryOptions<unknown, Error, unknown, readonly unknown[]>, queryClient?: QueryClient | undefined): UseQueryResult<unknown, Error>', gave the following error.
+    Argument of type 'any[]' is not assignable to parameter of type 'UseQueryOptions<unknown, Error, unknown, readonly unknown[]>'.
+      Property 'queryKey' is missing in type 'any[]' but required in type 'UseQueryOptions<unknown, Error, unknown, readonly unknown[]>'.
+src/components/modules/Home/ProductSection.tsx(9,11): error TS2304: Cannot find name 'getProductsBySection'.
+src/components/modules/Home/ProductSection.tsx(14,19): error TS2304: Cannot find name 'Product'.
+src/components/modules/Home/ProductSection.tsx(14,45): error TS2339: Property 'data' does not exist on type '{}'.
+src/types/home.ts(7,10): error TS2552: Cannot find name 'Icontent'. Did you mean 'IContent'?

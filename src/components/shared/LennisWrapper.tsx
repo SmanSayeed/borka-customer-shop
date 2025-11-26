@@ -1,6 +1,10 @@
 'use client';
-import { useEffect } from 'react';
 import Lenis from '@studio-freight/lenis';
+import { useEffect } from 'react';
+<<<<<<< HEAD
+=======
+import Lenis from '@studio-freight/lenis';
+>>>>>>> 811aa7daddb20053522508ce2af68cce8085fe2d
 
 const LennisWrapper = () => {
   useEffect(() => {

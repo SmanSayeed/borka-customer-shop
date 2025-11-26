@@ -1,5 +1,7 @@
+import { Toaster } from '@/components/ui/sonner';
+import Providers from '@/providers/Providers';
 import type { Metadata } from 'next';
-import { Marcellus, DM_Sans, Marck_Script } from 'next/font/google';
+import { DM_Sans, Marcellus } from 'next/font/google';
 import './globals.css';
 
 const marcellus = Marcellus({
@@ -16,12 +18,6 @@ const dmSans = DM_Sans({
   display: 'swap',
 });
 
-const marckScript = Marck_Script({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-marck-script',
-});
-
 export const metadata: Metadata = {
   title: 'Faith Journey',
   description: 'An Abaya E-commerce Online Shop',
@@ -35,9 +31,12 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={` ${dmSans.variable} ${marcellus.variable} font-dmSans bg-background text-foreground antialiased`}
+        className={` ${dmSans.variable} ${marcellus.variable} font-dmSans text-foreground antialiased bg-[#f7fbfe]`}
       >
-        {children}
+        <Providers>
+          <Toaster position='top-right' richColors />
+          {children}
+        </Providers>
       </body>
     </html>
   );
