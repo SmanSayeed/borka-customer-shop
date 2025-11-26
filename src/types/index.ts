@@ -1,7 +1,6 @@
 export interface ICategory {
   id: number;
   name: string;
-<<<<<<< HEAD
   slug: string;
   business_category_id: number | null;
   parent_id: number | null;
@@ -81,17 +80,4 @@ export interface ISize {
   unit_of_masurement: string;
   is_active: number;
   label: string;
-=======
-  price: number;
-  discount: number;
-  status: string;
-  color: string[];
-  size: string[];
-  quantity: number;
-  description: string;
-  image: string[];
-  category: string;
-  rating?: number;
-  reviews?: number;
->>>>>>> 811aa7daddb20053522508ce2af68cce8085fe2d
 }

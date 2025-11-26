@@ -4,7 +4,7 @@ export interface IHomeProduct {
   title: string;
   subtitle: string | null;
   position: number;
-  content: IContent[];
+  content: IContent [] | any;
   is_active: boolean;
   created_at: string;
   updated_at: string;

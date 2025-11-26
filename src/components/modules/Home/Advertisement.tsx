@@ -9,7 +9,7 @@ export default function Advertisement({ section }: { section: IHomeProduct }) {
   return (
     <section className='px-0 mt-12 md:mt-24 md:container mx-auto'>
       <div className="grid grid-cols-12 md:gap-6">
-        {section.content.map((ad, index) => {
+        {section.content != null && section.content.length > 0 && section.content.map((ad: any, index: number) => {
           let colClass = '';
 
           // Desktop & Laptop
