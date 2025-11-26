@@ -24,7 +24,6 @@ export const getCartFromStorage = () => {
     const validItems = items.filter((item) => {
       return item.cart_expiry && currentTime < item.cart_expiry;
     });
-
     // If some items expired, update storage
     if (validItems.length !== items.length) {
       saveCartToStorage(validItems);

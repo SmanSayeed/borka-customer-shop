@@ -48,9 +48,10 @@ const Navbar = () => {
             aria-label='Shopping Cart'
           >
             <ShoppingBag className='size-5' />
+
             {cartDetails.products.length > 0 && (
               <span className='absolute -top-1.5 -right-1.5 bg-primary text-black text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center'>
-                {cartDetails.products.length}
+                {cartDetails.products.reduce((sum, item) => sum + item.quantity, 0)}
               </span>
             )}
           </button>
