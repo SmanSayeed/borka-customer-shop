@@ -84,7 +84,8 @@ export const GlobalContextProvider = ({
   const fetchCartMutation = useMutation({
     mutationFn: (products: ICart[]) => {
       setIsCartLoading(true);
-      return sentUserCartDetails({ items: products });
+      const apiPayload = products.map(({ cart_expiry, ...rest }) => rest);
+      return sentUserCartDetails({ items: apiPayload });
     },
 
     onSuccess: (response, variables) => {
@@ -136,10 +137,12 @@ export const GlobalContextProvider = ({
       });
 
       saveCartToStorage(updatedCart);
-      return sentUserCartDetails({ items: updatedCart });
+      const apiPayload = updatedCart.map(({ cart_expiry, ...rest }) => rest);
+      return sentUserCartDetails({ items: apiPayload });
     },
 
     onSuccess: (response) => {
+      console.log(response, 'in success');
       if (response.success) {
         setCartDetails(response.data);
         toast.success('Added to cart successfully!');
@@ -173,7 +176,8 @@ export const GlobalContextProvider = ({
       });
 
       saveCartToStorage(updatedCart);
-      return sentUserCartDetails({ items: updatedCart });
+      const apiPayload = updatedCart.map(({ cart_expiry, ...rest }) => rest);
+      return sentUserCartDetails({ items: apiPayload });
     },
 
     onSuccess: (response) => {
@@ -198,7 +202,8 @@ export const GlobalContextProvider = ({
       });
 
       saveCartToStorage(updatedCart);
-      return sentUserCartDetails({ items: updatedCart });
+      const apiPayload = updatedCart.map(({ cart_expiry, ...rest }) => rest);
+      return sentUserCartDetails({ items: apiPayload });
     },
 
     onSuccess: (response) => {
