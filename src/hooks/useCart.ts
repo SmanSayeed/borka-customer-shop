@@ -17,7 +17,8 @@ export default function useCart() {
     cartDetails,
     fetchCart,
     addToCart,
-    updateQuantity,
+    updateQuantity: (id: number, quantity: number, sizeId?: number) =>
+      updateQuantity(id, quantity, sizeId),
     removeItem: (id: number, sizeId?: number) => removeItem(id, sizeId),
     clearCart,
     isCartLoading,
