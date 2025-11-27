@@ -2,16 +2,25 @@
 
 import { createOrder } from '@/actions/order';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { defaultCheckoutForm } from '@/constants';
 import useCart from '@/hooks/useCart';
 import { useDeliveryZones } from '@/hooks/useOrder';
 import { cn } from '@/lib/utils';
+import { checkoutFormSchema } from '@/schemas';
 import { ICartProduct } from '@/types/cart';
 import { IZone } from '@/types/order';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { HandCoins, Package, AlertTriangle } from 'lucide-react';
+import { AlertTriangle, HandCoins, Package } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -19,15 +28,6 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod';
 import SearchableSelect from './SearchableSelect';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
-import { checkoutFormSchema } from '@/schemas';
-import { defaultCheckoutForm } from '@/constants';
 
 type FormData = z.infer<typeof checkoutFormSchema>;
 
@@ -143,11 +143,9 @@ const CheckoutDetails = () => {
   return (
     <div className='container mx-auto mb-6 lg:mb-12'>
       <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-        {/* LEFT FORM */}
         <div className='lg:col-span-2 bg-white rounded-xl p-6 md:p-8'>
           <h2 className='text-xl font-semibold mb-6'>Checkout Details</h2>
           <form className='space-y-6'>
-            {/* Name & Phone */}
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <div>
                 <Label className='mb-2'>Full Name *</Label>
@@ -173,7 +171,6 @@ const CheckoutDetails = () => {
               </div>
             </div>
 
-            {/* SHIPPING */}
             <div>
               <Label className='mb-2'>Shipping Address *</Label>
               <div className='grid grid-cols-1 gap-4'>
@@ -191,7 +188,7 @@ const CheckoutDetails = () => {
                     name='shippingAddress.zone_id'
                     render={({ field }) => {
                       const selectedZone = zones.find(
-                        (z) => z.id === field.value
+                        (z: IZone) => z.id === field.value
                       );
                       return (
                         <SearchableSelect
@@ -199,10 +196,9 @@ const CheckoutDetails = () => {
                           items={zones.map((z: IZone) => z.label)}
                           placeholder='Select Zone'
                           onChange={(label) => {
-                            const zone = zones.find((z) => z.label === label);
+                            const zone = zones.find((z: IZone) => z.label === label);
                             if (zone) {
                               field.onChange(Number(zone.id));
-                              // deliveryCharge আপডেট
                               setValue(
                                 'deliveryCharge',
                                 Number(zone.delivery_charge)
@@ -235,7 +231,7 @@ const CheckoutDetails = () => {
                     name='billingAddress.zone_id'
                     render={({ field }) => {
                       const selectedZone = zones.find(
-                        (z) => z.id === field.value
+                        (z: IZone) => z.id === field.value
                       );
                       return (
                         <SearchableSelect
@@ -243,7 +239,7 @@ const CheckoutDetails = () => {
                           items={zones.map((z: IZone) => z.label)}
                           placeholder='Select Zone'
                           onChange={(label) => {
-                            const zone = zones.find((z) => z.label === label);
+                            const zone = zones.find((z: IZone) => z.label === label);
                             if (zone) {
                               field.onChange(Number(zone.id));
                             }
