@@ -1,8 +1,7 @@
 'use client';
 
 import {
-  downloadInvoice,
-  getInvoicePDF,
+    getInvoicePDF,
   getOrderSummary,
 } from '@/actions/order';
 import { Button } from '@/components/ui/button';
@@ -56,37 +55,37 @@ function SuccessContent() {
     fetchOrder();
   }, [orderNumber, phoneNumber]);
 
-  const handleDownloadInvoice = async () => {
-    if (!orderNumber || !phoneNumber) return;
+  // const handleDownloadInvoice = async () => {
+  //   if (!orderNumber || !phoneNumber) return;
 
-    try {
-      setIsDownloading(true);
+  //   try {
+  //     setIsDownloading(true);
 
-      const pdfBlob = await downloadInvoice({
-        order_number: orderNumber,
-        phone_number: phoneNumber,
-      });
+  //     const pdfBlob = await downloadInvoice({
+  //       order_number: orderNumber,
+  //       phone_number: phoneNumber,
+  //     });
 
-      if (!pdfBlob) {
-        toast.error('Failed to download invoice');
-        return;
-      }
+  //     if (!pdfBlob) {
+  //       toast.error('Failed to download invoice');
+  //       return;
+  //     }
 
-      const pdfUrl = URL.createObjectURL(pdfBlob);
-      const a = document.createElement('a');
-      a.href = pdfUrl;
-      a.download = `invoice-${orderNumber}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(pdfUrl);
-    } catch (error) {
-      console.error(error);
-      toast.error('Something went wrong');
-    } finally {
-      setIsDownloading(false);
-    }
-  };
+  //     const pdfUrl = URL.createObjectURL(pdfBlob);
+  //     const a = document.createElement('a');
+  //     a.href = pdfUrl;
+  //     a.download = `invoice-${orderNumber}.pdf`;
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     document.body.removeChild(a);
+  //     URL.revokeObjectURL(pdfUrl);
+  //   } catch (error) {
+  //     console.error(error);
+  //     toast.error('Something went wrong');
+  //   } finally {
+  //     setIsDownloading(false);
+  //   }
+  // };
 
   const handleViewInvoice = async () => {
     if (!orderNumber || !phoneNumber) return;
@@ -267,7 +266,7 @@ function SuccessContent() {
 
         {/* Actions */}
         <div className='flex flex-col sm:flex-row flex-wrap justify-center gap-3 pt-4'>
-          <Button
+          {/* <Button
             className='bg-green-500 w-full sm:w-auto'
             onClick={handleDownloadInvoice}
             disabled={isDownloading}
@@ -278,7 +277,7 @@ function SuccessContent() {
               <Download className='w-4 h-4 mr-2' />
             )}
             Download Invoice
-          </Button>
+          </Button> */}
 
           <Button
             className='bg-purple-500 w-full sm:w-auto'

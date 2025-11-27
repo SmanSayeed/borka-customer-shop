@@ -87,20 +87,29 @@ export const getInvoicePDF = async (payload: {
 export const downloadInvoice = async (payload: {
   order_number: string;
   phone_number: string;
-}) => {
+}): Promise<Blob | null> => {
   try {
     const res = await fetch(`${baseUrl}/orders/downloadInvoice`, {
       method: 'POST',
-      next: { revalidate: 0 },
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
+      next: { revalidate: 0 },
     });
 
-    if (!res.ok) throw new Error('Failed To Download Invoice');
-    
-    return await res.blob();
+    if (!res.ok) throw new Error('Failed to download invoice');
+
+    const contentType = res.headers.get('content-type');
+    if (!contentType || !contentType.includes('pdf')) {
+      throw new Error('Received invalid PDF data.');
+    }
+
+    const blob = await res.blob();
+    return blob; // Blob রিটার্ন হচ্ছে
   } catch (error) {
-    console.error('Error Downloading Invoice:', error);
+    console.error('Error downloading invoice:', error);
+    return null;
   }
 };
+
+
 
