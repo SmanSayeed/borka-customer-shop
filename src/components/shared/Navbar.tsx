@@ -6,18 +6,45 @@ import { ICategory } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, Search, ShoppingBag, X } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Logo } from './assets';
 import CategoryMenuItem from './CategoryMenuItem';
+import { Skeleton } from '@/components/ui/skeleton';
+import MobileCategoryItem from './MobileCategoryItem';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { categories } = useCategory();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const { categories, isCategoryLoading } = useCategory();
   const { cartDetails, setIsCartDrawerOpen } = useGlobalContext();
 
+  useEffect(() => {
+    setIsMounted(true);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    // Check initial scroll position after mount
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Use bg-black/0 initially, but black when menu is open on mobile or when scrolled
+  const headerBg =
+    menuOpen
+      ? 'bg-black'
+      : isMounted && isScrolled
+        ? 'bg-background'
+        : 'bg-black/0';
+
   return (
-    <header className='bg-background text-white sticky top-0 z-20 leading-none'>
-      <nav className='container mx-auto flex items-center justify-between py-3 px-4 lg:px-0'>
+    <header
+      className={`${headerBg} text-white sticky top-0 z-[100] leading-none transition-all duration-300 pointer-events-auto`}
+    >
+      <nav className='container mx-auto flex items-center justify-between py-3 px-4 lg:px-0 relative z-[101] pointer-events-auto'>
         {/* Logo */}
         <Link prefetch={true} href='/'>
           <Logo />
@@ -25,9 +52,20 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <ul className='hidden lg:flex items-center gap-6'>
-          {categories.map((category: ICategory) => (
-            <CategoryMenuItem key={category.id} category={category} />
-          ))}
+          {isCategoryLoading ? (
+            <>
+              {Array.from({ length: 6 }).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className='h-6 w-20 bg-white/20'
+                />
+              ))}
+            </>
+          ) : (
+            categories.map((category: ICategory) => (
+              <CategoryMenuItem key={category.id} category={category} />
+            ))
+          )}
         </ul>
 
         {/* Right Section */}
@@ -75,18 +113,26 @@ const Navbar = () => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className='lg:hidden bg-background/50 backdrop-blur-md overflow-hidden flex flex-col gap-2 px-6 py-8 text-sm'
+            className='lg:hidden bg-black backdrop-blur-md overflow-hidden flex flex-col gap-0 px-6 py-8 text-sm relative z-[101]'
           >
-            {categories.map(({ id, slug, name }: ICategory) => (
-              <Link
-                key={id}
-                href={`/category/${slug}`}
-                className='py-2 hover:text-primary transition-colors'
-                onClick={() => setMenuOpen(false)}
-              >
-                {name}
-              </Link>
-            ))}
+            {isCategoryLoading ? (
+              <>
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    className='h-5 w-32 bg-white/20'
+                  />
+                ))}
+              </>
+            ) : (
+              categories.map((category: ICategory) => (
+                <MobileCategoryItem
+                  key={category.id}
+                  category={category}
+                  onLinkClick={() => setMenuOpen(false)}
+                />
+              ))
+            )}
           </motion.ul>
         )}
       </AnimatePresence>

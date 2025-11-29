@@ -21,20 +21,19 @@ const CategoryMenuItem = ({ category }: Props) => {
 
   return (
     <div
-      className='relative group h-full flex items-center'
+      className='relative group h-full flex items-center gap-1'
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <Link
         href={`/category/${category.slug}`}
-        className='flex items-center gap-1 hover:text-primary transition-colors py-4'
+        className='flex items-center hover:text-primary transition-colors py-2 px-2 bg-black/80 rounded-sm text-lg font-semibold'
       >
         {category.name}
         {hasSubCategories && (
           <ChevronDown
-            className={`w-4 h-4 transition-transform duration-300 ${
-              isHovered ? 'rotate-180' : ''
-            }`}
+            className={`w-4 h-4 transition-transform duration-300 ${isHovered ? 'rotate-180' : ''
+              }`}
           />
         )}
       </Link>
