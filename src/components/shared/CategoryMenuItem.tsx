@@ -27,7 +27,7 @@ const CategoryMenuItem = ({ category }: Props) => {
     >
       <Link
         href={`/category/${category.slug}`}
-        className='flex items-center hover:text-primary transition-colors py-2 px-2 bg-black/80 rounded-sm text-lg font-semibold'
+        className='flex items-center hover:text-primary transition-colors py-2 px-2 bg-black/80 rounded-sm text-sm lg:text-sm font-semibold'
       >
         {category.name}
         {hasSubCategories && (

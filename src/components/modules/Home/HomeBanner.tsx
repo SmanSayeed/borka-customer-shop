@@ -72,7 +72,7 @@ export default function HomeBanner({
   if (isLoading) {
     return (
       <div className='w-full flex justify-center relative -mt-[150px] pt-0'>
-        <div className='relative w-full h-[80vh] overflow-hidden'>
+        <div className='relative w-full h-[80vh] lg:h-[90vh] overflow-hidden'>
           <Skeleton className='w-full h-full bg-muted-foreground/20' />
         </div>
       </div>
@@ -85,7 +85,7 @@ export default function HomeBanner({
 
   return (
     <div className='w-full flex justify-center relative -mt-[150px] pt-0'>
-      <div className='relative w-full h-[80vh] overflow-hidden'>
+      <div className='relative w-full h-[80vh] lg:h-[90vh] overflow-hidden'>
         {slides.map((slide, index) => {
           const imageUrl = getImageUrl(slide);
           if (!imageUrl) return null;
@@ -101,7 +101,7 @@ export default function HomeBanner({
                 alt={`banner image ${index + 1}`}
                 fill
                 priority={index === 0}
-                className='object-cover'
+                className='object-cover w-full h-full'
                 sizes='100vw'
                 onError={(e) => {
                   console.error('Failed to load banner image:', imageUrl);
@@ -110,16 +110,22 @@ export default function HomeBanner({
 
               <div className='absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent' />
 
-              <div className='absolute inset-0 flex flex-col items-center justify-end pb-20 text-center text-white px-4 sm:px-6 pointer-events-none'>
+              <div className='absolute inset-0 flex flex-col items-center justify-end pb-20 text-center text-white px-0 sm:px-0 pointer-events-none'>
                 <Link
                   prefetch={true}
                   href='/products'
                   className='pointer-events-auto'
                 >
-                  <button className='group relative inline-flex h-8 md:h-10 items-center justify-center overflow-hidden rounded-md bg-black/50 hover:bg-black/70 hover:text-primary px-5 md:px-6 md:font-medium text-neutral-200'>
-                    <span>Browse Collection</span>
-                    <div className='w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100'>
-                      <RigthArrow className='text-primary' />
+                  <button className='group relative inline-flex h-10 md:h-16 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-r from-[#e1b320]/20 via-[#e1b320]/30 to-[#e1b320]/20 border-2 border-[#e1b320]/60 hover:border-[#e1b320] px-10 md:px-12 md:font-bold text-lg md:text-2xl text-[#e1b320] shadow-[0_0_20px_rgba(225,179,32,0.5)] hover:shadow-[0_0_30px_rgba(225,179,32,0.8)] transition-all duration-300'>
+                    {/* Shimmer effect */}
+                    <div className='absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent'></div>
+
+                    {/* Glow effect */}
+                    <div className='absolute inset-0 rounded-lg bg-[#e1b320]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse'></div>
+
+                    <span className='relative z-10 font-bold tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]'>Browse Collection</span>
+                    <div className='relative z-10 w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:pl-2 group-hover:opacity-100'>
+                      <RigthArrow className='text-[#e1b320]' />
                     </div>
                   </button>
                 </Link>

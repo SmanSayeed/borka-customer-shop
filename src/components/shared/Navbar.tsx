@@ -44,14 +44,14 @@ const Navbar = () => {
     <header
       className={`${headerBg} text-white sticky top-0 z-[100] leading-none transition-all duration-300 pointer-events-auto`}
     >
-      <nav className='container mx-auto flex items-center justify-between py-3 px-4 lg:px-0 relative z-[101] pointer-events-auto'>
+      <nav className='container mx-auto flex items-center justify-between py-1 px-4 lg:px-0 relative z-[101] pointer-events-auto'>
         {/* Logo */}
         <Link prefetch={true} href='/'>
           <Logo />
         </Link>
 
         {/* Desktop Menu */}
-        <ul className='hidden lg:flex items-center gap-6'>
+        <ul className='hidden lg:flex items-center gap-2'>
           {isCategoryLoading ? (
             <>
               {Array.from({ length: 6 }).map((_, index) => (
