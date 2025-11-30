@@ -6,7 +6,7 @@ import { ICategory } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, Search, ShoppingBag, X } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Logo } from './assets';
 import CategoryMenuItem from './CategoryMenuItem';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -14,35 +14,12 @@ import MobileCategoryItem from './MobileCategoryItem';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const { categories, isCategoryLoading } = useCategory();
   const { cartDetails, setIsCartDrawerOpen } = useGlobalContext();
 
-  useEffect(() => {
-    setIsMounted(true);
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    // Check initial scroll position after mount
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Use bg-black/0 initially, but black when menu is open on mobile or when scrolled
-  const headerBg =
-    menuOpen
-      ? 'bg-black'
-      : isMounted && isScrolled
-        ? 'bg-background'
-        : 'bg-black/0';
-
   return (
     <header
-      className={`${headerBg} text-white sticky top-0 z-[100] leading-none transition-all duration-300 pointer-events-auto`}
+      className='bg-black text-white sticky top-0 z-[100] leading-none transition-all duration-300 pointer-events-auto'
     >
       <nav className='container mx-auto flex items-center justify-between py-1 px-4 lg:px-0 relative z-[101] pointer-events-auto'>
         {/* Logo */}

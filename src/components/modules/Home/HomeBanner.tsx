@@ -71,7 +71,7 @@ export default function HomeBanner({
 
   if (isLoading) {
     return (
-      <div className='w-full flex justify-center relative -mt-[150px] pt-0'>
+      <div className='w-full flex justify-center'>
         <div className='relative w-full h-[80vh] lg:h-[90vh] overflow-hidden'>
           <Skeleton className='w-full h-full bg-muted-foreground/20' />
         </div>
@@ -84,7 +84,7 @@ export default function HomeBanner({
   }
 
   return (
-    <div className='w-full flex justify-center relative -mt-[150px] pt-0'>
+    <div className='w-full flex justify-center'>
       <div className='relative w-full h-[80vh] lg:h-[90vh] overflow-hidden'>
         {slides.map((slide, index) => {
           const imageUrl = getImageUrl(slide);
