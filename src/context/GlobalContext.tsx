@@ -28,7 +28,7 @@ interface GlobalContextType {
   isSizeLoading: boolean;
   fetchCart: (products: ICart[]) => void;
   addToCart: (payload: { items: ICart[] }) => void;
-  updateQuantity: (id: number, quantity: number) => void;
+  updateQuantity: (id: number, quantity: number, sizeId?: number) => void;
   removeItem: (id: number, sizeId?: number) => void;
   clearCart: () => void;
   isCartLoading: boolean;
@@ -84,7 +84,8 @@ export const GlobalContextProvider = ({
   const fetchCartMutation = useMutation({
     mutationFn: (products: ICart[]) => {
       setIsCartLoading(true);
-      return sentUserCartDetails({ items: products });
+      const apiPayload = products.map(({ cart_expiry, ...rest }) => rest);
+      return sentUserCartDetails({ items: apiPayload });
     },
 
     onSuccess: (response, variables) => {
@@ -136,10 +137,12 @@ export const GlobalContextProvider = ({
       });
 
       saveCartToStorage(updatedCart);
-      return sentUserCartDetails({ items: updatedCart });
+      const apiPayload = updatedCart.map(({ cart_expiry, ...rest }) => rest);
+      return sentUserCartDetails({ items: apiPayload });
     },
 
     onSuccess: (response) => {
+      console.log(response, 'in success');
       if (response.success) {
         setCartDetails(response.data);
         toast.success('Added to cart successfully!');
@@ -152,14 +155,29 @@ export const GlobalContextProvider = ({
   });
 
   const updateQuantityMutation = useMutation({
-    mutationFn: async ({ id, quantity }: { id: number; quantity: number }) => {
+    mutationFn: async ({
+      id,
+      quantity,
+      sizeId,
+    }: {
+      id: number;
+      quantity: number;
+      sizeId?: number;
+    }) => {
       const currentCart = getCartFromStorage();
-      const updatedCart = currentCart.map((p) =>
-        p.product_id === id ? { ...p, quantity } : p
-      );
+      const updatedCart = currentCart.map((p) => {
+        const isSameProduct = Number(p.product_id) === Number(id);
+        const isSameSize = sizeId ? Number(p.size_id) === Number(sizeId) : true;
+
+        if (isSameProduct && isSameSize) {
+          return { ...p, quantity };
+        }
+        return p;
+      });
 
       saveCartToStorage(updatedCart);
-      return sentUserCartDetails({ items: updatedCart });
+      const apiPayload = updatedCart.map(({ cart_expiry, ...rest }) => rest);
+      return sentUserCartDetails({ items: apiPayload });
     },
 
     onSuccess: (response) => {
@@ -184,7 +202,8 @@ export const GlobalContextProvider = ({
       });
 
       saveCartToStorage(updatedCart);
-      return sentUserCartDetails({ items: updatedCart });
+      const apiPayload = updatedCart.map(({ cart_expiry, ...rest }) => rest);
+      return sentUserCartDetails({ items: apiPayload });
     },
 
     onSuccess: (response) => {
@@ -207,9 +226,8 @@ export const GlobalContextProvider = ({
     },
 
     onSuccess: (response) => {
-      console.log('Clear cart success response:', response);
-      if (response.success) {
-        setCartDetails(initialCart);
+      setCartDetails(initialCart);
+      if (response?.success) {
         toast.success('Cart cleared successfully');
       }
     },
@@ -231,16 +249,16 @@ export const GlobalContextProvider = ({
     sizes,
     fetchCart: fetchCartMutation.mutate,
     addToCart: addToCartMutation.mutate,
-    updateQuantity: (id: number, quantity: number) =>
-      updateQuantityMutation.mutate({ id, quantity }),
+    updateQuantity: (id: number, quantity: number, sizeId?: number) =>
+      updateQuantityMutation.mutate({ id, quantity, sizeId }),
     removeItem: (id: number, sizeId?: number) =>
       removeItemMutation.mutate({ id, sizeId }),
     clearCart: clearCartMutation.mutate,
     isColorLoading,
     isSizeLoading,
     isCartLoading,
-     isCartDrawerOpen,
-  setIsCartDrawerOpen,
+    isCartDrawerOpen,
+    setIsCartDrawerOpen,
   };
 
   return (

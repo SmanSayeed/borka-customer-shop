@@ -33,9 +33,83 @@ export const getDeliveryZones = async () => {
 
     if (!res.ok) throw new Error('Failed To Fetch Delivery Zones');
 
-      const data = await res.json();
-      return data.data; 
+    const data = await res.json();
+    return data.data;
   } catch (error) {
     console.error('Error Fetching Delivery Zones:', error);
   }
 };
+
+// * Get Order Summary
+export const getOrderSummary = async (payload: {
+  order_number: string;
+  phone_number: string;
+}) => {
+  try {
+    const res = await fetch(`${baseUrl}/orders/summary`, {
+      method: 'POST',
+      next: { revalidate: 0 },
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) throw new Error('Failed To Fetch Order Summary');
+
+    return await res.json();
+  } catch (error) {
+    console.error('Error Fetching Order Summary:', error);
+  }
+};
+
+// * Get Invoice PDF
+export const getInvoicePDF = async (payload: {
+  order_number: string;
+  phone_number: string;
+}) => {
+  try {
+    const res = await fetch(`${baseUrl}/orders/invoice`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) throw new Error('Failed To Fetch Invoice PDF');
+
+    return await res.blob();
+  } catch (error) {
+    console.error('Error Fetching Invoice PDF:', error);
+    return null;
+  }
+};
+
+
+// * Download Invoice
+export const downloadInvoice = async (payload: {
+  order_number: string;
+  phone_number: string;
+}): Promise<Blob | null> => {
+  try {
+    const res = await fetch(`${baseUrl}/orders/downloadInvoice`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      next: { revalidate: 0 },
+    });
+
+    if (!res.ok) throw new Error('Failed to download invoice');
+
+    const contentType = res.headers.get('content-type');
+    if (!contentType || !contentType.includes('pdf')) {
+      throw new Error('Received invalid PDF data.');
+    }
+
+    const blob = await res.blob();
+    return blob; // Blob রিটার্ন হচ্ছে
+  } catch (error) {
+    console.error('Error downloading invoice:', error);
+    return null;
+  }
+};
+
+
+

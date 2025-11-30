@@ -33,7 +33,7 @@ const ShopFacebook = () => {
                 href='https://www.facebook.com/Hijabicrown'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='group relative block overflow-hidden'
+                className='group relative block overflow-hidden z-0'
               >
                 <div
                   className={cn(

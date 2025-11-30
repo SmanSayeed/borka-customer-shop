@@ -119,14 +119,11 @@ export default function CartDrawer() {
                 )}
                 <div className='flex justify-between font-bold text-lg pt-2 border-t'>
                   <span>Total</span>
-                  <span className='text-primary'>৳{' '}{payable_amount}</span>
+                  <span className='text-primary'>৳ {payable_amount}</span>
                 </div>
               </div>
 
-              <Button
-                onClick={() => router.push('/checkout')}
-                className='w-full'
-              >
+              <Button onClick={handleCheckout} className='w-full'>
                 Checkout
               </Button>
               <div className='flex items-center justify-center gap-2 text-sm text-gray-500'>
