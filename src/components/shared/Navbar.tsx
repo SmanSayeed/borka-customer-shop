@@ -32,7 +32,6 @@ const Navbar = () => {
 
         {/* Right Section */}
         <div className='flex items-center gap-4'>
-          {/* Search */}
           <button
             onClick={() => console.log('Search clicked')}
             className='h-10 w-10 flex items-center justify-center rounded-full hover:bg-primary transition'

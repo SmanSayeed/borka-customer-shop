@@ -134,7 +134,6 @@ const ProductDetails = ({ product }: { product: IProductDetails }) => {
             </div>
           </div>
 
-          {/* Add to Cart & Buy Now */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full">
 
             <Button
@@ -148,6 +147,7 @@ const ProductDetails = ({ product }: { product: IProductDetails }) => {
             <Button
               variant="outline"
               className="w-full sm:w-auto flex items-center bg-white gap-2 border-gray-300 text-gray-600 shadow-none"
+              onClick={() => console.log('Buy Now clicked')}
             >
               <ShoppingBag className="w-5 h-5" />
               Buy Now
