@@ -305,8 +305,8 @@ const CheckoutDetails = () => {
             <p className='text-center text-red-500'>Your cart is empty!</p>
           ) : (
             <div className='space-y-4 mb-6 max-h-[400px] overflow-y-auto pr-2'>
-              {carts.map((cart) => (
-                <div key={cart.id} className='flex gap-4 border-b pb-4'>
+              {carts.map((cart, index) => (
+                <div key={`${cart.id}-${index}-${cart.size_name || ''}-${cart.size_id || ''}`} className='flex gap-4 border-b pb-4'>
                   <div className='w-16 h-16 relative rounded-md overflow-hidden border'>
                     <Image
                       src={cart.thumbnail_url}
