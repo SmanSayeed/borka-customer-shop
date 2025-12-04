@@ -1,12 +1,12 @@
 'use client';
 
 import { RigthArrow } from '@/components/shared/assets';
+import { Skeleton } from '@/components/ui/skeleton';
 import { IHomeProduct } from '@/types/home';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
 
 export default function HomeBanner({
   slides,
@@ -17,16 +17,13 @@ export default function HomeBanner({
 }) {
   const [current, setCurrent] = useState(0);
 
-  // Helper function to get image URL from slide content
   const getImageUrl = (slide: IHomeProduct): string => {
     if (!slide.content) return '';
 
-    // If content is an array, get the first item
     if (Array.isArray(slide.content) && slide.content.length > 0) {
       return slide.content[0]?.url || slide.content[0]?.path || '';
     }
 
-    // If content is an object
     if (typeof slide.content === 'object') {
       return slide.content.url || slide.content.path || '';
     }
@@ -46,7 +43,7 @@ export default function HomeBanner({
     }
   };
 
-  // Preload all images when slides are loaded
+  // Preloading Images
   useEffect(() => {
     if (slides.length === 0) return;
 
@@ -57,35 +54,31 @@ export default function HomeBanner({
         img.src = imageUrl;
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slides]);
 
+  // Auto Slide
   useEffect(() => {
     if (slides.length === 0) return;
 
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 7000);
+    const timer = setInterval(() => nextSlide(), 7000);
     return () => clearInterval(timer);
   }, [slides.length]);
 
   if (isLoading) {
     return (
       <div className='w-full flex justify-center'>
-        <div className='relative w-full h-[80vh] lg:h-[90vh] overflow-hidden'>
+        <div className='relative w-full h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[90vh] overflow-hidden'>
           <Skeleton className='w-full h-full bg-muted-foreground/20' />
         </div>
       </div>
     );
   }
 
-  if (!slides || slides.length === 0) {
-    return null;
-  }
+  if (!slides || slides.length === 0) return null;
 
   return (
     <div className='w-full flex justify-center'>
-      <div className='relative w-full h-[80vh] lg:h-[90vh] overflow-hidden'>
+      <div className='relative w-full h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[90vh] overflow-hidden'>
         {slides.map((slide, index) => {
           const imageUrl = getImageUrl(slide);
           if (!imageUrl) return null;
@@ -93,38 +86,32 @@ export default function HomeBanner({
           return (
             <div
               key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-700 
-                ${index === current ? 'opacity-100 z-[15]' : 'opacity-0 z-[10]'}`}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-700 
+    ${index === current ? 'opacity-100 z-15' : 'opacity-0 z-10'}`}
             >
               <Image
                 src={imageUrl}
                 alt={`banner image ${index + 1}`}
-                fill
+                height={915}
+                width={1980}
                 priority={index === 0}
                 className='object-cover w-full h-full'
                 sizes='100vw'
-                onError={(e) => {
-                  console.error('Failed to load banner image:', imageUrl);
-                }}
               />
 
-              <div className='absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent' />
+              {/* Gradient Overlay */}
+              <div className='absolute inset-0 bg-linear-to-t from-black via-black/70 to-transparent' />
 
-              <div className='absolute inset-0 flex flex-col items-center justify-end pb-20 text-center text-white px-0 sm:px-0 pointer-events-none'>
+              {/* Banner Text Box */}
+              <div className='absolute inset-0 flex flex-col items-center justify-end pb-14 md:pb-20 text-white pointer-events-none'>
                 <Link
                   prefetch={true}
                   href='/products'
                   className='pointer-events-auto'
                 >
-                  <button className='group relative inline-flex h-10 md:h-16 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-r from-[#e1b320]/20 via-[#e1b320]/30 to-[#e1b320]/20 border-2 border-[#e1b320]/60 hover:border-[#e1b320] px-10 md:px-12 md:font-bold text-lg md:text-2xl text-[#e1b320] shadow-[0_0_20px_rgba(225,179,32,0.5)] hover:shadow-[0_0_30px_rgba(225,179,32,0.8)] transition-all duration-300'>
-                    {/* Shimmer effect */}
-                    <div className='absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent'></div>
-
-                    {/* Glow effect */}
-                    <div className='absolute inset-0 rounded-lg bg-[#e1b320]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse'></div>
-
-                    <span className='relative z-10 font-bold tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]'>Browse Collection</span>
-                    <div className='relative z-10 w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:pl-2 group-hover:opacity-100'>
+                  <button className='group relative inline-flex h-10 sm:h-12 md:h-14 items-center justify-center overflow-hidden rounded-lg bg-linear-to-r from-[#e1b320]/20 via-[#e1b320]/30 to-[#e1b320]/20 border-2 border-[#e1b320]/60 hover:border-[#e1b320] px-8 sm:px-10 md:px-12 text-base sm:text-xl md:text-2xl font-bold text-[#e1b320] transition-all duration-300'>
+                    <span className='relative z-10'>Browse Collection</span>
+                    <div className='relative z-10 w-0 translate-x-full pl-0 opacity-0 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:pl-2 group-hover:opacity-100'>
                       <RigthArrow className='text-[#e1b320]' />
                     </div>
                   </button>
@@ -137,31 +124,30 @@ export default function HomeBanner({
         {/* Prev Button */}
         <button
           onClick={prevSlide}
-          className='absolute top-1/2 -translate-y-1/2 left-7 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition flex items-center gap-1 text-xs sm:text-sm backdrop-blur-md z-[20]'
+          className='hidden lg:grid place-items-center size-12 top-1/2 -translate-y-1/2 left-7  bg-white/10 hover:bg-white/20 text-white rounded-full transition backdrop-blur-md z-20'
         >
-          <ChevronLeft size={18} />
-          <span className='hidden md:block'>Prev</span>
+          <ChevronLeft size={24} />
         </button>
 
         {/* Next Button */}
         <button
           onClick={nextSlide}
-          className='absolute top-1/2 -translate-y-1/2 right-7 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition flex items-center gap-1 text-xs sm:text-sm backdrop-blur-md z-[20]'
+          className='hidden lg:grid place-items-center size-12 top-1/2 -translate-y-1/2 right-7  bg-white/10 hover:bg-white/20 text-white rounded-full transition backdrop-blur-md z-20'
         >
-          <span className='hidden md:block'>Next</span>
-          <ChevronRight size={18} />
+          <ChevronRight size={24} />
         </button>
 
         {/* Indicators */}
-        <div className='absolute bottom-10 sm:bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-2 sm:gap-3 z-[20]'>
+        <div className='absolute bottom-6 sm:bottom-10 md:bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-2 sm:gap-3 z-20'>
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrent(index)}
-              className={`h-1 rounded-full transition-all 
-                ${current === index
-                  ? 'bg-white/60 w-10 sm:w-12'
-                  : 'bg-white/10 w-3 sm:w-6'
+              className={`rounded-full h-1 transition-all
+                ${
+                  current === index
+                    ? 'bg-white/80 w-10 sm:w-12 md:w-16'
+                    : 'bg-white/20 w-4 sm:w-6 md:w-8'
                 }`}
             />
           ))}

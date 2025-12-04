@@ -220,7 +220,8 @@ function SuccessContent() {
                       <Image
                         src={item.product.thumbnail_url}
                         alt={item.product.product_label}
-                        fill
+                        height={24}
+                        width={20}
                         className='object-cover rounded'
                       />
                     )}

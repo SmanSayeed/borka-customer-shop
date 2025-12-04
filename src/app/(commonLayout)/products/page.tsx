@@ -1,27 +1,13 @@
+'use client'
+
 import ProductList from '@/components/modules/products/ProductList';
-import Loader from '@/components/shared/Loader';
-import PageBanner from '@/components/shared/PageBanner';
-import { Suspense } from 'react';
 
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
-
-const ProductsPage = async () => {
+const ProductsPage = () => {
 
   return (
-    <div>
-      <PageBanner 
-        heading='Product List' 
-        breadcrumbs={[
-          { label: 'Home', href: '/' },
-          { label: 'Products' }
-        ]} 
-      />
-      <div className='container my-10 mx-auto'>
-        <Suspense fallback={<Loader />}>
-          <ProductList />
-        </Suspense>
-      </div>
-
+    <div className='container mx-auto px-4 md:px-0 py-8'>
+      
+      <ProductList />
     </div>
   );
 };

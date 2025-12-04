@@ -66,7 +66,7 @@ export const getParentByBusinessCategoryId = async (
 };
 
 // * Fetch subcategories based on parent category ID
-export const getSubCategoriesByParentId = async (parentId: string) => {
+export const getSubCategoriesByParentId = async (parentId?: string) => {
   try {
     const res = await fetch(`${baseUrl}/categories?parent_id=${parentId}`, {
       method: 'GET',

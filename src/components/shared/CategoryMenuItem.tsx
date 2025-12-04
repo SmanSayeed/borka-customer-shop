@@ -26,7 +26,7 @@ const CategoryMenuItem = ({ category }: Props) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <Link
-        href={`/category/${category.slug}`}
+        href={`/products?category=${category.slug}`}
         className='flex items-center hover:text-primary transition-colors py-2 px-2 bg-black/80 rounded-sm text-sm lg:text-sm font-semibold'
       >
         {category.name}
@@ -51,7 +51,7 @@ const CategoryMenuItem = ({ category }: Props) => {
               {subCategories.map((sub: ICategory) => (
                 <li key={sub.id}>
                   <Link
-                    href={`/category/${sub.slug}`}
+                    href={`/products?category=${category.slug}/${sub.slug}`}
                     className='block px-4 py-2 hover:bg-gray-50 hover:text-primary transition-colors text-sm'
                   >
                     {sub.name}

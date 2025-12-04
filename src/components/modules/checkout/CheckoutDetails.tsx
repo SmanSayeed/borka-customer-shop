@@ -31,7 +31,6 @@ import SearchableSelect from './SearchableSelect';
 
 type FormData = z.infer<typeof checkoutFormSchema>;
 
-// ---------------- MAIN COMPONENT ----------------
 const CheckoutDetails = () => {
   const router = useRouter();
   const { cartDetails, clearCart } = useCart();

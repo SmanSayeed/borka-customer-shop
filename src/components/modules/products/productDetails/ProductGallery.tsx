@@ -69,7 +69,8 @@ export default function ProductGallery({
           <Image
             src={mainImage}
             alt={productName}
-            fill
+            height={900}
+            width={700}
             className={`object-contain transition-transform duration-300 ${
               zoom ? 'scale-110 cursor-zoom-in' : ''
             }`}

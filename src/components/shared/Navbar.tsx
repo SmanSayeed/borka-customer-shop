@@ -19,9 +19,9 @@ const Navbar = () => {
 
   return (
     <header
-      className='bg-black text-white sticky top-0 z-[100] leading-none transition-all duration-300 pointer-events-auto'
+      className='bg-black text-white sticky top-0 z-40 leading-none transition-all duration-300 pointer-events-auto'
     >
-      <nav className='container mx-auto flex items-center justify-between py-1 px-4 lg:px-0 relative z-[101] pointer-events-auto'>
+      <nav className='container mx-auto flex items-center justify-between py-2 px-4 lg:px-0 relative z-40 pointer-events-auto'>
         {/* Logo */}
         <Link prefetch={true} href='/'>
           <Logo />
@@ -89,7 +89,7 @@ const Navbar = () => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className='lg:hidden bg-black backdrop-blur-md overflow-hidden flex flex-col gap-0 px-6 py-8 text-sm relative z-[101]'
+            className='lg:hidden bg-black backdrop-blur-md overflow-hidden flex flex-col gap-0 px-6 py-8 text-sm relative z-40'
           >
             {isCategoryLoading ? (
               <>

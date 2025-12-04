@@ -22,10 +22,14 @@ export default function useProducts({ filters }: Props = {}) {
     staleTime: 1000 * 60 * 20,
   });
 
-  const products: IProduct[] = productsData?.data?.data || [];
+  const products: IProduct[] = productsData?.data?.products?.data || [];
+  const meta = productsData?.data;
+  const filterResponse = productsData?.data?.filters;
 
   return {
     products,
+    meta,
+    filterResponse,
     colors,
     sizes,
     isProductLoading,
