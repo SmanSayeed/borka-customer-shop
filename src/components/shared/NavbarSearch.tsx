@@ -27,13 +27,18 @@ const NavbarSearch = () => {
 
   useEffect(() => {
     if (debouncedText) {
-      const filtered = products.filter(
-        (p) =>
+      const filtered = products.filter((p) => {
+        const colorNames = Array.isArray(p.color_name)
+          ? p.color_name.join(' ')
+          : p.color_name;
+
+        return (
           p.product_label.toLowerCase().includes(debouncedText.toLowerCase()) ||
           p.product_code.toLowerCase().includes(debouncedText.toLowerCase()) ||
-          p.color_name.toLowerCase().includes(debouncedText.toLowerCase()) ||
+          colorNames.toLowerCase().includes(debouncedText.toLowerCase()) ||
           p.product_category.toLowerCase().includes(debouncedText.toLowerCase())
-      );
+        );
+      });
       setFilteredProducts(filtered);
     } else {
       setFilteredProducts([]);

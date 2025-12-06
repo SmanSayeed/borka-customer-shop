@@ -35,9 +35,8 @@ export default function CartSheet() {
     <Sheet
       open={isCartSheetOpen}
       onOpenChange={setIsCartSheetOpen}
-      position='right'
     >
-      <SheetContent className='w-full sm:w-[500px] bg-[#f7fbfe] flex flex-col h-full pb-6'>
+      <SheetContent className='w-full sm:w-[500px] bg-[#f7fbfe] flex flex-col h-full pb-6' side='right'>
         <SheetHeader className='flex items-center justify-between'>
           <div className='flex items-center justify-between gap-16 w-full'>
             <div className='text-left'>
@@ -72,7 +71,7 @@ export default function CartSheet() {
                   Looks like you haven&apos;t added anything yet.
                 </p>
               </div>
-              <Button onClick={() => setIsCartDrawerOpen(false)}>
+              <Button onClick={() => setIsCartSheetOpen(false)}>
                 Continue Shopping
               </Button>
             </div>
