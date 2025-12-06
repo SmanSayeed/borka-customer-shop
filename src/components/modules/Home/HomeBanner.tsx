@@ -103,7 +103,7 @@ export default function HomeBanner({
               <div className='absolute inset-0 bg-linear-to-t from-black via-black/70 to-transparent' />
 
               {/* Banner Text Box */}
-              <div className='absolute inset-0 flex flex-col items-center justify-end pb-14 md:pb-20 text-white pointer-events-none'>
+              <div className='hidden absolute inset-0 md:flex flex-col items-center justify-end pb-14 md:pb-20 text-white pointer-events-none'>
                 <Link
                   prefetch={true}
                   href='/products'

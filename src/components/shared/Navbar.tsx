@@ -1,5 +1,6 @@
 'use client';
 
+import { Skeleton } from '@/components/ui/skeleton';
 import { useGlobalContext } from '@/context/GlobalContext';
 import useCategory from '@/hooks/useCategory';
 import { ICategory } from '@/types';
@@ -7,20 +8,31 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, Search, ShoppingBag, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
 import { Logo } from './assets';
 import CategoryMenuItem from './CategoryMenuItem';
-import { Skeleton } from '@/components/ui/skeleton';
 import MobileCategoryItem from './MobileCategoryItem';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { categories, isCategoryLoading } = useCategory();
+  const { categories, businessCategories, isCategoryLoading } = useCategory();
   const { cartDetails, setIsCartDrawerOpen } = useGlobalContext();
 
+    const [selectedBusinessCat, setSelectedBusinessCat] = useState<number>(1)
+
+    const filteredCategories = categories.filter(
+      (cat) => cat.business_category_id === selectedBusinessCat
+    );
+
   return (
-    <header
-      className='bg-black text-white sticky top-0 z-40 leading-none transition-all duration-300 pointer-events-auto'
-    >
+    <header className='bg-black text-white sticky top-0 z-40 leading-none transition-all duration-300 pointer-events-auto'>
       <nav className='container mx-auto flex items-center justify-between py-2 px-4 lg:px-0 relative z-40 pointer-events-auto'>
         {/* Logo */}
         <Link prefetch={true} href='/'>
@@ -32,10 +44,7 @@ const Navbar = () => {
           {isCategoryLoading ? (
             <>
               {Array.from({ length: 6 }).map((_, index) => (
-                <Skeleton
-                  key={index}
-                  className='h-6 w-20 bg-white/20'
-                />
+                <Skeleton key={index} className='h-6 w-20 bg-white/20' />
               ))}
             </>
           ) : (
@@ -65,7 +74,10 @@ const Navbar = () => {
 
             {cartDetails.products.length > 0 && (
               <span className='absolute -top-1.5 -right-1.5 bg-primary text-black text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center'>
-                {cartDetails.products.reduce((sum, item) => sum + item.quantity, 0)}
+                {cartDetails.products.reduce(
+                  (sum, item) => sum + item.quantity,
+                  0
+                )}
               </span>
             )}
           </button>
@@ -94,10 +106,7 @@ const Navbar = () => {
             {isCategoryLoading ? (
               <>
                 {Array.from({ length: 6 }).map((_, index) => (
-                  <Skeleton
-                    key={index}
-                    className='h-5 w-32 bg-white/20'
-                  />
+                  <Skeleton key={index} className='h-5 w-32 bg-white/20' />
                 ))}
               </>
             ) : (
@@ -112,6 +121,42 @@ const Navbar = () => {
           </motion.ul>
         )}
       </AnimatePresence>
+
+      {/* Mobile Only — Business Categories + Main Category Slider */}
+      <div className='md:hidden flex items-center gap-6 border-t border-white/10 py-4 px-2'>
+        {/* LEFT SIDE → SELECT */}
+        <div className='w-[140px]'>
+          <Select
+            onValueChange={(value) => setSelectedBusinessCat(Number(value))}
+            defaultValue='1'
+            
+          >
+            <SelectTrigger className='bg-white/10 border-0'>
+              <SelectValue placeholder='Category' />
+            </SelectTrigger>
+
+            <SelectContent className='bg-white/15'>
+              {businessCategories.map((bc) => (
+                <SelectItem key={bc.id} value={String(bc.id)} className='bg-transparent'>
+                  {bc.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* RIGHT SIDE → FILTERED CATEGORIES */}
+        <div className='flex items-center gap-4 overflow-x-auto whitespace-nowrap py-2 text-sm'>
+          {filteredCategories.map((cat) => (
+            <div
+              key={cat.id}
+              className=''
+            >
+              {cat.name}
+            </div>
+          ))}
+        </div>
+      </div>
     </header>
   );
 };

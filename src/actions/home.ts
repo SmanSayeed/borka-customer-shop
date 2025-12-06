@@ -1,7 +1,7 @@
 import config from '@/config';
 
 const { baseUrl } = config();
-console.log("baseUrl - ", baseUrl);
+
 // * Get All Home Page Sections
 export const getAllHomeSections = async () => {
   try {

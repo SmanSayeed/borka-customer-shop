@@ -193,7 +193,7 @@ export default function ProductList() {
                 className='w-[70%]'
               />
 
-              <p className='whitespace-nowrap'>
+              <p className='whitespace-nowrap text-sm'>
                 {meta?.products?.total}{' '}
                 {meta?.products?.total === 1 ? 'Product' : 'Products'}
               </p>
@@ -227,7 +227,7 @@ export default function ProductList() {
           ) : (
             <>
               <div
-                className={`grid gap-6 ${
+                className={`grid gap-2 md:gap-6 ${
                   filters.grid === 2
                     ? 'grid-cols-2'
                     : 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-3'
@@ -238,7 +238,7 @@ export default function ProductList() {
                     <ProductCard key={p.id} product={p} />
                   ))
                 ) : (
-                  <p className='text-center col-span-full'>No products found</p>
+                  <p className='text-center text-2xl font-semibold mt-20 col-span-full text-gray-500'>No products found</p>
                 )}
               </div>
 

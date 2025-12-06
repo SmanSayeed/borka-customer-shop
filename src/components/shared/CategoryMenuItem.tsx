@@ -17,8 +17,6 @@ const CategoryMenuItem = ({ category }: Props) => {
 
   const hasSubCategories = subCategories && subCategories.length > 0;
 
-  // if (isSubCategoryLoading) return <Loader />;
-
   return (
     <div
       className='relative group h-full flex items-center gap-1'
