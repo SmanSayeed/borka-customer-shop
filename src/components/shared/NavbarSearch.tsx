@@ -56,12 +56,13 @@ const NavbarSearch = () => {
         </button>
       </PopoverTrigger>
 
-      <PopoverContent className='w-[450px] p-2'>
+      <PopoverContent className='w-[380px] p-2'>
         <Input
           autoFocus
           placeholder='Search products...'
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
+          className='border border-primary/20'
         />
 
         {searchText && (

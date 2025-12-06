@@ -86,7 +86,7 @@ export default function HomeBanner({
           return (
             <div
               key={slide.id}
-              className={`absolute inset-0 w-full h-full transition-opacity duration-700 
+              className={`absolute inset-0 w-full h-[60vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] transition-opacity duration-700 
     ${index === current ? 'opacity-100 z-15' : 'opacity-0 z-10'}`}
             >
               <Image
