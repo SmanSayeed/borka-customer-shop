@@ -98,17 +98,11 @@ const CheckoutDetails = () => {
       const payload = {
         phone_number: data.phoneNumber,
         items: cartItems,
-        shipping_address: {
+        address: {
           name: data.fullName,
           address: data.shippingAddress.address,
           area: data.shippingAddress.area,
           zone_id: data.shippingAddress.zone_id,
-        },
-        billing_address: {
-          name: data.fullName,
-          address: data.billingAddress.address,
-          area: data.billingAddress.area,
-          zone_id: data.billingAddress.zone_id,
         },
         notes: data.notes || '',
         delivery_charge: data.deliveryCharge,
@@ -171,7 +165,7 @@ const CheckoutDetails = () => {
             </div>
 
             <div>
-              <Label className='mb-2'>Shipping Address *</Label>
+              <Label className='mb-2'>Address *</Label>
               <div className='grid grid-cols-1 gap-4'>
                 <Input
                   placeholder='Address'
@@ -195,52 +189,15 @@ const CheckoutDetails = () => {
                           items={zones.map((z: IZone) => z.label)}
                           placeholder='Select Zone'
                           onChange={(label) => {
-                            const zone = zones.find((z: IZone) => z.label === label);
+                            const zone = zones.find(
+                              (z: IZone) => z.label === label
+                            );
                             if (zone) {
                               field.onChange(Number(zone.id));
                               setValue(
                                 'deliveryCharge',
                                 Number(zone.delivery_charge)
                               );
-                            }
-                          }}
-                        />
-                      );
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* BILLING */}
-            <div>
-              <Label className='mb-2'>Billing Address *</Label>
-              <div className='grid grid-cols-1 gap-4'>
-                <Input
-                  placeholder='Address'
-                  {...register('billingAddress.address')}
-                />
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                  <Input
-                    placeholder='Area'
-                    {...register('billingAddress.area')}
-                  />
-                  <Controller
-                    control={control}
-                    name='billingAddress.zone_id'
-                    render={({ field }) => {
-                      const selectedZone = zones.find(
-                        (z: IZone) => z.id === field.value
-                      );
-                      return (
-                        <SearchableSelect
-                          value={selectedZone?.label || ''}
-                          items={zones.map((z: IZone) => z.label)}
-                          placeholder='Select Zone'
-                          onChange={(label) => {
-                            const zone = zones.find((z: IZone) => z.label === label);
-                            if (zone) {
-                              field.onChange(Number(zone.id));
                             }
                           }}
                         />
@@ -305,7 +262,12 @@ const CheckoutDetails = () => {
           ) : (
             <div className='space-y-4 mb-6 max-h-[400px] overflow-y-auto pr-2'>
               {carts.map((cart, index) => (
-                <div key={`${cart.id}-${index}-${cart.size_name || ''}-${cart.size_id || ''}`} className='flex gap-4 border-b pb-4'>
+                <div
+                  key={`${cart.id}-${index}-${cart.size_name || ''}-${
+                    cart.size_id || ''
+                  }`}
+                  className='flex gap-4 border-b pb-4'
+                >
                   <div className='w-16 h-16 relative rounded-md overflow-hidden border'>
                     <Image
                       src={cart.thumbnail_url}

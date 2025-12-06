@@ -3,15 +3,15 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGlobalContext } from '@/context/GlobalContext';
 import useCategory from '@/hooks/useCategory';
+import useProducts from '@/hooks/useProducts';
 import { ICategory } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Menu, Search, ShoppingBag, X } from 'lucide-react';
+import { Menu, ShoppingBag, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -19,17 +19,22 @@ import {
 import { Logo } from './assets';
 import CategoryMenuItem from './CategoryMenuItem';
 import MobileCategoryItem from './MobileCategoryItem';
+import NavbarSearch from './NavbarSearch';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { categories, businessCategories, isCategoryLoading } = useCategory();
-  const { cartDetails, setIsCartDrawerOpen } = useGlobalContext();
+  const { cartDetails, setIsCartSheetOpen } = useGlobalContext();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const { products } = useProducts();
 
-    const [selectedBusinessCat, setSelectedBusinessCat] = useState<number>(1)
+  const [selectedBusinessCat, setSelectedBusinessCat] = useState<number>(1);
 
-    const filteredCategories = categories.filter(
-      (cat) => cat.business_category_id === selectedBusinessCat
-    );
+  const filteredCategories = categories.filter(
+    (cat) => cat.business_category_id === selectedBusinessCat
+  );
 
   return (
     <header className='bg-black text-white sticky top-0 z-40 leading-none transition-all duration-300 pointer-events-auto'>
@@ -56,17 +61,11 @@ const Navbar = () => {
 
         {/* Right Section */}
         <div className='flex items-center gap-4'>
-          <button
-            onClick={() => console.log('Search clicked')}
-            className='h-10 w-10 flex items-center justify-center rounded-full hover:bg-primary transition'
-            aria-label='Search'
-          >
-            <Search className='size-5' />
-          </button>
+          <NavbarSearch />
 
           {/* Cart Button */}
           <button
-            onClick={() => setIsCartDrawerOpen(true)}
+            onClick={() => setIsCartSheetOpen(true)}
             className='relative h-10 w-10 flex items-center justify-center rounded-full hover:bg-primary transition'
             aria-label='Shopping Cart'
           >
@@ -129,7 +128,6 @@ const Navbar = () => {
           <Select
             onValueChange={(value) => setSelectedBusinessCat(Number(value))}
             defaultValue='1'
-            
           >
             <SelectTrigger className='bg-white/10 border-0'>
               <SelectValue placeholder='Category' />
@@ -137,7 +135,11 @@ const Navbar = () => {
 
             <SelectContent className='bg-white/15'>
               {businessCategories.map((bc) => (
-                <SelectItem key={bc.id} value={String(bc.id)} className='bg-transparent'>
+                <SelectItem
+                  key={bc.id}
+                  value={String(bc.id)}
+                  className='bg-transparent'
+                >
                   {bc.name}
                 </SelectItem>
               ))}
@@ -148,10 +150,7 @@ const Navbar = () => {
         {/* RIGHT SIDE → FILTERED CATEGORIES */}
         <div className='flex items-center gap-4 overflow-x-auto whitespace-nowrap py-2 text-sm'>
           {filteredCategories.map((cat) => (
-            <div
-              key={cat.id}
-              className=''
-            >
+            <div key={cat.id} className=''>
               {cat.name}
             </div>
           ))}

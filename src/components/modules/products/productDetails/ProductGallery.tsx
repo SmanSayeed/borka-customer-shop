@@ -7,6 +7,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, SearchCheck } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -43,15 +44,14 @@ export default function ProductGallery({
 
   return (
     <div className='w-full flex flex-col lg:flex-row gap-4 lg:gap-6'>
+      {/* Thumbnails */}
       <div className='flex lg:flex-col gap-4 md:gap-6 order-2 lg:order-1 overflow-x-auto lg:overflow-x-visible'>
         {images.map((img, idx) => (
           <div
             key={idx}
             onClick={() => handleThumbnailClick(idx)}
             className={`relative w-20 h-20 lg:w-24 lg:h-24 border cursor-pointer overflow-hidden ${
-              mainImage === img
-                ? 'border-primary ring-2 ring-primary/30'
-                : 'border-gray-200'
+              mainImage === img ? 'border-primary ring-3 ring-primary/30' : ''
             }`}
           >
             <Image src={img} alt='thumbnail' fill className='object-cover' />
@@ -59,22 +59,32 @@ export default function ProductGallery({
         ))}
       </div>
 
-      {/* Main Image */}
       <div className='relative w-full lg:w-[500px] order-1 lg:order-2 flex flex-col'>
         <div
           className='relative w-full aspect-3/4 overflow-hidden'
           onMouseEnter={() => setZoom(true)}
           onMouseLeave={() => setZoom(false)}
         >
-          <Image
-            src={mainImage}
-            alt={productName}
-            height={900}
-            width={700}
-            className={`object-contain transition-transform duration-300 ${
-              zoom ? 'scale-110 cursor-zoom-in' : ''
-            }`}
-          />
+          <AnimatePresence mode='wait'>
+            <motion.div
+              key={mainImage}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.4 }}
+              className='absolute top-0 left-0 w-full h-full'
+            >
+              <Image
+                src={mainImage}
+                alt={productName}
+                height={900}
+                width={700}
+                className={`object-contain w-full h-full transition-transform duration-300 ${
+                  zoom ? 'scale-110 cursor-zoom-in' : ''
+                }`}
+              />
+            </motion.div>
+          </AnimatePresence>
 
           {/* Zoom Button */}
           <div className='absolute bottom-4 left-4'>
@@ -114,11 +124,11 @@ export default function ProductGallery({
           </div>
         </div>
 
-        {/* Navigation Buttons - Right Aligned */}
-        <div className='absolute bottom-4 right-4  flex justify-end gap-2 mt-4'>
+        {/* Navigation Buttons */}
+        <div className='absolute bottom-4 right-4 flex justify-end gap-2 mt-4'>
           <button
             onClick={prevImage}
-            className='p-2 rounded-full bg-white/50  hover:bg-gray-300 transition'
+            className='p-2 rounded-full bg-white/50 hover:bg-gray-300 transition'
           >
             <ChevronLeft />
           </button>

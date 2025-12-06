@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import useCart from '@/hooks/useCart';
 import useProducts from '@/hooks/useProducts';
 import { IColor, IProductDetails, ISize } from '@/types/product';
-import { Minus, Plus, ShoppingBag, ShoppingBasket } from 'lucide-react';
+import { Minus, Plus, ShoppingBasket } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import ProductAdditionalInfo from './ProductAdditionalInfo';
@@ -46,11 +46,10 @@ const ProductDetails = ({ product }: { product: IProductDetails }) => {
   };
 
   return (
-    <div className="container mx-auto mb-12">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-
+    <div className='container mx-auto mb-12'>
+      <div className='grid grid-cols-1 lg:grid-cols-12 gap-8'>
         {/* Left: Gallery */}
-        <div className="col-span-1 lg:col-span-5">
+        <div className='col-span-1 lg:col-span-5'>
           <ProductGallery
             images={galleryImages}
             productName={product.product_name}
@@ -58,42 +57,47 @@ const ProductDetails = ({ product }: { product: IProductDetails }) => {
         </div>
 
         {/* Right: Details */}
-        <div className="col-span-1 lg:col-span-7 md:space-y-6 space-y-4">
-
-          <h4 className="text-xl sm:text-2xl font-semibold">
+        <div className='col-span-1 lg:col-span-7 md:space-y-6 space-y-4'>
+          <h4 className='text-xl sm:text-2xl font-semibold'>
             {product.product_name}
           </h4>
 
           {/* Price */}
-          <div className="flex flex-wrap items-center gap-3">
-            <p className="text-2xl font-bold">৳{salePrice}</p>
+          <div className='flex flex-wrap items-center gap-3'>
+            <p className='text-2xl font-bold'>৳{salePrice}</p>
 
             {hasDiscount && (
               <>
-                <p className="line-through text-gray-400">৳{originalPrice}</p>
-                <p className="text-primary text-sm">({discountPercent}% Off)</p>
+                <p className='line-through text-gray-400'>৳{originalPrice}</p>
+                <p className='text-primary text-sm'>({discountPercent}% Off)</p>
               </>
             )}
           </div>
 
           {/* Info */}
-          <div className="text-gray-700 space-y-1">
-            <p><strong>SKU:</strong> {product.product_code}</p>
-            <p><strong>Available:</strong> {stockCount} in stock</p>
-            <p><strong>Category:</strong> {product.category?.name}</p>
+          <div className='text-gray-700 space-y-1'>
+            <p>
+              <strong>SKU:</strong> {product.product_code}
+            </p>
+            <p>
+              <strong>Available:</strong> {stockCount} in stock
+            </p>
+            <p>
+              <strong>Category:</strong> {product.category?.name}
+            </p>
           </div>
 
           {/* Size Selection */}
           {sizes.length > 0 && (
-            <div className="flex items-center gap-2">
-              <p className="font-medium">
+            <div className='flex items-center gap-2'>
+              <p className='font-medium'>
                 Size:{' '}
-                <span className="text-gray-500">
+                <span className='text-gray-500'>
                   {selectedSize ? selectedSize.name : 'Select'}
                 </span>
               </p>
 
-              <div className="flex flex-wrap gap-3">
+              <div className='flex flex-wrap gap-3'>
                 {sizes.map((s: ISize) => (
                   <button
                     key={s.id}
@@ -112,51 +116,41 @@ const ProductDetails = ({ product }: { product: IProductDetails }) => {
           )}
 
           {/* Quantity */}
-          <div className="flex items-center gap-3">
-            <p className="font-medium">Quantity:</p>
+          <div className='flex items-center gap-4'>
+            {/* Quantity Selector */}
+            <div className='flex items-center gap-3'>
+              <p className='font-medium'>Quantity:</p>
+              <div className='flex items-center'>
+                <button
+                  className='bg-white rounded-sm p-2 text-sm border hover:border-primary hover:bg-primary/10 transition duration-300'
+                  onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                >
+                  <Minus size={16} />
+                </button>
 
-            <div className="flex items-center ">
-              <button
-                className="bg-white rounded-sm p-2 text-sm border hover:border-primary hover:bg-primary/10 transition duration-300"
-                onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-              >
-                <Minus size={16}/>
-              </button>
+                <span className='w-8 text-center'>{quantity}</span>
 
-              <span className="w-8 text-center">{quantity}</span>
-
-              <button
-                className="bg-white rounded-sm p-2 text-sm border hover:border-primary hover:bg-primary/10 transition duration-300"
-                onClick={() => setQuantity((prev) => prev + 1)}
-              >
-                <Plus size={16}/>
-              </button>
+                <button
+                  className='bg-white rounded-sm p-2 text-sm border hover:border-primary hover:bg-primary/10 transition duration-300'
+                  onClick={() => setQuantity((prev) => prev + 1)}
+                >
+                  <Plus size={16} />
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full">
-
+            {/* Add To Cart Button */}
             <Button
-              className="bg-primary text-white w-full sm:w-auto flex items-center gap-2 shadow-none"
+              className='bg-primary text-white flex items-center gap-2 shadow-none rounded-none px-4 py-2'
               onClick={handleAddToCart}
             >
-              <ShoppingBasket className="w-5 h-5" />
+              <ShoppingBasket className='w-5 h-5' />
               Add To Cart
-            </Button>
-
-            <Button
-              variant="outline"
-              className="w-full sm:w-auto flex items-center bg-white gap-2 border-gray-300 text-gray-600 shadow-none"
-              onClick={() => console.log('Buy Now clicked')}
-            >
-              <ShoppingBag className="w-5 h-5" />
-              Buy Now
             </Button>
           </div>
 
           <ProductAdditionalInfo product={product} />
         </div>
-
       </div>
     </div>
   );

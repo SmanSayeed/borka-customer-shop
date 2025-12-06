@@ -78,7 +78,7 @@ export default function HomeBanner({
 
   return (
     <div className='w-full flex justify-center'>
-      <div className='relative w-full h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[90vh] overflow-hidden'>
+      <div className='relative w-full h-[60vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] overflow-hidden'>
         {slides.map((slide, index) => {
           const imageUrl = getImageUrl(slide);
           if (!imageUrl) return null;

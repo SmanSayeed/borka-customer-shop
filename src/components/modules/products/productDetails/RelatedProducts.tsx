@@ -44,7 +44,7 @@ export default function RelatedProducts({ categoryId }: RelatedProductsProps) {
                 key={index}
                 className='basis-1/2 sm:basis-1/2 lg:basis-1/5'
               >
-                <ProductCard product={product} />
+                <ProductCard product={product} isRelated={true} />
               </CarouselItem>
             ))}
           </CarouselContent>
