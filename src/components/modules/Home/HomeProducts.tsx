@@ -17,7 +17,7 @@ const HomeProducts = ({ section }: { section: any }) => {
     queryKey: ['sectionProducts', section.id],
     queryFn: () => getProductsBySection(section.id),
   });
- 
+
 
   const products: any[] = productsData?.data?.data || [];
 
@@ -50,7 +50,7 @@ const HomeProducts = ({ section }: { section: any }) => {
           <>
             {/* Highlight Products First */}
             {products
-              .filter((p) => p.is_highlight === true)
+              .filter((p) => p?.is_highlight === true)
               .map((product) => (
                 <HighlightedProduct key={product.id} product={product} />
               ))}

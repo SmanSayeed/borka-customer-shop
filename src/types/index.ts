@@ -25,6 +25,7 @@ export interface IProduct {
   product_category: string;
   sale_price: string | number | null;
   discount_label: string | null;
+  is_highlight?: boolean;
   name?: string;
   price?: number;
   discount?: number;
