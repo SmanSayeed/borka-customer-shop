@@ -50,15 +50,15 @@ const HomeProducts = ({ section }: { section: any }) => {
           <>
             {/* Highlight Products First */}
             {products
-              .filter((p) => p?.is_highlight === true)
-              .map((product) => (
+              .filter((p: any) => p?.is_highlight === true)
+              .map((product: any) => (
                 <HighlightedProduct key={product.id} product={product} />
               ))}
 
             {/* Regular Products Next */}
             {products
-              .filter((p) => !p.is_highlight)
-              .map((product) => (
+              .filter((p: any) => !p?.is_highlight)
+              .map((product: any) => (
                 <HighlightedProduct key={product.id} product={product} />
               ))}
           </>
