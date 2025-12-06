@@ -1,6 +1,6 @@
 'use client'
 
-import CartDrawer from '@/components/modules/cart/CartDrawer';
+import CartDrawer from '@/components/modules/cart/CartSheet';
 import Footer from '@/components/shared/Footer';
 import Navbar from '@/components/shared/Navbar';
 import { useLenis } from '@/hooks/useLenis';

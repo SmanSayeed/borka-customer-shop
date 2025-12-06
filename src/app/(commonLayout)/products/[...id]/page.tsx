@@ -21,7 +21,7 @@ const ProductDetailsPage = async ({
           { label: 'Product Details' },
         ]}
       />
-      <div className='px-4 md:px-0'>
+      <div className='px-2 md:px-0'>
         <ProductDetails product={product} />
       <RelatedProducts categoryId={product.category.id}/>
       <CustomerReviews />

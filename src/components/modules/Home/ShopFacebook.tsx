@@ -44,7 +44,8 @@ const ShopFacebook = () => {
                   <Image
                     src={image}
                     alt={`Shop image ${index + 1}`}
-                    fill
+                    width={756}
+                    height={340}
                     className='object-cover w-full h-full transition-transform duration-700 group-hover:scale-110'
                   />
 
