@@ -14,11 +14,11 @@ const CartItem = ({ item, onQuantityChange, onRemove }: ICartItemProps) => {
   const total = price * item.quantity;
 
   return (
-    <div className='gap-4 p-4 border border-gray-50 bg-white relative'>
+    <div className='gap-4 p-2 border border-gray-50 bg-white relative'>
       {onRemove && (
         <button
           onClick={() => onRemove(item.id, item.size_id)}
-          className='absolute top-3 right-3 text-muted-foreground hover:text-destructive transition-colors p-1'
+          className='absolute top-2 right-2 text-muted-foreground hover:text-destructive transition-colors p-1'
         >
           <Trash2 className='size-5' />
         </button>
@@ -29,13 +29,14 @@ const CartItem = ({ item, onQuantityChange, onRemove }: ICartItemProps) => {
           <img
             src={item.thumbnail_url}
             alt={item.product_label}
-            className='w-full h-full object-cover rounded-sm'
+            className='w-full h-full object-cover'
           />
         </div>
 
         <div className='col-span-9 flex flex-col gap-2'>
-          <h4 className='font-medium text-foreground mb-1 truncate'>
-            {item.product_label}
+          <h4 className='font-medium text-sm text-foreground mb-1'>
+            {item.product_label.split(' ').slice(0, 3).join(' ')}
+            {item.product_label.split(' ').length > 3 && '...'}
           </h4>
 
           <div className='flex items-center gap-4 text-sm text-muted-foreground'>

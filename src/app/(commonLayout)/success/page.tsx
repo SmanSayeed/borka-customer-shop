@@ -1,12 +1,9 @@
 'use client';
 
-import {
-    getInvoicePDF,
-  getOrderSummary,
-} from '@/actions/order';
+import { getInvoicePDF, getOrderSummary } from '@/actions/order';
 import { Button } from '@/components/ui/button';
 import { Confetti, type ConfettiRef } from '@/components/ui/confetti';
-import { Download, Eye, Loader2 } from 'lucide-react';
+import { Eye, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -220,7 +217,8 @@ function SuccessContent() {
                       <Image
                         src={item.product.thumbnail_url}
                         alt={item.product.product_label}
-                        fill
+                        height={24}
+                        width={20}
                         className='object-cover rounded'
                       />
                     )}

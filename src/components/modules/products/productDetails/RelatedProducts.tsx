@@ -31,7 +31,7 @@ export default function RelatedProducts({ categoryId }: RelatedProductsProps) {
   );
 
   return (
-    <section className='px-2 md:px-0 mt-12 md:mt-24 md: container mx-auto'>
+    <section className='mt-12 md:mt-24 md:container mx-auto'>
         <h2 className='text-2xl md:text-5xl font-bold text-center mb-4 md:mb-8'>Related Products</h2>
 
       {isProductLoading ? (
@@ -44,7 +44,7 @@ export default function RelatedProducts({ categoryId }: RelatedProductsProps) {
                 key={index}
                 className='basis-1/2 sm:basis-1/2 lg:basis-1/5'
               >
-                <ProductCard product={product} />
+                <ProductCard product={product} isRelated={true} />
               </CarouselItem>
             ))}
           </CarouselContent>

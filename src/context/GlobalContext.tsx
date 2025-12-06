@@ -45,7 +45,7 @@ export const GlobalContextProvider = ({
 }) => {
   const [cartDetails, setCartDetails] = useState<ICartData>(initialCart);
   const [isCartLoading, setIsCartLoading] = useState(false);
-  const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
+  const [isCartSheetOpen, setIsCartSheetOpen] = useState(false);
 
   // * Get all business categories
   const { data: businessCategoriesData, isLoading: isBusinessCategoryLoading } =
@@ -257,8 +257,8 @@ export const GlobalContextProvider = ({
     isColorLoading,
     isSizeLoading,
     isCartLoading,
-    isCartDrawerOpen,
-    setIsCartDrawerOpen,
+    isCartSheetOpen,
+    setIsCartSheetOpen,
   };
 
   return (
