@@ -27,13 +27,18 @@ const NavbarSearch = () => {
 
   useEffect(() => {
     if (debouncedText) {
-      const filtered = products.filter(
-        (p) =>
+      const filtered = products.filter((p) => {
+        const colorNames = Array.isArray(p.color_name)
+          ? p.color_name.join(' ')
+          : p.color_name;
+
+        return (
           p.product_label.toLowerCase().includes(debouncedText.toLowerCase()) ||
           p.product_code.toLowerCase().includes(debouncedText.toLowerCase()) ||
-          p.color_name.toLowerCase().includes(debouncedText.toLowerCase()) ||
+          colorNames.toLowerCase().includes(debouncedText.toLowerCase()) ||
           p.product_category.toLowerCase().includes(debouncedText.toLowerCase())
-      );
+        );
+      });
       setFilteredProducts(filtered);
     } else {
       setFilteredProducts([]);
@@ -51,12 +56,13 @@ const NavbarSearch = () => {
         </button>
       </PopoverTrigger>
 
-      <PopoverContent className='w-[450px] p-2'>
+      <PopoverContent className='w-[380px] p-2'>
         <Input
           autoFocus
           placeholder='Search products...'
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
+          className='border border-primary/20'
         />
 
         {searchText && (

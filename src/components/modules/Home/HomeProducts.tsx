@@ -12,14 +12,14 @@ import Link from 'next/link';
 import HighlightedProduct from '../products/HighlitedProducts';
 import { ArrowRight } from 'lucide-react';
 
-const HomeProducts = ({ section }: { section: IHomeProduct }) => {
+const HomeProducts = ({ section }: { section: any }) => {
   const { data: productsData, isLoading } = useQuery({
     queryKey: ['sectionProducts', section.id],
     queryFn: () => getProductsBySection(section.id),
   });
  
 
-  const products: IProduct[] = productsData?.data?.data || [];
+  const products: any[] = productsData?.data?.data || [];
 
   return (
     <div className='px-2 md:px-0 mt-12 md:mt-24'>

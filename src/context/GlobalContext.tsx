@@ -32,8 +32,8 @@ interface GlobalContextType {
   removeItem: (id: number, sizeId?: number) => void;
   clearCart: () => void;
   isCartLoading: boolean;
-  isCartDrawerOpen: boolean;
-  setIsCartDrawerOpen: (open: boolean) => void;
+  isCartSheetOpen: boolean;
+  setIsCartSheetOpen: (open: boolean) => void;
 }
 
 const GlobalContext = createContext<GlobalContextType | null>(null);
